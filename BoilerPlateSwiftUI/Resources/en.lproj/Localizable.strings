@@ -1,9 +1,0 @@
-/* 
-  Localizable.strings
-  BoilerPlateSwiftUI
-
-  Created by Selim Gungorer on 14.09.2022.
-  Copyright © 2022 Adesso Turkey. All rights reserved.
-*/
-
-"Hello, World!" = "Hello";

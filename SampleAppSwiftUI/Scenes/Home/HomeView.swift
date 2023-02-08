@@ -7,14 +7,42 @@
 //
 
 import SwiftUI
+import PulseUI
 
 struct HomeView: View {
+
+    @State private var showPulseUI = false
+
     var body: some View {
-        ZStack {
-            Color.red
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/.localized)
+        ZStack(alignment: .bottom) {
+            ZStack {
+                Color.red
+                Text("Hello, World!")
+                    .foregroundColor(.white)
+                    .bold()
+
+            }
+            Button {
+                showPulseUI.toggle()
+            } label: {
+                Text("Pulse")
+                    .foregroundColor(.black)
+            }
+            .padding(.all)
+            .background(Color.white)
+            .cornerRadius(20)
+            .offset(x: 0, y: -30)
+
         }
         .ignoresSafeArea()
+        .sheet(isPresented: $showPulseUI) {
+            NavigationView {
+                ConsoleView()
+                    .navigationBarItems(leading: Button("Close") {
+                        showPulseUI = false
+                    })
+            }
+        }
     }
 }
 

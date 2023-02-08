@@ -35,6 +35,8 @@
 		2FCDE0FF2565722600203445 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FCDE0FE2565722600203445 /* Assets.xcassets */; };
 		2FCDE1022565722600203445 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FCDE1002565722600203445 /* LaunchScreen.storyboard */; };
 		2FCDE1572566AE2700203445 /* UITableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCDE1562566AE2700203445 /* UITableViewExtensions.swift */; };
+		729EA9022993CA7600F391B6 /* Pulse in Frameworks */ = {isa = PBXBuildFile; productRef = 729EA9012993CA7600F391B6 /* Pulse */; };
+		729EA9042993CA7600F391B6 /* PulseUI in Frameworks */ = {isa = PBXBuildFile; productRef = 729EA9032993CA7600F391B6 /* PulseUI */; };
 		D1703A4F28C9CDA70071EF00 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D1703A4E28C9CDA70071EF00 /* CocoaLumberjackSwift */; };
 		D1AC819728F69C4500E5B0AE /* OnFirstAppearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC819628F69C4500E5B0AE /* OnFirstAppearModifier.swift */; };
 		E50BB41AA460239E70C85ED2 /* Pods_SampleAppSwiftUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AA8343AF26103C22D43403D /* Pods_SampleAppSwiftUITests.framework */; };
@@ -165,7 +167,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				729EA9022993CA7600F391B6 /* Pulse in Frameworks */,
 				0EC0C2453748A46E5EA50303 /* Pods_SampleAppSwiftUI.framework in Frameworks */,
+				729EA9042993CA7600F391B6 /* PulseUI in Frameworks */,
 				D1703A4F28C9CDA70071EF00 /* CocoaLumberjackSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -554,6 +558,8 @@
 			name = SampleAppSwiftUI;
 			packageProductDependencies = (
 				D1703A4E28C9CDA70071EF00 /* CocoaLumberjackSwift */,
+				729EA9012993CA7600F391B6 /* Pulse */,
+				729EA9032993CA7600F391B6 /* PulseUI */,
 			);
 			productName = "boilerplate-ios-swiftui";
 			productReference = 2FCDE0F22565722400203445 /* SampleAppSwiftUI.app */;
@@ -638,6 +644,7 @@
 			packageReferences = (
 				D1703A4D28C9CDA70071EF00 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
 				E670F253298A9B9B00351959 /* XCRemoteSwiftPackageReference "swifter" */,
+				729EA9002993CA7600F391B6 /* XCRemoteSwiftPackageReference "Pulse" */,
 			);
 			productRefGroup = 2FCDE0F32565722400203445 /* Products */;
 			projectDirPath = "";
@@ -1449,6 +1456,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		729EA9002993CA7600F391B6 /* XCRemoteSwiftPackageReference "Pulse" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Pulse";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		D1703A4D28C9CDA70071EF00 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CocoaLumberjack/CocoaLumberjack";
@@ -1468,6 +1483,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		729EA9012993CA7600F391B6 /* Pulse */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 729EA9002993CA7600F391B6 /* XCRemoteSwiftPackageReference "Pulse" */;
+			productName = Pulse;
+		};
+		729EA9032993CA7600F391B6 /* PulseUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 729EA9002993CA7600F391B6 /* XCRemoteSwiftPackageReference "Pulse" */;
+			productName = PulseUI;
+		};
 		D1703A4E28C9CDA70071EF00 /* CocoaLumberjackSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D1703A4D28C9CDA70071EF00 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;

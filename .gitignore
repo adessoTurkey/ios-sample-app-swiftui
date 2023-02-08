@@ -83,3 +83,9 @@ fastlane/test_output
 
 iOSInjectionProject/
 .DS_Store
+
+# Xcodegen  
+# Since we now generate .xcodeproj file with xcodegen, git shouldn't track following files
+*.xcodeproj
+SampleAppSwiftUI.xcodeproj
+SampleAppSwiftUI.xcworkspace

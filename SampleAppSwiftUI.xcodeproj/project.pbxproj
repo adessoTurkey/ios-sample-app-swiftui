@@ -1019,7 +1019,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 74D8BCE834C7B5683630A1ED /* Pods-SampleAppSwiftUI-SampleAppSwiftUIUITests.swifter.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K8J8CUXWK9;
@@ -1153,7 +1152,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9B86CF0688E998F9C642504D /* Pods-SampleAppSwiftUI-SampleAppSwiftUIUITests.development.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K8J8CUXWK9;
@@ -1390,7 +1388,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FB89E15DF3E6838C70010F13 /* Pods-SampleAppSwiftUI-SampleAppSwiftUIUITests.production.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K8J8CUXWK9;
@@ -1415,7 +1412,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F2A1669AD3998030C9F73813 /* Pods-SampleAppSwiftUI-SampleAppSwiftUIUITests.appstore.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K8J8CUXWK9;

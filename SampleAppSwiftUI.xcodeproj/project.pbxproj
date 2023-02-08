@@ -546,7 +546,6 @@
 				2FCDE0EF2565722400203445 /* Frameworks */,
 				2FCDE0F02565722400203445 /* Resources */,
 				26C4C4452575230A00358DAE /* Swiftlint */,
-				BB9E94EE21A1763174246897 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -590,7 +589,6 @@
 				2FCDE10F2565722600203445 /* Sources */,
 				2FCDE1102565722600203445 /* Frameworks */,
 				2FCDE1112565722600203445 /* Resources */,
-				FFDE2CE4D6F75977F40BF246 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -766,40 +764,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BB9E94EE21A1763174246897 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SampleAppSwiftUI/Pods-SampleAppSwiftUI-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SampleAppSwiftUI/Pods-SampleAppSwiftUI-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SampleAppSwiftUI/Pods-SampleAppSwiftUI-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FFDE2CE4D6F75977F40BF246 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SampleAppSwiftUI-SampleAppSwiftUIUITests/Pods-SampleAppSwiftUI-SampleAppSwiftUIUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SampleAppSwiftUI-SampleAppSwiftUIUITests/Pods-SampleAppSwiftUI-SampleAppSwiftUIUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SampleAppSwiftUI-SampleAppSwiftUIUITests/Pods-SampleAppSwiftUI-SampleAppSwiftUIUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

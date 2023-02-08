@@ -11,7 +11,6 @@ target 'SampleAppSwiftUI' do
   # Pods for boilerplate-ios-swiftui
 
   # Utils
-  pod 'CocoaDebug', '1.7.1', :configurations => ['Development','Swifter']
 
   target 'SampleAppSwiftUITests' do
     inherit! :search_paths

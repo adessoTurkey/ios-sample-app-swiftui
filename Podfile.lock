@@ -1,16 +1,21 @@
 PODS:
-  - CocoaDebug (1.7.1)
+  - CocoaDebug (1.7.2)
 
 DEPENDENCIES:
-  - CocoaDebug (= 1.7.1)
+  - CocoaDebug (from `https://github.com/philosopherdog/CocoaDebug.git`)
 
-SPEC REPOS:
-  trunk:
-    - CocoaDebug
+EXTERNAL SOURCES:
+  CocoaDebug:
+    :git: https://github.com/philosopherdog/CocoaDebug.git
+
+CHECKOUT OPTIONS:
+  CocoaDebug:
+    :commit: 43642be19290d9821b142af91d53a44916d344d1
+    :git: https://github.com/philosopherdog/CocoaDebug.git
 
 SPEC CHECKSUMS:
-  CocoaDebug: 9993e85ec4cfbcd2668c8cf8a6d955eb9c96d49a
+  CocoaDebug: 61cf93ada6ce8f3407507dc01f9b874d91ac1d5c
 
-PODFILE CHECKSUM: c6e491bb0e5e8f2e817633d6873a52190472bac1
+PODFILE CHECKSUM: d913e94d078e1d70c028b315f30cd571a6dc628b
 
 COCOAPODS: 1.11.3

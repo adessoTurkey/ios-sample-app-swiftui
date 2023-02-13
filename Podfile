@@ -1,5 +1,4 @@
-# Uncomment the next line to define a global platform for your project
-# platform :ios, '14.0'
+platform :ios, '15.0'
 
 # ignore all warnings from all pods
 inhibit_all_warnings!
@@ -11,7 +10,7 @@ target 'SampleAppSwiftUI' do
   # Pods for boilerplate-ios-swiftui
 
   # Utils
-  pod 'CocoaDebug', '1.7.1', :configurations => ['Development','Swifter']
+  pod 'CocoaDebug', :git => 'https://github.com/philosopherdog/CocoaDebug.git' , :configurations => ['Development','Swifter']
 
   target 'SampleAppSwiftUITests' do
     inherit! :search_paths
@@ -25,7 +24,7 @@ target 'SampleAppSwiftUI' do
   post_install do |installer|
     installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
       end
     end
   end

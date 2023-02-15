@@ -1,9 +1,11 @@
 name: SampleAppSwiftUI
 
 configs:
-  Development: release
+  Development: debug
   Swifter: debug
-
+  Production: debug
+  AppStore: release
+  
 options:
   bundleIdPrefix: com.adesso
   deploymentTarget:
@@ -26,7 +28,12 @@ targets:
       - package: CocoaLumberjack
         product: CocoaLumberjack
       - package: CocoaLumberjack
-        product: CocoaLumberjackSwift 
+        product: CocoaLumberjackSwift
+    configFiles:
+        Development: SampleAppSwiftUI/Configs/Development.xcconfig
+        Production: SampleAppSwiftUI/Configs/Production.xcconfig
+        Swifter: SampleAppSwiftUI/Configs/Development.xcconfig
+        AppStore: SampleAppSwiftUI/Configs/AppStore.xcconfig
     type: application
     platform: iOS
     sources:
@@ -35,6 +42,21 @@ targets:
       testTargets:
       - SampleAppSwiftUITests
       - SampleAppSwiftUIUITests
+      - Swifter
+    preBuildScripts:
+      - name: SwiftLint
+        script: |
+                export PATH="$PATH:/opt/homebrew/bin"
+                if which swiftlint > /dev/null; then
+                    swiftlint
+                else
+                    echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+                fi
+  Swifter:
+    type: application
+    platform: iOS
+    sources:
+      - path: SampleAppSwiftUI
   SampleAppSwiftUITests:
     type: bundle.unit-test
     platform: iOS

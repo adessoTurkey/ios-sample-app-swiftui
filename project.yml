@@ -1,0 +1,47 @@
+name: SampleAppSwiftUI
+
+configs:
+  Development: release
+  Swifter: debug
+
+options:
+  bundleIdPrefix: com.adesso
+  deploymentTarget:
+    iOS: 15.0
+
+packages:
+  CocoaLumberjack:
+    url: https://github.com/CocoaLumberjack/CocoaLumberjack
+    majorVersion: 3.8.0
+  Swifter:
+    url: https://github.com/httpswift/swifter
+    exactVersion: 1.5.0
+  swift-log:
+    url: https://github.com/apple/swift-log.git
+    majorVersion: 1.5.2
+
+targets:
+  SampleAppSwiftUI:
+    dependencies:
+      - package: CocoaLumberjack
+        product: CocoaLumberjack
+      - package: CocoaLumberjack
+        product: CocoaLumberjackSwift 
+    type: application
+    platform: iOS
+    sources:
+      - path: SampleAppSwiftUI
+    scheme:
+      testTargets:
+      - SampleAppSwiftUITests
+      - SampleAppSwiftUIUITests
+  SampleAppSwiftUITests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: SampleAppSwiftUITests
+  SampleAppSwiftUIUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: SampleAppSwiftUIUITests

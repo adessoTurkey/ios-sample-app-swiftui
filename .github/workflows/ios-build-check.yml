@@ -8,13 +8,18 @@ on:
 
 jobs:
   build:
-    name: Build scheme 
+    name: Build scheme
     runs-on: macos-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Xcodegen
+        uses: xavierLowmiller/xcodegen-action@1.1.2
+        with:
+            spec: project.yaml
+            quiet: true
+            version: '2.33.0'
       - name: Build
         run: |
-          xcodegen
-          xcodebuild -scheme SampleAppSwiftUI clean build -sdk iphoneos -configuration Development CODE_SIGNING_ALLOWED=No           
+          xcodebuild -scheme SampleAppSwiftUI clean build -sdk iphoneos -configuration Development CODE_SIGNING_ALLOWED=No

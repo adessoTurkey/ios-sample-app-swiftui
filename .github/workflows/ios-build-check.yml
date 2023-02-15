@@ -20,6 +20,9 @@ jobs:
             spec: project.yaml
             quiet: true
             version: '2.33.0'
+      - name: Generate Project
+        run: |
+          xcodegen generate
       - name: Build
         run: |
           xcodebuild -scheme SampleAppSwiftUI clean build -sdk iphoneos -configuration Development CODE_SIGNING_ALLOWED=No

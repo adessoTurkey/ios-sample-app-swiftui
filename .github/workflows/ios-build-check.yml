@@ -16,4 +16,4 @@ jobs:
         uses: actions/checkout@v2
       - name: Build
         run: |
-          xcodebuild -scheme ios-boilerplate clean build -sdk iphoneos -configuration Development CODE_SIGNING_ALLOWED=No           
+          xcodebuild -scheme SampleAppSwiftUI clean build -sdk iphoneos -configuration Development CODE_SIGNING_ALLOWED=No           

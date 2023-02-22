@@ -52,16 +52,3 @@ struct SampleAppSwiftUIApp: App {
      func deactivated() {}
      func onOpenURL(_ url: URL) {} // URL Opening management. Same as AppDelegate's `application(_:open:options:)`
  }
-
-// MARK: - App Delegate
-// This will include methods which the new SwiftUI Lifecycle does not support yet.
-class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        // Handle remote notifications here
-    }
-
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        // Handle remote notification failures here
-        print(error.localizedDescription)
-    }
-}

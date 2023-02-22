@@ -1,5 +1,5 @@
 //
-//  boilerplate-ios-swiftuiApp.swift
+//  SampleAppSwiftUIApp.swift
 //  boilerplate-ios-swiftui
 //
 //  Created by Cagri Gider on 14.08.2022.

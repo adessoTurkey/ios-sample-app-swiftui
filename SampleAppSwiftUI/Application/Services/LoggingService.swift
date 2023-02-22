@@ -8,14 +8,11 @@
 
 import UIKit
 
-class LoggingService: NSObject, UIApplicationDelegate {
+class LoggingService {
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
+    init() {
         LoggerManager.instance.setup(level: .debug)
         logApplicationAndDeviceInfo()
-
-        return true
     }
 
     private func logApplicationAndDeviceInfo() {

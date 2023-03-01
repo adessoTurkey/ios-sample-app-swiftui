@@ -11,17 +11,23 @@ import PulseUI
 
 struct HomeView: View {
 
+    @StateObject private var viewModel = HomeViewModel()
     @State private var showPulseUI = false
 
     var body: some View {
         ZStack(alignment: .bottom) {
             ZStack {
                 Color.red
-                Text("Hello, World!")
-                    .foregroundColor(.white)
-                    .bold()
-
+                VStack {
+                    Text("BTCUSD: ")
+                        .foregroundColor(.white)
+                        .bold()
+                    Text(viewModel.btcPrice)
+                        .foregroundColor(.white)
+                        .bold()
+                }
             }
+
             Button {
                 showPulseUI.toggle()
             } label: {
@@ -33,6 +39,9 @@ struct HomeView: View {
             .cornerRadius(20)
             .offset(x: 0, y: -30)
 
+        }
+        .task {
+            await viewModel.startSocketConnection()
         }
         .ignoresSafeArea()
         .sheet(isPresented: $showPulseUI) {

@@ -43,6 +43,9 @@ struct HomeView: View {
                     })
             }
         }
+        .onAppear {
+            let _ = RSwiftExampleModel()
+        }
     }
 }
 

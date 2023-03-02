@@ -14,6 +14,9 @@ packages:
   CocoaLumberjack:
     url: https://github.com/CocoaLumberjack/CocoaLumberjack
     majorVersion: 3.8.0
+  R.swift:
+    url: https://github.com/mac-cain13/R.swift
+    majorVersion: 7.2.4
   Pulse:
     url: https://github.com/kean/Pulse
     majorVersion: 3.0.0
@@ -30,6 +33,9 @@ targets:
       - package: Pulse
         product: Pulse
         product: PulseUI
+      - package: R.swift
+        product: rswift
+        product: RswiftLibrary
     configFiles:
         Development: SampleAppSwiftUI/Configs/Development.xcconfig
         Production: SampleAppSwiftUI/Configs/Production.xcconfig

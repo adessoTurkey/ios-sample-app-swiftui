@@ -8,13 +8,14 @@
 
 import Foundation
 
-class WebSocketProvider {
+class WebSocketProvider: NSObject {
 
     var socket: WebSocketStream
 
-    init? (endPoint: TargetEndpointProtocol = WebSocketEndpoint.baseCoinApi) {
+    init? (endPoint: TargetEndpointProtocol = WebSocketEndpoint.baseCoinApi,
+           session: URLSession = URLSession.shared ) {
         guard let url = URL(string: endPoint.path) else { return nil }
         self.socket = WebSocketStream(url: url,
-                                      session: URLSession.shared)
+                                      session: session)
     }
 }

@@ -18,14 +18,7 @@ struct HomeView: View {
         ZStack(alignment: .bottom) {
             ZStack {
                 Color.red
-                VStack {
-                    Text("BTCUSD: ")
-                        .foregroundColor(.white)
-                        .bold()
-                    Text(viewModel.btcPrice)
-                        .foregroundColor(.white)
-                        .bold()
-                }
+                coinInfo
             }
 
             Button {
@@ -50,6 +43,19 @@ struct HomeView: View {
                     .navigationBarItems(leading: Button("Close") {
                         showPulseUI = false
                     })
+            }
+        }
+    }
+    
+    var coinInfo: some View {
+        VStack {
+            if let coin = viewModel.coinInfo {
+                Text(coin.coinName())
+                    .foregroundColor(.white)
+                    .bold()
+                Text(coin.formattedPrice())
+                    .foregroundColor(.white)
+                    .bold()
             }
         }
     }

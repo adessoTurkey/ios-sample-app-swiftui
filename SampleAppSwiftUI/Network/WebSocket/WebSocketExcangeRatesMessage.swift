@@ -36,7 +36,10 @@ struct WebSocketExcangeRatesMessage: WebSocketMessageProtocol {
     }
 }
 
-struct ExcangeRatesResponseModel: Codable {
+struct ExcangeRatesResponseModel: Codable, Identifiable, ResponseModelProtocol {
+    var id: String {
+        coinName()
+    }
     let time, assetIDBase, assetIDQuote, rateType: String
     let rate: Double
     let type: String
@@ -48,4 +51,13 @@ struct ExcangeRatesResponseModel: Codable {
         case rateType = "rate_type"
         case rate, type
     }
+    
+    func formattedPrice() -> String {
+        "\(Int(rate))"
+    }
+    
+    func coinName()  -> String {
+        "\(assetIDBase)/\(self.assetIDQuote)"
+    }
 }
+protocol ResponseModelProtocol {}

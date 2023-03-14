@@ -34,7 +34,7 @@ struct HomeView: View {
 
         }
         .task {
-            await viewModel.startSocketConnection()
+            viewModel.startSocketConnection()
         }
         .ignoresSafeArea()
         .sheet(isPresented: $showPulseUI) {
@@ -46,7 +46,7 @@ struct HomeView: View {
             }
         }
     }
-    
+
     var coinInfo: some View {
         VStack {
             if let coin = viewModel.coinInfo {

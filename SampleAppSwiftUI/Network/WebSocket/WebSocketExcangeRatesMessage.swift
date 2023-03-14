@@ -51,12 +51,12 @@ struct ExcangeRatesResponseModel: Codable, Identifiable, ResponseModelProtocol {
         case rateType = "rate_type"
         case rate, type
     }
-    
+
     func formattedPrice() -> String {
         "\(Int(rate))"
     }
-    
-    func coinName()  -> String {
+
+    func coinName() -> String {
         "\(assetIDBase)/\(self.assetIDQuote)"
     }
 }

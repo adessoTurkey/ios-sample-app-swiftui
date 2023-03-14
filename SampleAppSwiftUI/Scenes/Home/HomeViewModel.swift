@@ -14,9 +14,9 @@ class HomeViewModel: ObservableObject {
     private var cancellable = Set<AnyCancellable>()
     private var reconnectionCount: Int = 0
     private var maxReconnectionCount: Int = 3
-    
+
     @Published var coinInfo: ExcangeRatesResponseModel?
-    
+
     init(webSocketService: any WebSocketServiceProtocol = WebSocketService.shared) {
         self.webSocketService = webSocketService
     }
@@ -25,7 +25,7 @@ class HomeViewModel: ObservableObject {
         reconnectionCount = 0
         connect()
     }
-    
+
     private func connect() {
         guard reconnectionCount < maxReconnectionCount,
              let service = webSocketService.connect(endPoint: .baseCoinApi) else {
@@ -41,13 +41,12 @@ class HomeViewModel: ObservableObject {
             self.reconnectionCount += 1
             self.connect()
         }.receive(on: DispatchQueue.main)
-        .sink { _ in}
+        .sink { _ in }
         receiveValue: { [weak self] socketData in
             guard let self else { return }
             self.webSocketDidReceiveMessage(socketData)
         }.store(in: &cancellable)
     }
-    
 
     private func webSocketDidReceiveMessage(_ socketResponse: URLSessionWebSocketTask.Message) {
         if let coin: ExcangeRatesResponseModel = socketResponse.convert() {

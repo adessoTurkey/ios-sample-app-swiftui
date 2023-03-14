@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 class WebSocketStream: NSObject, AsyncSequence {
     typealias SocketStream = AsyncThrowingStream<Element, Error>
     typealias Element = URLSessionWebSocketTask.Message

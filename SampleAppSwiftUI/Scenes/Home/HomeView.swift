@@ -12,15 +12,25 @@ import PulseUI
 struct HomeView: View {
 
     @State private var showPulseUI = false
+    @State private var filterTitle = "Most Popular"
 
     var body: some View {
         NavigationView {
             VStack {
+                filterView
                 NavigationLink("Click Here", destination: CoinDetailView())
             }
         }
         .background(Color.lightGray)
         .ignoresSafeArea(.all, edges: [.top, .trailing, .leading])
+    }
+    
+    var filterView: some View {
+        HStack{
+            Text(filterTitle)
+            Spacer()
+            Image(systemName: "")
+        }
     }
 }
 

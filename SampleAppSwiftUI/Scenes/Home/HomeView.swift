@@ -14,25 +14,10 @@ struct HomeView: View {
     @State private var showPulseUI = false
 
     var body: some View {
-        ZStack(alignment: .bottom) {
-            ZStack {
-                Color.red
-                Text("Hello, World!")
-                    .foregroundColor(.white)
-                    .bold()
-
+        NavigationView {
+            VStack {
+                NavigationLink("Click Here", destination: CoinDetailView())
             }
-            Button {
-                showPulseUI.toggle()
-            } label: {
-                Text("Pulse")
-                    .foregroundColor(.black)
-            }
-            .padding(.all)
-            .background(Color.white)
-            .cornerRadius(20)
-            .offset(x: 0, y: -30)
-
         }
         .ignoresSafeArea()
         .sheet(isPresented: $showPulseUI) {

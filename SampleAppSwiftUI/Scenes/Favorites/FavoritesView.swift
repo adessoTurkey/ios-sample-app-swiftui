@@ -17,6 +17,7 @@ struct FavoritesView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: createTopBar)
         }
+        .background(Color.lightGray)
     }
 
     @ToolbarContentBuilder

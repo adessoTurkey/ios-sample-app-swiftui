@@ -19,15 +19,8 @@ struct HomeView: View {
                 NavigationLink("Click Here", destination: CoinDetailView())
             }
         }
-        .ignoresSafeArea()
-        .sheet(isPresented: $showPulseUI) {
-            NavigationView {
-                ConsoleView()
-                    .navigationBarItems(leading: Button("Close") {
-                        showPulseUI = false
-                    })
-            }
-        }
+        .background(Color.lightGray)
+        .ignoresSafeArea(.all, edges: [.top, .trailing, .leading])
     }
 }
 

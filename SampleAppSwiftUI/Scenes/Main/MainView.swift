@@ -9,8 +9,24 @@
 import SwiftUI
 
 struct MainView: View {
+
     var body: some View {
-        HomeView()
+        TabView {
+            HomeView()
+                .tabItem {
+                    Image(systemName: "house.fill")
+                }
+            FavoritesView()
+                .tabItem {
+                    Image(systemName: "star")
+                }
+            SettingsView()
+                .tabItem {
+                    Image(systemName: "gear")
+                }
+        }
+        .tint(.blue)
+        .shadow(radius: 8)
     }
 }
 

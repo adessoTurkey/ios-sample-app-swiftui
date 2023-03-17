@@ -24,9 +24,9 @@ struct HomeView: View {
         .background(Color.lightGray)
         .ignoresSafeArea(.all, edges: [.top, .trailing, .leading])
     }
-    
+
     var filterView: some View {
-        HStack{
+        HStack {
             Text(filterTitle)
             Spacer()
             Image(systemName: "")

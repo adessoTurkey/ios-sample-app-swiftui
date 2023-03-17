@@ -9,4 +9,6 @@ import SwiftUI
 
 extension Color {
     static let lightGray = Color("LightGray")
+    static let searchbarBackground = Color("SearchBarBackground")
+    static let searchIcon = Color("SearchIcon")
 }

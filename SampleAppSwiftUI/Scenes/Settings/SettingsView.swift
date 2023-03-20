@@ -9,31 +9,28 @@ import SwiftUI
 
 enum Parities: String, CaseIterable, Identifiable {
     case USD, ETH, AVAX
+
     var id: Self { self }
 }
 
 struct SettingsView: View {
+
     private let spaceSize: CGFloat = 18
-    @State var isDarkModeOn: Bool = false
+    @State private var isDarkModeOn = false
     @State private var selectedParity: Parities = .USD
+
     var body: some View {
         VStack(alignment: .leading, spacing: spaceSize) {
-            Spacer().frame(height: 75)
+            Spacer()
+                .frame(height: 75)
             viewTitle
             darkButton
             paritySelection
             Spacer()
             removeButton
         }
-        .padding(.leading, spaceSize)
-        .padding(.trailing, spaceSize)
+        .padding([.leading, .trailing], spaceSize)
         .edgesIgnoringSafeArea(.top)
-    }
-}
-
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView()
     }
 }
 
@@ -44,7 +41,7 @@ extension SettingsView {
                 Text("Settings")
                     .bold()
                     .font(.title2)
-                    .foregroundColor(Color.settingsViewTitleColor)
+                    .foregroundColor(.settingsViewTitleColor)
                 Spacer()
             }
         }
@@ -55,8 +52,6 @@ extension SettingsView {
     private var darkButton: some View {
         VStack {
             Toggle("Dark Mode:", isOn: $isDarkModeOn)
-                .font(.body)
-                .font(Font.body.bold())
                 .foregroundColor(Color.settingsLineTitleColor)
                 .padding(8)
                 .frame(height: 44)
@@ -73,7 +68,6 @@ extension SettingsView {
             HStack {
                 Text("Currency")
                     .bold()
-                    .font(.body)
                     .foregroundColor(Color.settingsLineTitleColor)
                 Spacer()
                 Picker("Parities", selection: $selectedParity) {
@@ -87,8 +81,10 @@ extension SettingsView {
             .frame(height: 50)
             .background(Color.settingsLineColor)
             .cornerRadius(8)
+            .padding(.bottom, 10)
+
             Text("When you select a new base currency, all prices in the app will be displayed in that currency.")
-                .foregroundColor(Color.settingsCurrencyExpColor)
+                .foregroundColor(.settingsCurrencyExpColor)
                 .font(.caption2)
                 .fontWeight(.regular)
         }
@@ -97,16 +93,21 @@ extension SettingsView {
 
 extension SettingsView {
     private var removeButton: some View {
-        Button("Remove All Data") {
+        Button {
             print("Make an action")
+        } label: {
+            Text("Remove All Data")
+                .foregroundColor(.white)
         }
-        .font(.body)
-        .font(Font.body.bold())
-        .tint(.white)
-        .frame(height: 50)
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, minHeight: 50)
         .background(Color.settingsButtonColor)
         .cornerRadius(8)
         .padding(.bottom, 14)
+    }
+}
+
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingsView()
     }
 }

@@ -8,8 +8,7 @@
 
 import Foundation
 
-final class Configuration {
-
+final class Configuration: ConfigurationProtocol {
     static var isProduction: Bool {
         #if Production
             return true
@@ -38,4 +37,16 @@ final class Configuration {
         ""
     }
 
+    static var coinApiKey: String {
+        let key = ""
+        if key.isEmpty {
+            #warning("Set coin api key")
+        }
+        return key
+    }
+
+    static var webSocketBaseUrl: String {
+        let url: String? = try? self.value(for: "WebSocket_Base_URL")
+        return url ?? ""
+    }
 }

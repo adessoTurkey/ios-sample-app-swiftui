@@ -11,6 +11,7 @@ import PulseUI
 
 struct HomeView: View {
 
+    @StateObject private var viewModel = HomeViewModel()
     @State private var showPulseUI = false
     @State private var filterTitle = "Most Popular"
 
@@ -30,6 +31,22 @@ struct HomeView: View {
             Text(filterTitle)
             Spacer()
             Image(systemName: "")
+        }
+        .task {
+            viewModel.startSocketConnection()
+        }
+    }
+
+    var coinInfo: some View {
+        VStack {
+            if let coin = viewModel.coinInfo {
+                Text(coin.coinName())
+                    .foregroundColor(.white)
+                    .bold()
+                Text(coin.formattedPrice())
+                    .foregroundColor(.white)
+                    .bold()
+            }
         }
     }
 }

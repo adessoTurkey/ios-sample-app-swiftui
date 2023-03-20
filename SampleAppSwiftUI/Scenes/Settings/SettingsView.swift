@@ -2,7 +2,7 @@
 //  SettingsView.swift
 //  SampleAppSwiftUI
 //
-//  Created by Faik Coskun Cakir, Faik on 18.03.2023.
+//  Created by Cakir, Faik on 18.03.2023.
 //
 
 import SwiftUI
@@ -34,14 +34,18 @@ struct SettingsView: View {
     }
 }
 
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingsView()
+    }
+}
+
 extension SettingsView {
     private var viewTitle: some View {
         VStack {
             HStack {
                 Text("Settings")
-                    .bold()
-                    .font(.title2)
-                    .foregroundColor(.settingsViewTitleColor)
+                    .modifier(SettingTextModifier(fontType: .bold, fontSize: .title2, foregroundColor: .settingsViewTitleColor))
                 Spacer()
             }
         }
@@ -52,11 +56,8 @@ extension SettingsView {
     private var darkButton: some View {
         VStack {
             Toggle("Dark Mode:", isOn: $isDarkModeOn)
-                .foregroundColor(Color.settingsLineTitleColor)
-                .padding(8)
-                .frame(height: 44)
-                .background(Color.settingsLineColor)
-                .cornerRadius(8)
+                .modifier(SettingTextModifier(fontType: .bold, fontSize: .body, foregroundColor: .settingsLineTitleColor))
+                .modifier(SettingLineModifier(height: 44))
         }
         .preferredColorScheme(isDarkModeOn ? .dark : .light)
     }
@@ -67,8 +68,7 @@ extension SettingsView {
         VStack(spacing: 0) {
             HStack {
                 Text("Currency")
-                    .bold()
-                    .foregroundColor(Color.settingsLineTitleColor)
+                    .modifier(SettingTextModifier(fontType: .bold, fontSize: .body, foregroundColor: .settingsLineTitleColor))
                 Spacer()
                 Picker("Parities", selection: $selectedParity) {
                     ForEach(Parities.allCases) { parity in
@@ -77,16 +77,10 @@ extension SettingsView {
                 }
                 .tint(Color.settingsParitySetColor)
             }
-            .padding(8)
-            .frame(height: 50)
-            .background(Color.settingsLineColor)
-            .cornerRadius(8)
-            .padding(.bottom, 10)
+            .modifier(SettingLineModifier(height: 50))
 
             Text("When you select a new base currency, all prices in the app will be displayed in that currency.")
-                .foregroundColor(.settingsCurrencyExpColor)
-                .font(.caption2)
-                .fontWeight(.regular)
+                .modifier(SettingTextModifier(fontType: .regular, fontSize: .caption2, foregroundColor: .settingsCurrencyExpColor))
         }
     }
 }
@@ -97,17 +91,8 @@ extension SettingsView {
             print("Make an action")
         } label: {
             Text("Remove All Data")
-                .foregroundColor(.white)
+                .modifier(SettingTextModifier(fontType: .bold, fontSize: .body, foregroundColor: .white))
         }
-        .frame(maxWidth: .infinity, minHeight: 50)
-        .background(Color.settingsButtonColor)
-        .cornerRadius(8)
-        .padding(.bottom, 14)
-    }
-}
-
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView()
+        .modifier(SettingButtonModifier())
     }
 }

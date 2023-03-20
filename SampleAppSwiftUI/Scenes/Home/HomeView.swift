@@ -35,7 +35,7 @@ struct HomeView: View {
             viewModel.startSocketConnection()
         }
     }
-    
+
 //    @ViewBuilder
 //    func coinInfo() -> some View {
 //        if let coin = viewModel.coinInfo {

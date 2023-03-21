@@ -49,21 +49,6 @@ struct HomeView: View {
         }
     }
 
-    var searchView: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 18)
-                .fill(Color.searchbarBackground)
-            HStack {
-                Image(systemName: "magnifyingglass")
-                    .font(.system(size: 15, weight: .bold))
-                    .foregroundColor(.searchIcon)
-                TextField("Search for a coin", text: $searchTerm, prompt: Text("Search for a coin"))
-                    .font(.system(size: 15, weight: .bold))
-                    .autocorrectionDisabled()
-            }.padding(.all)
-        }
-    }
-
     @ViewBuilder
     func coinListView() -> some View {
         if filteredCoins.isEmpty {

@@ -21,7 +21,7 @@ struct HomeView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 10) {
-                    searchView
+                    SearchBarView(searchText: $searchTerm)
                         .padding(.top, 76)
                         .padding(.bottom, 18)
                     filterView

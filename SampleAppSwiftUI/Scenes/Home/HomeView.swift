@@ -92,22 +92,10 @@ struct HomeView: View {
             filteredCoins = coins
         }
     }
-   
+
     func fillCoins() {
         filteredCoins = coins
     }
-
-//    @ViewBuilder
-//    func coinInfo() -> some View {
-//        if let coin = viewModel.coinInfo {
-//            Text(coin.coinName())
-//                .foregroundColor(.white)
-//                .bold()
-//            Text(coin.formattedPrice())
-//                .foregroundColor(.white)
-//                .bold()
-//        }
-//    }
 }
 
 struct HomeView_Previews: PreviewProvider {

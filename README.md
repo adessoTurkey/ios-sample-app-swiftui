@@ -7,3 +7,5 @@ SampleAppSwiftUI
 
 Sample App Figma Link:
 https://www.figma.com/file/RAgvUa7cfDTVteU8Z6Qv1z/SampleAppSwiftUI?node-id=48%3A2425&t=jRUyk0dLzFPejhfL-1
+Open Issues:
+https://github.com/adessoTurkey/ios-sample-app-swiftui/issues

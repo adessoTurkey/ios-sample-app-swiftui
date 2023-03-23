@@ -16,6 +16,9 @@ class HomeViewModel: ObservableObject {
     private var maxReconnectionCount: Int = 3
 
     @Published var coinInfo: ExcangeRatesResponseModel?
+    @Published var coinList: [CoinInfo] = []
+    @Published var filteredCoins: [CoinInfo] = []
+    @Published var filterTitle = "Most Popular"
 
     init(webSocketService: any WebSocketServiceProtocol = WebSocketService.shared) {
         self.webSocketService = webSocketService
@@ -24,6 +27,40 @@ class HomeViewModel: ObservableObject {
     func startSocketConnection() {
         reconnectionCount = 0
         connect()
+    }
+
+    func fillModels(demo: Bool = false) {
+        if demo {
+            fetchDemoModel()
+        }
+    }
+
+    private func fetchDemoModel() {
+        if let demoDataPath = Bundle.main.path(forResource: "CoinList", ofType: "json") {
+            let pathURL = URL(fileURLWithPath: demoDataPath)
+            do {
+                let data = try Data(contentsOf: pathURL, options: .mappedIfSafe)
+                let coinList = try JSONDecoder().decode([CoinInfo].self, from: data)
+                self.fillDemoData(coinList: coinList)
+            } catch let error {
+                print(error)
+            }
+        }
+    }
+
+    private func fillDemoData(coinList: [CoinInfo]) {
+        self.coinList = coinList
+        self.filteredCoins = coinList
+    }
+
+    func filterResults(searchTerm: String) {
+        if !searchTerm.isEmpty {
+            filteredCoins = coinList.filter { coin in
+                coin.title.lowercased().contains(searchTerm.lowercased()) || coin.code.lowercased().contains(searchTerm.lowercased())
+            }
+        } else {
+            filteredCoins = coinList
+        }
     }
 
     private func connect() {

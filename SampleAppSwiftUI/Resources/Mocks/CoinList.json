@@ -1,0 +1,7 @@
+[
+    { "id": "348348", "title": "Bitcoin", "code": "BTC", "price": 27457.60, "changePercentage": 0.43, "changeAmount": 118.60 },
+    { "id": "5645445", "title": "Ether", "code": "ETH", "price": 1755.59, "changePercentage": 0.92, "changeAmount": 16.09 },
+    { "id": "234234hd", "title": "Dogecoin", "code": "DOGE", "price": 0.077, "changePercentage": 4.19, "changeAmount": 0.0031 },
+    { "id": "20679338", "title": "Dash", "code": "DASH", "price": 61.68, "changePercentage": 2.61, "changeAmount": 4.41 },
+    { "id": "473957", "title": "Aion", "code": "AION", "price": 0.0015, "changePercentage": 2.91, "changeAmount": -0.00040 }
+]

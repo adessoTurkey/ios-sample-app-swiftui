@@ -10,30 +10,36 @@ import SwiftUI
 struct CoinView: View {
 
     var coinInfo: CoinInfo
+    @StateObject private var viewModel = CoinInfoViewModel()
 
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 16)
                 .fill(Color(uiColor: .tertiarySystemBackground))
             HStack {
-                Image(coinInfo.imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 40, height: 40)
+                AsyncImage(url: viewModel.getURL(from: coinInfo.code.lowercased())) { image in
+                    image
+                        .resizable()
+                } placeholder: {
+                    ProgressView()
+                }
+                .scaledToFit()
+                .frame(width: 40, height: 40)
+
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(coinInfo.title)
+                    Text(coinInfo.code)
                         .font(.system(size: 17))
                         .bold()
-                    Text(coinInfo.code)
+                    Text(coinInfo.title)
                         .foregroundColor(Color(uiColor: .systemGray))
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: 8) {
-                    Text(coinInfo.price)
+                    Text(viewModel.createPriceString(coinInfo: coinInfo))
                         .font(.system(size: 17))
                         .bold()
-                    Text("\(coinInfo.changePercentage) (\(coinInfo.changeAmount))")
-                        .foregroundColor(coinInfo.changePercentage.contains("-") ? .red : .green)
+                    Text(viewModel.createChangeText(coinInfo: coinInfo))
+                        .foregroundColor(coinInfo.changeAmount < 0 ? .red : .green)
                 }
             }
             .padding([.trailing, .leading], 16)

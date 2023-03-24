@@ -12,10 +12,7 @@ import PulseUI
 struct HomeView: View {
 
     @StateObject private var viewModel = HomeViewModel()
-    @State private var filterTitle = "Most Popular"
     @State private var searchTerm = ""
-    @State private var coins: [CoinInfo] = [.demo, .secondDemo, .demo, .secondDemo, .demo]
-    @State private var filteredCoins: [CoinInfo] = []
 
     var body: some View {
         NavigationView {
@@ -34,16 +31,17 @@ struct HomeView: View {
         }
         .background(Color.lightGray)
         .ignoresSafeArea(.all, edges: [.top, .trailing, .leading])
-        .task {
-            viewModel.startSocketConnection()
-        }
-        .onAppear(perform: fillCoins)
-        .onChange(of: searchTerm, perform: filterResults(word:))
+        //.task { viewModel.startSocketConnection() }
+        .onAppear { viewModel.fillModels(demo: true) }
+        .onChange(of: searchTerm, perform: viewModel.filterResults(searchTerm:))
     }
 
+}
+
+extension HomeView {
     var filterView: some View {
         HStack {
-            Text(filterTitle)
+            Text(viewModel.filterTitle)
             Spacer()
             Image(systemName: "slider.horizontal.3")
         }
@@ -51,7 +49,7 @@ struct HomeView: View {
 
     @ViewBuilder
     func coinListView() -> some View {
-        if filteredCoins.isEmpty {
+        if viewModel.filteredCoins.isEmpty {
             VStack {
                 Spacer(minLength: 200)
                 Text("No Coins found.")
@@ -59,27 +57,13 @@ struct HomeView: View {
                 Spacer()
             }
         } else {
-            ForEach(filteredCoins) { coin in
+            ForEach(viewModel.filteredCoins) { coin in
                 NavigationLink(destination: CoinDetailView()) {
                     CoinView(coinInfo: coin)
                         .tint(Color(uiColor: .label))
                 }
-            }.animation(.easeInOut, value: filteredCoins)
+            }.animation(.easeInOut, value: viewModel.filteredCoins)
         }
-    }
-
-    func filterResults(word: String) {
-        if !searchTerm.isEmpty {
-            filteredCoins = coins.filter { coin in
-                coin.title.lowercased().contains(searchTerm.lowercased()) || coin.code.lowercased().contains(searchTerm.lowercased())
-            }
-        } else {
-            filteredCoins = coins
-        }
-    }
-
-    func fillCoins() {
-        filteredCoins = coins
     }
 }
 

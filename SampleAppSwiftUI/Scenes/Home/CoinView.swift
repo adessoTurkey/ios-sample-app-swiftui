@@ -10,6 +10,7 @@ import SwiftUI
 struct CoinView: View {
 
     var coinInfo: CoinInfo
+    @StateObject private var viewModel = CoinInfoViewModel()
 
     var body: some View {
         ZStack {
@@ -33,6 +34,9 @@ struct CoinView: View {
                             .frame(width: 40, height: 40)
                     }
                 }
+                .scaledToFit()
+                .frame(width: 40, height: 40)
+
                 VStack(alignment: .leading, spacing: 8) {
                     Text(coinInfo.code)
                         .font(.system(size: 17))
@@ -42,11 +46,11 @@ struct CoinView: View {
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: 8) {
-                    Text(coinInfo.price)
+                    Text(viewModel.createPriceString(coinInfo: coinInfo))
                         .font(.system(size: 17))
                         .bold()
-                    Text("\(coinInfo.changePercentage) (\(coinInfo.changeAmount))")
-                        .foregroundColor(coinInfo.changePercentage.contains("-") ? .red : .green)
+                    Text(viewModel.createChangeText(coinInfo: coinInfo))
+                        .foregroundColor(coinInfo.changeAmount < 0 ? .red : .green)
                 }
             }
             .padding([.trailing, .leading], 16)

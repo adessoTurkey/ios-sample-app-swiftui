@@ -16,15 +16,28 @@ struct CoinView: View {
             RoundedRectangle(cornerRadius: 16)
                 .fill(Color(uiColor: .tertiarySystemBackground))
             HStack {
-                Image(coinInfo.imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 40, height: 40)
+                AsyncImage(url: URL(string: "https://cryptoicons.org/api/icon/\(coinInfo.code.lowercased())/200")) { phase in
+                    if let image = phase.image {
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 40, height: 40)
+                    } else if phase.error != nil {
+                        VStack {
+                            Image(systemName: "xmark")
+                                .foregroundColor(.red)
+                                .frame(width: 40, height: 40)
+                        }
+                    } else {
+                        ProgressView()
+                            .frame(width: 40, height: 40)
+                    }
+                }
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(coinInfo.title)
+                    Text(coinInfo.code)
                         .font(.system(size: 17))
                         .bold()
-                    Text(coinInfo.code)
+                    Text(coinInfo.title)
                         .foregroundColor(Color(uiColor: .systemGray))
                 }
                 Spacer()

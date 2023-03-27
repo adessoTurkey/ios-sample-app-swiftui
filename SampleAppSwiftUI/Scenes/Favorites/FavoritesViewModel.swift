@@ -13,10 +13,6 @@ class FavoritesViewModel: ObservableObject {
     @Published var filteredCoins: [CoinInfo] = []
     @Published var favoritedCoins: [CoinInfo] = []
 
-    init() {
-        prepareFavoritedCoins()
-    }
-
     func prepareFavoritedCoins() {
         if let data = UserDefaults.standard.data(forKey: "favoriteList") {
             if let favoriteList = try? PropertyListDecoder().decode([CoinInfo].self, from: data) {

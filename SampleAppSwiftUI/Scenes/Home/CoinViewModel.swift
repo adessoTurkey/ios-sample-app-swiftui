@@ -24,4 +24,26 @@ class CoinInfoViewModel: ObservableObject {
 .precision(.fractionLength(2...4)))))
 """
     }
+    
+    func manageFavorites(coinInfo: CoinInfo) -> String {
+        if let data = UserDefaults.standard.data(forKey: "favoriteList") {
+            var favoriteList = (try? PropertyListDecoder().decode([CoinInfo].self, from: data)) ?? [CoinInfo]()
+            
+            let index = favoriteList.firstIndex(of: coinInfo)
+            if let index { //if its index can be found, it is also exist. So, it should be deleted.
+                favoriteList.remove(at: index)
+                if let data = try? PropertyListEncoder().encode(favoriteList) {
+                    UserDefaults.standard.set(data, forKey: "favoriteList")
+                    return "Removed from Favorites"
+                }
+            } else {
+                favoriteList.append(coinInfo)
+                if let data = try? PropertyListEncoder().encode(favoriteList) {
+                    UserDefaults.standard.set(data, forKey: "favoriteList")
+                    return "Added to Favorites"
+                }
+            }
+        }
+        return "Couldn't make changes,\nthere is a problem."
+    }
 }

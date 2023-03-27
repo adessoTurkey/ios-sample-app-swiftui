@@ -11,6 +11,7 @@ struct CoinView: View {
 
     var coinInfo: CoinInfo
     @StateObject private var viewModel = CoinInfoViewModel()
+    @State private var showingAlert = false
 
     var body: some View {
         ZStack {
@@ -43,6 +44,13 @@ struct CoinView: View {
                 }
             }
             .padding([.trailing, .leading], 16)
+        }
+        .alert(isPresented: $showingAlert, content: {
+            let text = viewModel.manageFavorites(coinInfo: coinInfo)
+            return Alert(title: Text(text), dismissButton: .default(Text("Got it!")))
+        })
+        .onLongPressGesture(minimumDuration: 1){
+            showingAlert = true
         }
         .frame(height: 72)
     }

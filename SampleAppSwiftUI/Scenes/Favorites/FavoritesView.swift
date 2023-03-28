@@ -10,7 +10,7 @@ import SwiftUI
 struct FavoritesView: View {
 
     @State private var searchTerm = ""
-    @StateObject private var viewModel = HomeViewModel()
+    @StateObject private var viewModel = FavoritesViewModel()
 
     var body: some View {
         NavigationView {
@@ -27,10 +27,7 @@ struct FavoritesView: View {
             .toolbar(content: createTopBar)
         }
         .background(Color.lightGray)
-        .task {
-            viewModel.startSocketConnection()
-        }
-        .onAppear { viewModel.fillModels(demo: true) }
+        .onAppear { viewModel.prepareFavoritedCoins() }
         .onChange(of: searchTerm, perform: viewModel.filterResults(searchTerm:))
     }
 

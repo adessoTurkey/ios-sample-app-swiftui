@@ -18,12 +18,11 @@ struct HomeView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 10) {
-                    SearchBarView(searchText: $searchTerm)
-                        .padding(.top, 76)
+                    SearchBarView(searchText: $searchTerm, topPadding: 76)
                         .padding(.bottom, 18)
-                    filterView
+                    HomeFilterView(viewModel: viewModel)
                         .padding(.bottom, 12)
-                    coinListView()
+                    CoinListView(viewModel: viewModel)
                 }
                 .padding([.leading, .trailing], 16)
             }
@@ -31,39 +30,9 @@ struct HomeView: View {
         }
         .background(Color.lightGray)
         .ignoresSafeArea(.all, edges: [.top, .trailing, .leading])
-        //.task { viewModel.startSocketConnection() }
+        // .task { viewModel.startSocketConnection() }
         .onAppear { viewModel.fillModels(demo: true) }
         .onChange(of: searchTerm, perform: viewModel.filterResults(searchTerm:))
-    }
-
-}
-
-extension HomeView {
-    var filterView: some View {
-        HStack {
-            Text(viewModel.filterTitle)
-            Spacer()
-            Image(systemName: "slider.horizontal.3")
-        }
-    }
-
-    @ViewBuilder
-    func coinListView() -> some View {
-        if viewModel.filteredCoins.isEmpty {
-            VStack {
-                Spacer(minLength: 200)
-                Text("No Coins found.")
-                    .bold()
-                Spacer()
-            }
-        } else {
-            ForEach(viewModel.filteredCoins) { coin in
-                NavigationLink(destination: CoinDetailView()) {
-                    CoinView(coinInfo: coin)
-                        .tint(Color(uiColor: .label))
-                }
-            }.animation(.easeInOut, value: viewModel.filteredCoins)
-        }
     }
 }
 

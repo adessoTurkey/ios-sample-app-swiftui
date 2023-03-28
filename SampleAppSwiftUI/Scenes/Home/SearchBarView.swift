@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchBarView: View {
     @Binding var searchText: String
+    var topPadding: CGFloat
 
     var body: some View {
         ZStack(alignment: .center) {
@@ -26,12 +27,13 @@ struct SearchBarView: View {
         .cornerRadius(18)
         .padding([.trailing, .leading], 16)
         .shadow(color: .black.opacity(0.05), radius: 3, y: 10)
+        .padding(.top, topPadding)
     }
 }
 
 struct SearchBarView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBarView(searchText: .constant(""))
+        SearchBarView(searchText: .constant(""), topPadding: 20)
             .previewLayout(.sizeThatFits)
             .frame(width: .infinity, height: 56)
             .padding([.top, .bottom])

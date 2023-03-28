@@ -60,7 +60,7 @@ struct CoinView: View {
             let text = viewModel.manageFavorites(coinInfo: coinInfo)
             return Alert(title: Text(text), dismissButton: .default(Text("Got it!")))
         })
-        .onLongPressGesture(minimumDuration: 1){
+        .onLongPressGesture(minimumDuration: 1) {
             showingAlert = true
         }
         .frame(height: 72)

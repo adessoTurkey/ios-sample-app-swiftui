@@ -15,8 +15,7 @@ struct FavoritesView: View {
     var body: some View {
         NavigationView {
             VStack {
-                SearchBarView(searchText: $searchTerm)
-                    .padding(.top, 20)
+                SearchBarView(searchText: $searchTerm, topPadding: 20)
                     .padding(.bottom, 18)
                 coinListView()
                 Spacer()

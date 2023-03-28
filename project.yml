@@ -10,6 +10,9 @@ options:
   deploymentTarget:
     iOS: 15.0
 
+settings:
+  enableBaseInternationalization: true
+  
 packages:
   CocoaLumberjack:
     url: https://github.com/CocoaLumberjack/CocoaLumberjack

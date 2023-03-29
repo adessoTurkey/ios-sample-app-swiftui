@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import PulseUI
 
 struct HomeView: View {
 
@@ -22,7 +21,7 @@ struct HomeView: View {
                         .padding(.bottom, 18)
                     HomeFilterView(viewModel: viewModel)
                         .padding(.bottom, 12)
-                    CoinListView(viewModel: viewModel)
+                    CoinListView(filteredCoins: viewModel.filteredCoins)
                 }
                 .padding([.leading, .trailing], 16)
             }

@@ -17,7 +17,7 @@ struct FavoritesView: View {
             VStack {
                 SearchBarView(searchText: $searchTerm, topPadding: 20)
                     .padding(.bottom, 18)
-                coinListView()
+                CoinListView(filteredCoins: viewModel.filteredCoins)
                 Spacer()
             }
             .padding([.leading, .trailing], 16)
@@ -28,25 +28,6 @@ struct FavoritesView: View {
         .background(Color.lightGray)
         .onAppear { viewModel.prepareFavoritedCoins() }
         .onChange(of: searchTerm, perform: viewModel.filterResults(searchTerm:))
-    }
-
-    @ViewBuilder
-    func coinListView() -> some View {
-        if viewModel.filteredCoins.isEmpty {
-            VStack {
-                Spacer(minLength: 200)
-                Text("No Coins found.")
-                    .bold()
-                Spacer()
-            }
-        } else {
-            ForEach(viewModel.filteredCoins) { coin in
-                NavigationLink(destination: CoinDetailView()) {
-                    CoinView(coinInfo: coin)
-                        .tint(Color(uiColor: .label))
-                }
-            }.animation(.easeInOut, value: viewModel.filteredCoins)
-        }
     }
 
     @ToolbarContentBuilder

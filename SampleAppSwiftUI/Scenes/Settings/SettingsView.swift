@@ -16,7 +16,6 @@ struct SettingsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: spaceSize) {
             viewTitle
-                .padding(.top, 75)
             darkButton
             paritySelection
             Spacer()
@@ -36,6 +35,7 @@ extension SettingsView {
                 Spacer()
             }
         }
+        .padding(.top, 75)
     }
 
     private var darkButton: some View {
@@ -61,6 +61,7 @@ extension SettingsView {
                 .tint(.settingsParitySetColor)
             }
             .settingsLineStyle(height: 50)
+            .padding(.bottom, 10)
 
             Text("When you select a new base currency, all prices in the app will be displayed in that currency.")
                 .settingsTextStyle(fontType: .regular, fontSize: .caption2, foregroundColor: .settingsCurrencyExpColor)

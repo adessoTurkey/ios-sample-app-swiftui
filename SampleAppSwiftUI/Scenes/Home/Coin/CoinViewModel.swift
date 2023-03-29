@@ -8,6 +8,9 @@
 import SwiftUI
 
 class CoinInfoViewModel: ObservableObject {
+
+    @AppStorage("favoriteList") var favoriteListData: Data?
+
     func createPriceString(coinInfo: CoinInfo) -> String {
         coinInfo.price.formatted(.currency(code: "USD").precision(.fractionLength(2...4)))
     }
@@ -26,20 +29,20 @@ class CoinInfoViewModel: ObservableObject {
     }
 
     func manageFavorites(coinInfo: CoinInfo) -> String {
-        if let data = UserDefaults.standard.data(forKey: "favoriteList") {
-            var favoriteList = (try? PropertyListDecoder().decode([CoinInfo].self, from: data)) ?? [CoinInfo]()
+        if let favoriteListData {
+            var favoriteList = (try? PropertyListDecoder().decode([CoinInfo].self, from: favoriteListData)) ?? [CoinInfo]()
 
             let index = favoriteList.firstIndex(of: coinInfo)
             if let index { // if its index can be found, it is also exist. So, it should be deleted.
                 favoriteList.remove(at: index)
                 if let data = try? PropertyListEncoder().encode(favoriteList) {
-                    UserDefaults.standard.set(data, forKey: "favoriteList")
+                    self.favoriteListData = data
                     return "Removed from Favorites"
                 }
             } else {
                 favoriteList.append(coinInfo)
                 if let data = try? PropertyListEncoder().encode(favoriteList) {
-                    UserDefaults.standard.set(data, forKey: "favoriteList")
+                    self.favoriteListData = data
                     return "Added to Favorites"
                 }
             }

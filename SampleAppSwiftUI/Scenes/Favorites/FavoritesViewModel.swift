@@ -12,10 +12,11 @@ import Combine
 class FavoritesViewModel: ObservableObject {
     @Published var filteredCoins: [CoinInfo] = []
     @Published var favoritedCoins: [CoinInfo] = []
+    @AppStorage("favoriteList") var favoriteListData: Data?
 
     func prepareFavoritedCoins() {
-        if let data = UserDefaults.standard.data(forKey: "favoriteList") {
-            if let favoriteList = try? PropertyListDecoder().decode([CoinInfo].self, from: data) {
+        if let favoriteListData {
+            if let favoriteList = try? PropertyListDecoder().decode([CoinInfo].self, from: favoriteListData) {
                 self.favoritedCoins = favoriteList
                 filterResults(searchTerm: "")
             }

@@ -18,3 +18,9 @@ struct SettingLineModifier: ViewModifier {
             .cornerRadius(8)
     }
 }
+
+extension View {
+    func settingsLineStyle(height: CGFloat) -> some View {
+        modifier(SettingLineModifier(height: height))
+    }
+}

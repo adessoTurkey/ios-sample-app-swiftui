@@ -17,3 +17,9 @@ struct SettingButtonModifier: ViewModifier {
             .padding(.bottom, 14)
     }
 }
+
+extension View {
+    func settingsButtonStyle() -> some View {
+        modifier(SettingButtonModifier())
+    }
+}

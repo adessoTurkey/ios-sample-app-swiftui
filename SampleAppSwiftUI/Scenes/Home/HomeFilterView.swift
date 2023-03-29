@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct HomeFilterView: View {
-    var viewModel: HomeViewModel
+    var filterTitle: String
     var body: some View {
         HStack {
-            Text(viewModel.filterTitle)
+            Text(filterTitle)
             Spacer()
             Image(systemName: "slider.horizontal.3")
         }
@@ -20,6 +20,6 @@ struct HomeFilterView: View {
 
 struct HomeFilterView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeFilterView(viewModel: .init())
+        HomeFilterView(filterTitle: "")
     }
 }

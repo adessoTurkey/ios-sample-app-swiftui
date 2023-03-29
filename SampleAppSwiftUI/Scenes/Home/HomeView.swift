@@ -19,7 +19,7 @@ struct HomeView: View {
                 VStack(spacing: 10) {
                     SearchBarView(searchText: $searchTerm, topPadding: 76)
                         .padding(.bottom, 18)
-                    HomeFilterView(viewModel: viewModel)
+                    HomeFilterView(filterTitle: viewModel.filterTitle)
                         .padding(.bottom, 12)
                     CoinListView(filteredCoins: viewModel.filteredCoins)
                 }

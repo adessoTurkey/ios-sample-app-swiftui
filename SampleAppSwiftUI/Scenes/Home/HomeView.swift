@@ -7,57 +7,31 @@
 //
 
 import SwiftUI
-import PulseUI
 
 struct HomeView: View {
 
     @StateObject private var viewModel = HomeViewModel()
-    @State private var showPulseUI = false
+    @State private var searchTerm = ""
 
     var body: some View {
-        ZStack(alignment: .bottom) {
-            ZStack {
-                Color.red
-                coinInfo
+        NavigationView {
+            ScrollView {
+                VStack(spacing: 10) {
+                    SearchBarView(searchText: $searchTerm, topPadding: 76)
+                        .padding(.bottom, 18)
+                    HomeFilterView(filterTitle: viewModel.filterTitle)
+                        .padding(.bottom, 12)
+                    CoinListView(filteredCoins: viewModel.filteredCoins)
+                }
+                .padding([.leading, .trailing], 16)
             }
-
-            Button {
-                showPulseUI.toggle()
-            } label: {
-                Text("Pulse")
-                    .foregroundColor(.black)
-            }
-            .padding(.all)
-            .background(Color.white)
-            .cornerRadius(20)
-            .offset(x: 0, y: -30)
-
+            .ignoresSafeArea(.all, edges: .top)
         }
-        .task {
-            viewModel.startSocketConnection()
-        }
-        .ignoresSafeArea()
-        .sheet(isPresented: $showPulseUI) {
-            NavigationView {
-                ConsoleView()
-                    .navigationBarItems(leading: Button("Close") {
-                        showPulseUI = false
-                    })
-            }
-        }
-    }
-
-    var coinInfo: some View {
-        VStack {
-            if let coin = viewModel.coinInfo {
-                Text(coin.coinName())
-                    .foregroundColor(.white)
-                    .bold()
-                Text(coin.formattedPrice())
-                    .foregroundColor(.white)
-                    .bold()
-            }
-        }
+        .background(Color.lightGray)
+        .ignoresSafeArea(.all, edges: [.top, .trailing, .leading])
+        // .task { viewModel.startSocketConnection() }
+        .onAppear { viewModel.fillModels(demo: true) }
+        .onChange(of: searchTerm, perform: viewModel.filterResults(searchTerm:))
     }
 }
 

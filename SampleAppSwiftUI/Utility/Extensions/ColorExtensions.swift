@@ -18,4 +18,7 @@ extension Color {
     static let settingsButtonColor = Color("settingsButtonColor")
     static let settingsLineColor = Color("settingsLineColor")
     static let settingsViewTitleColor = Color("settingsViewTitleColor")
+    
+    /// Shadow
+    static let shadowColor = Color.black.opacity(0.05)
 }

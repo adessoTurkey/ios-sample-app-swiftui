@@ -17,13 +17,13 @@ struct HomeView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 10) {
-                    SearchBarView(searchText: $searchTerm, topPadding: 76)
-                        .padding(.bottom, 18)
+                    SearchBarView(searchText: $searchTerm, topPadding: Numbers.searchBarLargeTop)
+                        .padding(.bottom, Numbers.searchBarBottom)
                     HomeFilterView(filterTitle: viewModel.filterTitle)
-                        .padding(.bottom, 12)
+                        .padding(.bottom, Numbers.filterBottom)
                     CoinListView(filteredCoins: viewModel.filteredCoins)
                 }
-                .padding([.leading, .trailing], 16)
+                .padding([.leading, .trailing], Numbers.sidePadding)
             }
             .ignoresSafeArea(.all, edges: .top)
         }

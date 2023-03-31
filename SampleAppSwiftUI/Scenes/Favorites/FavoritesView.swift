@@ -15,12 +15,12 @@ struct FavoritesView: View {
     var body: some View {
         NavigationView {
             VStack {
-                SearchBarView(searchText: $searchTerm, topPadding: 20)
-                    .padding(.bottom, 18)
+                SearchBarView(searchText: $searchTerm, topPadding: Numbers.searchBarShortTop)
+                    .padding(.bottom, Numbers.searchBarBottom)
                 CoinListView(filteredCoins: viewModel.filteredCoins)
                 Spacer()
             }
-            .padding([.leading, .trailing], 16)
+            .padding([.leading, .trailing], Numbers.sidePadding)
             .navigationTitle(Text("Favorites"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: createTopBar)

@@ -13,9 +13,9 @@ struct SearchBarView: View {
 
     var body: some View {
         ZStack(alignment: .center) {
-            RoundedRectangle(cornerRadius: 18)
+            RoundedRectangle(cornerRadius: Numbers.defaultCornerRadius)
                 .fill(Color.searchbarBackground)
-            HStack(spacing: 8) {
+            HStack(spacing: Numbers.defaultSpacing) {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.searchIcon)
                 TextField("Search for a name or symbol", text: $searchText)
@@ -23,19 +23,19 @@ struct SearchBarView: View {
             }
             .padding(.all)
         }
-        .frame(height: 56)
-        .cornerRadius(18)
-        .padding([.trailing, .leading], 16)
-        .shadow(color: .black.opacity(0.05), radius: 3, y: 10)
+        .frame(height: Numbers.searchBarHeight)
+        .cornerRadius(Numbers.defaultCornerRadius)
+        .padding([.trailing, .leading], Numbers.sidePadding)
+        .lightShadow(color: .shadowColor)
         .padding(.top, topPadding)
     }
 }
 
 struct SearchBarView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBarView(searchText: .constant(""), topPadding: 20)
+        SearchBarView(searchText: .constant(""), topPadding: Numbers.searchBarShortTop)
             .previewLayout(.sizeThatFits)
-            .frame(width: .infinity, height: 56)
+            .frame(width: .infinity, height: Numbers.searchBarHeight)
             .padding([.top, .bottom])
     }
 }

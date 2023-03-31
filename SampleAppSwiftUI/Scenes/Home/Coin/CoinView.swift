@@ -15,7 +15,7 @@ struct CoinView: View {
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 16)
+            RoundedRectangle(cornerRadius: Numbers.defaultCornerRadius)
                 .fill(Color(uiColor: .tertiarySystemBackground))
             HStack {
                 AsyncImage(url: URL(string: "https://cryptoicons.org/api/icon/\(coinInfo.code.lowercased())/200")) { phase in
@@ -23,22 +23,22 @@ struct CoinView: View {
                         image
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 40, height: 40)
+                            .imageFrame()
                     } else if phase.error != nil {
                         VStack {
                             Image(systemName: "xmark")
                                 .foregroundColor(.red)
-                                .frame(width: 40, height: 40)
+                                .imageFrame()
                         }
                     } else {
                         ProgressView()
-                            .frame(width: 40, height: 40)
+                            .imageFrame()
                     }
                 }
                 .scaledToFit()
-                .frame(width: 40, height: 40)
+                .imageFrame()
 
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: Numbers.defaultSpacing) {
                     Text(coinInfo.code)
                         .font(.system(size: 17))
                         .bold()
@@ -46,7 +46,7 @@ struct CoinView: View {
                         .foregroundColor(Color(uiColor: .systemGray))
                 }
                 Spacer()
-                VStack(alignment: .trailing, spacing: 8) {
+                VStack(alignment: .trailing, spacing: Numbers.defaultSpacing) {
                     Text(viewModel.createPriceString(coinInfo: coinInfo))
                         .font(.system(size: 17))
                         .bold()
@@ -54,7 +54,7 @@ struct CoinView: View {
                         .foregroundColor(coinInfo.changeAmount < 0 ? .red : .green)
                 }
             }
-            .padding([.trailing, .leading], 16)
+            .padding([.trailing, .leading], Numbers.sidePadding)
         }
         .alert(isPresented: $showingAlert, content: {
             let text = viewModel.manageFavorites(coinInfo: coinInfo)
@@ -79,7 +79,7 @@ struct CoinView_Previews: PreviewProvider {
                 .previewLayout(.sizeThatFits)
                 .frame(height: 72)
                 .padding([.top, .bottom])
-                .padding([.trailing, .leading], 16)
+                .padding([.trailing, .leading], Numbers.sidePadding)
 
         }
     }

@@ -18,7 +18,7 @@ struct CoinView: View {
             RoundedRectangle(cornerRadius: Numbers.defaultCornerRadius)
                 .fill(Color(uiColor: .tertiarySystemBackground))
             HStack {
-                AsyncImage(url: URL(string: "https://cryptoicons.org/api/icon/\(coinInfo.code.lowercased())/200")) { phase in
+                AsyncImage(url: URL(string: "https://cryptoicons.org/api/icon/\(coinInfo.code.lowercased())/40")) { phase in
                     if let image = phase.image {
                         image
                             .resizable()
@@ -40,7 +40,7 @@ struct CoinView: View {
 
                 VStack(alignment: .leading, spacing: Numbers.defaultSpacing) {
                     Text(coinInfo.code)
-                        .font(.system(size: 17))
+                        .font(.system(size: Numbers.coinInfoFontSize))
                         .bold()
                     Text(coinInfo.title)
                         .foregroundColor(Color(uiColor: .systemGray))
@@ -48,7 +48,7 @@ struct CoinView: View {
                 Spacer()
                 VStack(alignment: .trailing, spacing: Numbers.defaultSpacing) {
                     Text(viewModel.createPriceString(coinInfo: coinInfo))
-                        .font(.system(size: 17))
+                        .font(.system(size: Numbers.coinInfoFontSize))
                         .bold()
                     Text(viewModel.createChangeText(coinInfo: coinInfo))
                         .foregroundColor(coinInfo.changeAmount < 0 ? .red : .green)
@@ -63,7 +63,7 @@ struct CoinView: View {
         .onLongPressGesture(minimumDuration: 1) {
             showingAlert = true
         }
-        .frame(height: 72)
+        .frame(height: Numbers.coinCellSize)
     }
 }
 
@@ -72,12 +72,12 @@ struct CoinView_Previews: PreviewProvider {
         Group {
             CoinView(coinInfo: .demo)
                 .previewLayout(.sizeThatFits)
-                .frame(height: 72)
+                .frame(height: Numbers.coinCellSize)
                 .padding([.top, .bottom])
             CoinView(coinInfo: .demo)
                 .preferredColorScheme(.dark)
                 .previewLayout(.sizeThatFits)
-                .frame(height: 72)
+                .frame(height: Numbers.coinCellSize)
                 .padding([.top, .bottom])
                 .padding([.trailing, .leading], Numbers.sidePadding)
 

@@ -13,7 +13,7 @@ struct CoinListView: View {
     var body: some View {
         if filteredCoins.isEmpty {
             VStack {
-                Spacer(minLength: 200)
+                Spacer(minLength: Numbers.emptySpaceEstimatedSize)
                 Text("No Coins found.")
                     .bold()
                 Spacer()

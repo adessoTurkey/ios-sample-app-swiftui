@@ -16,7 +16,7 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack(spacing: 10) {
+                VStack(spacing: Numbers.homeSpacing) {
                     SearchBarView(searchText: $searchTerm, topPadding: Numbers.searchBarLargeTop)
                         .padding(.bottom, Numbers.searchBarBottom)
                     HomeFilterView(filterTitle: viewModel.filterTitle)

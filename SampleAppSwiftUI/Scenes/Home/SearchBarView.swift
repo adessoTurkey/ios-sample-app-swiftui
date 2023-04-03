@@ -19,7 +19,7 @@ struct SearchBarView: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.searchIcon)
                 TextField("Search for a name or symbol", text: $searchText)
-                    .font(.system(size: 15))
+                    .font(.system(size: Numbers.searchBarFontSize))
             }
             .padding(.all)
         }

@@ -17,4 +17,9 @@ struct Paddings {
         static let largeTop: CGFloat = 76
         static let shortTop: CGFloat = 20
     }
+
+    struct Settings {
+        static let line: CGFloat = 8
+        static let bottom: CGFloat = 14
+    }
 }

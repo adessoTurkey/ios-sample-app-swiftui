@@ -15,7 +15,7 @@ struct CoinView: View {
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: Dimensions.defaultCornerRadius)
+            RoundedRectangle(cornerRadius: Dimensions.CornerRadius.standard)
                 .fill(Color.coinCellBackground)
             HStack {
                 AsyncImage(url: viewModel.getURL(from: coinInfo.code)) { phase in

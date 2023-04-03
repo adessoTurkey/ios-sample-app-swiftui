@@ -12,10 +12,10 @@ struct SettingLineModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .padding(8)
+            .padding(Paddings.Settings.line)
             .frame(height: height)
             .background(Color.settingsLineColor)
-            .cornerRadius(8)
+            .cornerRadius(Dimensions.CornerRadius.settingsButton)
     }
 }
 

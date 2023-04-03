@@ -13,7 +13,7 @@ struct SearchBarView: View {
 
     var body: some View {
         ZStack(alignment: .center) {
-            RoundedRectangle(cornerRadius: Dimensions.defaultCornerRadius)
+            RoundedRectangle(cornerRadius: Dimensions.CornerRadius.standard)
                 .fill(Color.searchbarBackground)
             HStack(spacing: Spacings.standard) {
                 Image(systemName: Images.search)
@@ -24,7 +24,7 @@ struct SearchBarView: View {
             .padding(.all)
         }
         .frame(height: Dimensions.searchBarHeight)
-        .cornerRadius(Dimensions.defaultCornerRadius)
+        .cornerRadius(Dimensions.CornerRadius.standard)
         .sidePadding(size: Paddings.side)
         .lightShadow(color: .shadowColor)
         .padding(.top, topPadding)
@@ -37,6 +37,6 @@ struct SearchBarView_Previews: PreviewProvider {
         SearchBarView(searchText: .constant(""), topPadding: Paddings.SearchBar.shortTop)
             .previewLayout(.sizeThatFits)
             .frame(width: .infinity, height: Dimensions.searchBarHeight)
-            .padding([.top, .bottom])
+            .topBottomPadding()
     }
 }

@@ -15,10 +15,10 @@ struct CoinView: View {
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: Numbers.defaultCornerRadius)
-                .fill(Color(uiColor: .tertiarySystemBackground))
+            RoundedRectangle(cornerRadius: Dimensions.defaultCornerRadius)
+                .fill(Color.coinCellBackground)
             HStack {
-                AsyncImage(url: URL(string: "https://cryptoicons.org/api/icon/\(coinInfo.code.lowercased())/40")) { phase in
+                AsyncImage(url: viewModel.getURL(from: coinInfo.code)) { phase in
                     if let image = phase.image {
                         image
                             .resizable()
@@ -38,32 +38,40 @@ struct CoinView: View {
                 .scaledToFit()
                 .imageFrame()
 
-                VStack(alignment: .leading, spacing: Numbers.defaultSpacing) {
+                VStack(alignment: .leading, spacing: Spacings.standard) {
                     Text(coinInfo.code)
-                        .font(.system(size: Numbers.coinInfoFontSize))
+                        .font(Fonts.coin)
                         .bold()
                     Text(coinInfo.title)
                         .foregroundColor(Color(uiColor: .systemGray))
                 }
                 Spacer()
-                VStack(alignment: .trailing, spacing: Numbers.defaultSpacing) {
+                VStack(alignment: .trailing, spacing: Spacings.standard) {
                     Text(viewModel.createPriceString(coinInfo: coinInfo))
-                        .font(.system(size: Numbers.coinInfoFontSize))
+                        .font(Fonts.coin)
                         .bold()
                     Text(viewModel.createChangeText(coinInfo: coinInfo))
-                        .foregroundColor(coinInfo.changeAmount < 0 ? .red : .green)
+                        .foregroundColor(configureTextColor(coinInfo))
                 }
             }
-            .padding([.trailing, .leading], Numbers.sidePadding)
+            .sidePadding(size: Paddings.side)
         }
-        .alert(isPresented: $showingAlert, content: {
-            let text = viewModel.manageFavorites(coinInfo: coinInfo)
-            return Alert(title: Text(text), dismissButton: .default(Text("Got it!")))
-        })
-        .onLongPressGesture(minimumDuration: 1) {
-            showingAlert = true
-        }
-        .frame(height: Numbers.coinCellSize)
+        .alert(isPresented: $showingAlert, content: configureAlert)
+        .onLongPressGesture(minimumDuration: 1, perform: showAlert)
+        .frame(height: Dimensions.coinCellSize)
+    }
+
+    func showAlert() {
+        showingAlert = true
+    }
+
+    func configureAlert() -> Alert {
+        let text = viewModel.manageFavorites(coinInfo: coinInfo)
+        return Alert(title: Text(text), dismissButton: .default(Text("Got it!")))
+    }
+
+    func configureTextColor(_ coinInfo: CoinInfo) -> Color {
+        coinInfo.changeAmount < 0 ? .red : .green
     }
 }
 
@@ -71,16 +79,12 @@ struct CoinView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             CoinView(coinInfo: .demo)
-                .previewLayout(.sizeThatFits)
-                .frame(height: Numbers.coinCellSize)
-                .padding([.top, .bottom])
             CoinView(coinInfo: .demo)
                 .preferredColorScheme(.dark)
-                .previewLayout(.sizeThatFits)
-                .frame(height: Numbers.coinCellSize)
-                .padding([.top, .bottom])
-                .padding([.trailing, .leading], Numbers.sidePadding)
-
         }
+        .previewLayout(.sizeThatFits)
+        .frame(height: Dimensions.coinCellSize)
+        .topBottomPadding()
+        .sidePadding(size: Paddings.side)
     }
 }

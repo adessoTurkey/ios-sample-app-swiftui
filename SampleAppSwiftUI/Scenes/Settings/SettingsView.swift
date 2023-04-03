@@ -13,14 +13,14 @@ struct SettingsView: View {
     @State private var selectedParity: Parity = .USD
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Numbers.settingsSpacing) {
+        VStack(alignment: .leading, spacing: Spacings.settings) {
             viewTitle
             darkButton
             paritySelection
             Spacer()
             removeButton
         }
-        .padding([.leading, .trailing], Numbers.settingsSpacing)
+        .padding([.leading, .trailing], Spacings.settings)
         .edgesIgnoringSafeArea(.top)
     }
 }
@@ -34,14 +34,14 @@ extension SettingsView {
                 Spacer()
             }
         }
-        .padding(.top, Numbers.titleTopPadding)
+        .padding(.top, Paddings.titleTop)
     }
 
     private var darkButton: some View {
         VStack {
             Toggle("Dark Mode:", isOn: $isDarkModeOn)
                 .settingsTextStyle(fontType: .bold, fontSize: .body, foregroundColor: .settingsLineTitleColor)
-                .settingsLineStyle(height: Numbers.lineHeight)
+                .settingsLineStyle(height: Dimensions.lineHeight)
         }
         .preferredColorScheme(isDarkModeOn ? .dark : .light)
     }
@@ -59,8 +59,8 @@ extension SettingsView {
                 }
                 .tint(.settingsParitySetColor)
             }
-            .settingsLineStyle(height: Numbers.lineHeight)
-            .padding(.bottom, Numbers.homeSpacing)
+            .settingsLineStyle(height: Dimensions.lineHeight)
+            .padding(.bottom, Spacings.home)
 
             Text("When you select a new base currency, all prices in the app will be displayed in that currency.")
                 .settingsTextStyle(fontType: .regular, fontSize: .caption2, foregroundColor: .settingsCurrencyExpColor)

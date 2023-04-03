@@ -13,7 +13,7 @@ struct HomeFilterView: View {
         HStack {
             Text(filterTitle)
             Spacer()
-            Image(systemName: "slider.horizontal.3")
+            Image(systemName: Images.filter)
         }
     }
 }

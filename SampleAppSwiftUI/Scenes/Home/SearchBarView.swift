@@ -13,29 +13,30 @@ struct SearchBarView: View {
 
     var body: some View {
         ZStack(alignment: .center) {
-            RoundedRectangle(cornerRadius: Numbers.defaultCornerRadius)
+            RoundedRectangle(cornerRadius: Dimensions.defaultCornerRadius)
                 .fill(Color.searchbarBackground)
-            HStack(spacing: Numbers.defaultSpacing) {
-                Image(systemName: "magnifyingglass")
+            HStack(spacing: Spacings.standard) {
+                Image(systemName: Images.search)
                     .foregroundColor(.searchIcon)
                 TextField("Search for a name or symbol", text: $searchText)
-                    .font(.system(size: Numbers.searchBarFontSize))
+                    .font(Fonts.searchBar)
             }
             .padding(.all)
         }
-        .frame(height: Numbers.searchBarHeight)
-        .cornerRadius(Numbers.defaultCornerRadius)
-        .padding([.trailing, .leading], Numbers.sidePadding)
+        .frame(height: Dimensions.searchBarHeight)
+        .cornerRadius(Dimensions.defaultCornerRadius)
+        .sidePadding(size: Paddings.side)
         .lightShadow(color: .shadowColor)
         .padding(.top, topPadding)
+        .padding(.bottom, Paddings.SearchBar.bottom)
     }
 }
 
 struct SearchBarView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBarView(searchText: .constant(""), topPadding: Numbers.searchBarShortTop)
+        SearchBarView(searchText: .constant(""), topPadding: Paddings.SearchBar.shortTop)
             .previewLayout(.sizeThatFits)
-            .frame(width: .infinity, height: Numbers.searchBarHeight)
+            .frame(width: .infinity, height: Dimensions.searchBarHeight)
             .padding([.top, .bottom])
     }
 }

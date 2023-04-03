@@ -16,14 +16,13 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack(spacing: Numbers.homeSpacing) {
-                    SearchBarView(searchText: $searchTerm, topPadding: Numbers.searchBarLargeTop)
-                        .padding(.bottom, Numbers.searchBarBottom)
+                VStack(spacing: Spacings.home) {
+                    SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.largeTop)
                     HomeFilterView(filterTitle: viewModel.filterTitle)
-                        .padding(.bottom, Numbers.filterBottom)
+                        .padding(.bottom, Paddings.filterBottom)
                     CoinListView(filteredCoins: viewModel.filteredCoins)
                 }
-                .padding([.leading, .trailing], Numbers.sidePadding)
+                .sidePadding(size: Paddings.side)
             }
             .ignoresSafeArea(.all, edges: .top)
         }

@@ -26,7 +26,7 @@ struct MainView: View {
                 }
         }
         .tint(.blue)
-        .shadow(radius: Numbers.defaultSpacing)
+        .shadow(radius: Spacings.standard)
     }
 }
 

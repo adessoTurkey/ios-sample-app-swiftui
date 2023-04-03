@@ -19,7 +19,7 @@ struct ImageFrameModifier: ViewModifier {
 }
 
 extension View {
-    func imageFrame(width: CGFloat? = Numbers.imageWidth, height: CGFloat? = Numbers.imageHeight) -> some View {
+    func imageFrame(width: CGFloat? = Dimensions.imageWidth, height: CGFloat? = Dimensions.imageHeight) -> some View {
         modifier(ImageFrameModifier(width: width, height: height))
     }
 }

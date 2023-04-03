@@ -16,7 +16,7 @@ class CoinInfoViewModel: ObservableObject {
     }
 
     func getURL(from code: String) -> URL? {
-        URL(string: "https://cryptoicons.org/api/icon/\(code.lowercased())/\(Numbers.imageWidth)")
+        URL(string: "\(URLs.Icons.baseURL)\(code.lowercased())/\(Dimensions.imageWidth)")
     }
 
     func createChangeText(coinInfo: CoinInfo) -> String {
@@ -31,7 +31,7 @@ class CoinInfoViewModel: ObservableObject {
     private func createAmountText(_ coinInfo: CoinInfo) -> String {
         coinInfo.changeAmount
             .formatted(.currency(code: "USD")
-                .precision(.fractionLength(Numbers.currencyDigitBounds)))
+                .precision(.fractionLength(Range.currency)))
     }
 
     func manageFavorites(coinInfo: CoinInfo) -> String {

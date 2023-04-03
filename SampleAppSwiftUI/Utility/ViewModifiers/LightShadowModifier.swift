@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct LightShadowModifier: ViewModifier {
-    
+
     var color: Color
-    
+
     func body(content: Content) -> some View {
         content
             .shadow(color: color, radius: 3, y: 10)

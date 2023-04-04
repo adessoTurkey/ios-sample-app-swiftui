@@ -10,8 +10,7 @@ import SwiftUI
 struct CoinView: View {
 
     var coinInfo: CoinInfo
-    @StateObject private var viewModel = CoinInfoViewModel()
-    @State private var showingAlert = false
+    @ObservedObject var viewModel: CoinInfoViewModel
 
     var body: some View {
         ZStack {
@@ -56,18 +55,7 @@ struct CoinView: View {
             }
             .sidePadding(size: Paddings.side)
         }
-        .alert(isPresented: $showingAlert, content: configureAlert)
-        .onLongPressGesture(minimumDuration: 1, perform: showAlert)
         .frame(height: Dimensions.coinCellSize)
-    }
-
-    func showAlert() {
-        showingAlert = true
-    }
-
-    func configureAlert() -> Alert {
-        let text = viewModel.manageFavorites(coinInfo: coinInfo)
-        return Alert(title: Text(text), dismissButton: .default(Text("Got it!")))
     }
 
     func configureTextColor(_ coinInfo: CoinInfo) -> Color {
@@ -78,8 +66,8 @@ struct CoinView: View {
 struct CoinView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            CoinView(coinInfo: .demo)
-            CoinView(coinInfo: .demo)
+            CoinView(coinInfo: .demo, viewModel: .init())
+            CoinView(coinInfo: .demo, viewModel: .init())
                 .preferredColorScheme(.dark)
         }
         .previewLayout(.sizeThatFits)

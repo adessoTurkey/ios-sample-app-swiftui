@@ -11,22 +11,28 @@ struct FavoritesView: View {
 
     @State private var searchTerm = ""
     @StateObject private var viewModel = FavoritesViewModel()
+    @StateObject private var storageManager = StorageManager.shared
 
     var body: some View {
         NavigationView {
-            VStack {
-                SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.shortTop)
-                CoinListView(filteredCoins: viewModel.filteredCoins)
-                Spacer()
+            ScrollView {
+                VStack {
+                    SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.shortTop)
+                    CoinListView(filteredCoins: viewModel.filteredCoins)
+                    Spacer()
+                }
+                .sidePadding(size: Paddings.side)
+                .navigationTitle(Text("Favorites"))
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar(content: createTopBar)
             }
-            .sidePadding(size: Paddings.side)
-            .navigationTitle(Text("Favorites"))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar(content: createTopBar)
         }
         .background(Color.lightGray)
-        .onAppear { viewModel.prepareFavoritedCoins() }
+        .onAppear(perform: viewModel.fetchFavorites)
         .onChange(of: searchTerm, perform: viewModel.filterResults(searchTerm:))
+        .onChange(of: storageManager.favoriteCoins) { _ in
+            viewModel.fetchFavorites()
+        }
     }
 
     @ToolbarContentBuilder

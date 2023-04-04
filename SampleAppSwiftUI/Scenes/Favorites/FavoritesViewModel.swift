@@ -10,26 +10,61 @@ import SwiftUI
 import Combine
 
 class FavoritesViewModel: ObservableObject {
+    @Published var coins: [CoinInfo] = []
     @Published var filteredCoins: [CoinInfo] = []
-    @Published var favoritedCoins: [CoinInfo] = []
-    @AppStorage("favoriteList") var favoriteListData: Data?
+    @StateObject private var storageManager = StorageManager.shared
 
-    func prepareFavoritedCoins() {
-        if let favoriteListData {
-            if let favoriteList = try? PropertyListDecoder().decode([CoinInfo].self, from: favoriteListData) {
-                self.favoritedCoins = favoriteList
-                filterResults()
+    func fetchFavorites() {
+        fetchDemoModel()
+        getFavoriteCoinList()
+    }
+
+    private func getFavoriteCoinList() {
+        if !storageManager.favoriteCoins.isEmpty {
+            filteredCoins = coins.filter({ coin in
+                storageManager.favoriteCoins.contains(coin.code)
+            })
+        } else {
+            filteredCoins = []
+        }
+    }
+
+    func removeFavorite(coin: CoinInfo) {
+        storageManager.favoriteCoins.removeAll { code in
+            code == coin.code
+        }
+        getFavoriteCoinList()
+    }
+
+    private func fetchDemoModel() {
+        if let demoDataPath = Bundle.main.path(forResource: "CoinList", ofType: "json") {
+            let pathURL = URL(fileURLWithPath: demoDataPath)
+            do {
+                let data = try Data(contentsOf: pathURL, options: .mappedIfSafe)
+                let coinList = try JSONDecoder().decode([CoinInfo].self, from: data)
+                self.fillDemoData(coinList: coinList)
+            } catch let error {
+                print(error)
             }
         }
     }
 
+    private func fillDemoData(coinList: [CoinInfo]) {
+        self.coins = coinList
+        self.filteredCoins = coinList
+    }
+
     func filterResults(searchTerm: String = "") {
         if !searchTerm.isEmpty {
-            filteredCoins = favoritedCoins.filter { coin in
-                coin.title.lowercased().contains(searchTerm.lowercased()) || coin.code.lowercased().contains(searchTerm.lowercased())
+            filteredCoins = coins.filter { coin in
+                coin.title.lowercased().contains(searchTerm.lowercased()) ||
+                coin.code.lowercased().contains(searchTerm.lowercased()) &&
+                storageManager.favoriteCoins.contains(coin.code)
             }
         } else {
-            filteredCoins = favoritedCoins
+            filteredCoins = coins.filter({ coin in
+                storageManager.favoriteCoins.contains(coin.code)
+            })
         }
     }
 }

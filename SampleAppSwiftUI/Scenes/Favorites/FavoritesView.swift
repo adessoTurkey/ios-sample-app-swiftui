@@ -11,7 +11,7 @@ struct FavoritesView: View {
 
     @State private var searchTerm = ""
     @StateObject private var viewModel = FavoritesViewModel()
-    @StateObject private var storageViewModel = StorageManager.shared
+    @StateObject private var storageManager = StorageManager.shared
 
     var body: some View {
         NavigationView {
@@ -30,7 +30,7 @@ struct FavoritesView: View {
         .background(Color.lightGray)
         .onAppear(perform: viewModel.fetchFavorites)
         .onChange(of: searchTerm, perform: viewModel.filterResults(searchTerm:))
-        .onChange(of: storageViewModel.favoriteCoins) { _ in
+        .onChange(of: storageManager.favoriteCoins) { _ in
             viewModel.fetchFavorites()
         }
     }

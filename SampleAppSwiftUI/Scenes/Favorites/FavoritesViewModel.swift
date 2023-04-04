@@ -12,7 +12,7 @@ import Combine
 class FavoritesViewModel: ObservableObject {
     @Published var coins: [CoinInfo] = []
     @Published var filteredCoins: [CoinInfo] = []
-    @StateObject private var storageViewModel = StorageManager.shared
+    @StateObject private var storageManager = StorageManager.shared
 
     func fetchFavorites() {
         fetchDemoModel()
@@ -20,9 +20,9 @@ class FavoritesViewModel: ObservableObject {
     }
 
     private func getFavoriteCoinList() {
-        if !storageViewModel.favoriteCoins.isEmpty {
+        if !storageManager.favoriteCoins.isEmpty {
             filteredCoins = coins.filter({ coin in
-                storageViewModel.favoriteCoins.contains(coin.code)
+                storageManager.favoriteCoins.contains(coin.code)
             })
         } else {
             filteredCoins = []
@@ -30,7 +30,7 @@ class FavoritesViewModel: ObservableObject {
     }
 
     func removeFavorite(coin: CoinInfo) {
-        storageViewModel.favoriteCoins.removeAll { code in
+        storageManager.favoriteCoins.removeAll { code in
             code == coin.code
         }
         getFavoriteCoinList()
@@ -59,11 +59,11 @@ class FavoritesViewModel: ObservableObject {
             filteredCoins = coins.filter { coin in
                 coin.title.lowercased().contains(searchTerm.lowercased()) ||
                 coin.code.lowercased().contains(searchTerm.lowercased()) &&
-                storageViewModel.favoriteCoins.contains(coin.code)
+                storageManager.favoriteCoins.contains(coin.code)
             }
         } else {
             filteredCoins = coins.filter({ coin in
-                storageViewModel.favoriteCoins.contains(coin.code)
+                storageManager.favoriteCoins.contains(coin.code)
             })
         }
     }

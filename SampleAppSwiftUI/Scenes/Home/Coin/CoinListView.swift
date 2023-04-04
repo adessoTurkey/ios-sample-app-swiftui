@@ -11,7 +11,7 @@ struct CoinListView: View {
     var filteredCoins: [CoinInfo]
 
     @StateObject private var coinInfoViewModel = CoinInfoViewModel()
-    @StateObject private var storageViewModel = StorageManager.shared
+    @StateObject private var storageManager = StorageManager.shared
 
     @State private var showingAlert = false
     @State private var alertTitle = ""
@@ -39,7 +39,7 @@ struct CoinListView: View {
                         } label: {
                             Image(systemName: Images.favorites)
                         }
-                        .tint(storageViewModel.isCoinFavorite(code: coin.code) ? .red : .green)
+                        .tint(storageManager.isCoinFavorite(code: coin.code) ? .red : .green)
                     }
                 }
             }
@@ -51,7 +51,7 @@ struct CoinListView: View {
     }
 
     func checkFavorite(code: String) {
-        self.alertTitle = storageViewModel.manageFavorites(code: code)
+        self.alertTitle = storageManager.manageFavorites(code: code)
         showingAlert.toggle()
     }
 

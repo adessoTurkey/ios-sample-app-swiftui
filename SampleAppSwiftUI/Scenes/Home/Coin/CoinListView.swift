@@ -11,7 +11,7 @@ struct CoinListView: View {
     var filteredCoins: [CoinInfo]
 
     @StateObject private var coinInfoViewModel = CoinInfoViewModel()
-    @StateObject private var storageViewModel = StorageViewModel.shared
+    @StateObject private var storageViewModel = StorageManager.shared
 
     @State private var showingAlert = false
     @State private var alertTitle = ""

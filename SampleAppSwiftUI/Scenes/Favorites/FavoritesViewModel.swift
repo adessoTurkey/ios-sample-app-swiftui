@@ -12,7 +12,7 @@ import Combine
 class FavoritesViewModel: ObservableObject {
     @Published var coins: [CoinInfo] = []
     @Published var filteredCoins: [CoinInfo] = []
-    @StateObject private var storageViewModel = StorageViewModel.shared
+    @StateObject private var storageViewModel = StorageManager.shared
 
     func fetchFavorites() {
         fetchDemoModel()

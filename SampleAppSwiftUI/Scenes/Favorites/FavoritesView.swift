@@ -11,7 +11,7 @@ struct FavoritesView: View {
 
     @State private var searchTerm = ""
     @StateObject private var viewModel = FavoritesViewModel()
-    @StateObject private var storageViewModel = StorageViewModel.shared
+    @StateObject private var storageViewModel = StorageManager.shared
 
     var body: some View {
         NavigationView {

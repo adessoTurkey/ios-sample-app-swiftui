@@ -1,5 +1,5 @@
 //
-//  StorageViewModel.swift
+//  StorageManager.swift
 //  SampleAppSwiftUI
 //
 //  Created by Ege Sucu on 4.04.2023.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-class StorageViewModel: ObservableObject {
+class StorageManager: ObservableObject {
 
-    static let shared = StorageViewModel()
+    static let shared = StorageManager()
 
     @AppStorage("favoriteCoins") var favoriteCoins: [String] = [] {
         didSet {

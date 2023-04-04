@@ -10,7 +10,9 @@ import SwiftUI
 struct CoinListView: View {
     var filteredCoins: [CoinInfo]
 
-    @StateObject private var viewModel = CoinInfoViewModel()
+    @StateObject private var coinInfoViewModel = CoinInfoViewModel()
+    @StateObject private var storageViewModel = StorageViewModel.shared
+
     @State private var showingAlert = false
     @State private var alertTitle = ""
 
@@ -26,7 +28,7 @@ struct CoinListView: View {
             List {
                 ForEach(filteredCoins) { coin in
                     NavigationLink(destination: CoinDetailView()) {
-                        CoinView(coinInfo: coin, viewModel: viewModel)
+                        CoinView(coinInfo: coin, viewModel: coinInfoViewModel)
                     }
                     .listRowInsets(.init())
                     .listRowSeparator(.hidden)
@@ -37,7 +39,7 @@ struct CoinListView: View {
                         } label: {
                             Image(systemName: Images.favorites)
                         }
-                        .tint(viewModel.isCoinFavorite(code: coin.code) ? .red : .green)
+                        .tint(storageViewModel.isCoinFavorite(code: coin.code) ? .red : .green)
                     }
                 }
             }
@@ -49,7 +51,7 @@ struct CoinListView: View {
     }
 
     func checkFavorite(code: String) {
-        self.alertTitle = viewModel.manageFavorites(code: code)
+        self.alertTitle = storageViewModel.manageFavorites(code: code)
         showingAlert.toggle()
     }
 

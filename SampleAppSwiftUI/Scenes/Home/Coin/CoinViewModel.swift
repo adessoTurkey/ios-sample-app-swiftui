@@ -16,16 +16,22 @@ class CoinInfoViewModel: ObservableObject {
     }
 
     func getURL(from code: String) -> URL? {
-        URL(string: "https://cryptoicons.org/api/icon/\(code.lowercased())/40")
+        URL(string: "\(URLs.Icons.baseURL)\(code.lowercased())/\(Dimensions.imageWidth)")
     }
 
     func createChangeText(coinInfo: CoinInfo) -> String {
-        """
-\((coinInfo.changePercentage / 100)
-.formatted(.percent)) (\(coinInfo.changeAmount
-.formatted(.currency(code: "USD")
-.precision(.fractionLength(2...4)))))
-"""
+        "\(createPercentageText(coinInfo)) (\(createAmountText(coinInfo)))"
+    }
+
+    private func createPercentageText(_ coinInfo: CoinInfo) -> String {
+        (coinInfo.changePercentage / 100)
+            .formatted(.percent)
+    }
+
+    private func createAmountText(_ coinInfo: CoinInfo) -> String {
+        coinInfo.changeAmount
+            .formatted(.currency(code: "USD")
+                .precision(.fractionLength(Range.currency)))
     }
 
     func manageFavorites(coinInfo: CoinInfo) -> String {

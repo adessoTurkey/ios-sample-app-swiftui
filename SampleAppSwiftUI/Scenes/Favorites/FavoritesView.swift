@@ -15,12 +15,11 @@ struct FavoritesView: View {
     var body: some View {
         NavigationView {
             VStack {
-                SearchBarView(searchText: $searchTerm, topPadding: 20)
-                    .padding(.bottom, 18)
+                SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.shortTop)
                 CoinListView(filteredCoins: viewModel.filteredCoins)
                 Spacer()
             }
-            .padding([.leading, .trailing], 16)
+            .sidePadding(size: Paddings.side)
             .navigationTitle(Text("Favorites"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: createTopBar)
@@ -33,7 +32,7 @@ struct FavoritesView: View {
     @ToolbarContentBuilder
     func createTopBar() -> some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
-            Image(systemName: "star.fill")
+            Image(systemName: Images.favorites)
         }
     }
 }

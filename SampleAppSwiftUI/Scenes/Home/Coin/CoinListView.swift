@@ -13,7 +13,7 @@ struct CoinListView: View {
     var body: some View {
         if filteredCoins.isEmpty {
             VStack {
-                Spacer(minLength: 200)
+                Spacer(minLength: Dimensions.emptySpaceEstimatedSize)
                 Text("No Coins found.")
                     .bold()
                 Spacer()
@@ -22,7 +22,7 @@ struct CoinListView: View {
             ForEach(filteredCoins) { coin in
                 NavigationLink(destination: CoinDetailView()) {
                     CoinView(coinInfo: coin)
-                        .tint(Color(uiColor: .label))
+                        .tint(.label)
                 }
             }.animation(.easeInOut, value: filteredCoins)
         }

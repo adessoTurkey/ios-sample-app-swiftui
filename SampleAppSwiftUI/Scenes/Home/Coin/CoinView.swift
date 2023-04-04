@@ -15,55 +15,63 @@ struct CoinView: View {
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color(uiColor: .tertiarySystemBackground))
+            RoundedRectangle(cornerRadius: Dimensions.CornerRadius.standard)
+                .fill(Color.coinCellBackground)
             HStack {
-                AsyncImage(url: URL(string: "https://cryptoicons.org/api/icon/\(coinInfo.code.lowercased())/200")) { phase in
+                AsyncImage(url: viewModel.getURL(from: coinInfo.code)) { phase in
                     if let image = phase.image {
                         image
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 40, height: 40)
+                            .imageFrame()
                     } else if phase.error != nil {
                         VStack {
                             Image(systemName: "xmark")
                                 .foregroundColor(.red)
-                                .frame(width: 40, height: 40)
+                                .imageFrame()
                         }
                     } else {
                         ProgressView()
-                            .frame(width: 40, height: 40)
+                            .imageFrame()
                     }
                 }
                 .scaledToFit()
-                .frame(width: 40, height: 40)
+                .imageFrame()
 
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: Spacings.standard) {
                     Text(coinInfo.code)
-                        .font(.system(size: 17))
+                        .font(Fonts.coin)
                         .bold()
                     Text(coinInfo.title)
                         .foregroundColor(Color(uiColor: .systemGray))
                 }
                 Spacer()
-                VStack(alignment: .trailing, spacing: 8) {
+                VStack(alignment: .trailing, spacing: Spacings.standard) {
                     Text(viewModel.createPriceString(coinInfo: coinInfo))
-                        .font(.system(size: 17))
+                        .font(Fonts.coin)
                         .bold()
                     Text(viewModel.createChangeText(coinInfo: coinInfo))
-                        .foregroundColor(coinInfo.changeAmount < 0 ? .red : .green)
+                        .foregroundColor(configureTextColor(coinInfo))
                 }
             }
-            .padding([.trailing, .leading], 16)
+            .sidePadding(size: Paddings.side)
         }
-        .alert(isPresented: $showingAlert, content: {
-            let text = viewModel.manageFavorites(coinInfo: coinInfo)
-            return Alert(title: Text(text), dismissButton: .default(Text("Got it!")))
-        })
-        .onLongPressGesture(minimumDuration: 1) {
-            showingAlert = true
-        }
-        .frame(height: 72)
+        .alert(isPresented: $showingAlert, content: configureAlert)
+        .onLongPressGesture(minimumDuration: 1, perform: showAlert)
+        .frame(height: Dimensions.coinCellSize)
+    }
+
+    func showAlert() {
+        showingAlert = true
+    }
+
+    func configureAlert() -> Alert {
+        let text = viewModel.manageFavorites(coinInfo: coinInfo)
+        return Alert(title: Text(text), dismissButton: .default(Text("Got it!")))
+    }
+
+    func configureTextColor(_ coinInfo: CoinInfo) -> Color {
+        coinInfo.changeAmount < 0 ? .red : .green
     }
 }
 
@@ -71,16 +79,12 @@ struct CoinView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             CoinView(coinInfo: .demo)
-                .previewLayout(.sizeThatFits)
-                .frame(height: 72)
-                .padding([.top, .bottom])
             CoinView(coinInfo: .demo)
                 .preferredColorScheme(.dark)
-                .previewLayout(.sizeThatFits)
-                .frame(height: 72)
-                .padding([.top, .bottom])
-                .padding([.trailing, .leading], 16)
-
         }
+        .previewLayout(.sizeThatFits)
+        .frame(height: Dimensions.coinCellSize)
+        .topBottomPadding()
+        .sidePadding(size: Paddings.side)
     }
 }

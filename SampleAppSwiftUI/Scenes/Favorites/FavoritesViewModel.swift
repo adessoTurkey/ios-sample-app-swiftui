@@ -18,12 +18,12 @@ class FavoritesViewModel: ObservableObject {
         if let favoriteListData {
             if let favoriteList = try? PropertyListDecoder().decode([CoinInfo].self, from: favoriteListData) {
                 self.favoritedCoins = favoriteList
-                filterResults(searchTerm: "")
+                filterResults()
             }
         }
     }
 
-    func filterResults(searchTerm: String) {
+    func filterResults(searchTerm: String = "") {
         if !searchTerm.isEmpty {
             filteredCoins = favoritedCoins.filter { coin in
                 coin.title.lowercased().contains(searchTerm.lowercased()) || coin.code.lowercased().contains(searchTerm.lowercased())

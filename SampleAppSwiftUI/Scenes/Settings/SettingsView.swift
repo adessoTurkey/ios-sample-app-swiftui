@@ -9,19 +9,18 @@ import SwiftUI
 
 struct SettingsView: View {
 
-    private let spaceSize: CGFloat = 18
     @State private var isDarkModeOn = false
     @State private var selectedParity: Parity = .USD
 
     var body: some View {
-        VStack(alignment: .leading, spacing: spaceSize) {
+        VStack(alignment: .leading, spacing: Spacings.settings) {
             viewTitle
             darkButton
             paritySelection
             Spacer()
             removeButton
         }
-        .padding([.leading, .trailing], spaceSize)
+        .padding([.leading, .trailing], Spacings.settings)
         .edgesIgnoringSafeArea(.top)
     }
 }
@@ -35,14 +34,14 @@ extension SettingsView {
                 Spacer()
             }
         }
-        .padding(.top, 75)
+        .padding(.top, Paddings.titleTop)
     }
 
     private var darkButton: some View {
         VStack {
             Toggle("Dark Mode:", isOn: $isDarkModeOn)
                 .settingsTextStyle(fontType: .bold, fontSize: .body, foregroundColor: .settingsLineTitleColor)
-                .settingsLineStyle(height: 44)
+                .settingsLineStyle(height: Dimensions.lineHeight)
         }
         .preferredColorScheme(isDarkModeOn ? .dark : .light)
     }
@@ -60,8 +59,8 @@ extension SettingsView {
                 }
                 .tint(.settingsParitySetColor)
             }
-            .settingsLineStyle(height: 50)
-            .padding(.bottom, 10)
+            .settingsLineStyle(height: Dimensions.lineHeight)
+            .padding(.bottom, Spacings.home)
 
             Text("When you select a new base currency, all prices in the app will be displayed in that currency.")
                 .settingsTextStyle(fontType: .regular, fontSize: .caption2, foregroundColor: .settingsCurrencyExpColor)

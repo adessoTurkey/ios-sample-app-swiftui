@@ -9,7 +9,35 @@ import SwiftUI
 
 class CoinInfoViewModel: ObservableObject {
 
-    @AppStorage("favoriteList") var favoriteListData: Data?
+    @AppStorage("favoriteCoins") var favoriteCoins: [String] = []
+
+    func isCoinFavorite(code: String) -> Bool {
+        favoriteCoins.contains(code)
+    }
+
+    func checkFavorite(code: String) {
+        if favoriteCoins.isEmpty {
+            addFavoriteCoin(code: code)
+        } else {
+            if isCoinFavorite(code: code) {
+                removeFavoriteCoin(code: code)
+            } else {
+                addFavoriteCoin(code: code)
+            }
+        }
+    }
+
+    private func addFavoriteCoin(code: String) {
+        DispatchQueue.main.async {
+            self.favoriteCoins.append(code)
+        }
+    }
+
+    private func removeFavoriteCoin(code: String) {
+        DispatchQueue.main.async {
+            self.favoriteCoins.removeAll(where: { $0 == code })
+        }
+    }
 
     func createPriceString(coinInfo: CoinInfo) -> String {
         coinInfo.price.formatted(.currency(code: "USD").precision(.fractionLength(2...4)))
@@ -34,25 +62,9 @@ class CoinInfoViewModel: ObservableObject {
                 .precision(.fractionLength(Range.currency)))
     }
 
-    func manageFavorites(coinInfo: CoinInfo) -> String {
-        if let favoriteListData {
-            var favoriteList = (try? PropertyListDecoder().decode([CoinInfo].self, from: favoriteListData)) ?? [CoinInfo]()
-
-            let index = favoriteList.firstIndex(of: coinInfo)
-            if let index { // if its index can be found, it is also exist. So, it should be deleted.
-                favoriteList.remove(at: index)
-                if let data = try? PropertyListEncoder().encode(favoriteList) {
-                    self.favoriteListData = data
-                    return "Removed from Favorites"
-                }
-            } else {
-                favoriteList.append(coinInfo)
-                if let data = try? PropertyListEncoder().encode(favoriteList) {
-                    self.favoriteListData = data
-                    return "Added to Favorites"
-                }
-            }
-        }
-        return "Couldn't make changes,\nthere is a problem."
+    func manageFavorites(code: String) -> String {
+        let output = isCoinFavorite(code: code) ? "Removed from Favorites" : "Added to Favorites"
+        checkFavorite(code: code)
+        return output
     }
 }

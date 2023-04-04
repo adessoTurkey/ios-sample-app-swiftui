@@ -56,7 +56,8 @@ class HomeViewModel: ObservableObject {
     func filterResults(searchTerm: String) {
         if !searchTerm.isEmpty {
             filteredCoins = coinList.filter { coin in
-                coin.title.lowercased().contains(searchTerm.lowercased()) || coin.code.lowercased().contains(searchTerm.lowercased())
+                coin.title.lowercased().contains(searchTerm.lowercased()) ||
+                coin.code.lowercased().contains(searchTerm.lowercased())
             }
         } else {
             filteredCoins = coinList

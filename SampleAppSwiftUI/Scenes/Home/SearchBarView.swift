@@ -13,9 +13,9 @@ struct SearchBarView: View {
 
     var body: some View {
         ZStack(alignment: .center) {
-            RoundedRectangle(cornerRadius: Dimensions.CornerRadius.standard)
+            RoundedRectangle(cornerRadius: Dimensions.CornerRadius.default)
                 .fill(Color.searchbarBackground)
-            HStack(spacing: Spacings.standard) {
+            HStack(spacing: Spacings.default) {
                 Image(systemName: Images.search)
                     .foregroundColor(.searchIcon)
                 TextField("Search for a name or symbol", text: $searchText)
@@ -24,7 +24,7 @@ struct SearchBarView: View {
             .padding(.all)
         }
         .frame(height: Dimensions.searchBarHeight)
-        .cornerRadius(Dimensions.CornerRadius.standard)
+        .cornerRadius(Dimensions.CornerRadius.default)
         .sidePadding(size: Paddings.side)
         .lightShadow(color: .shadowColor)
         .padding(.top, topPadding)

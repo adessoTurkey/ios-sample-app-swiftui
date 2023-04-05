@@ -7,10 +7,12 @@
 
 import Foundation
 
+typealias CoinCode = String
+
 struct CoinInfo: Codable, Hashable, Identifiable {
     var id = UUID().uuidString
     var title: String
-    var code: String
+    var code: CoinCode
     var price: Double
     var changePercentage: Double
     var changeAmount: Double

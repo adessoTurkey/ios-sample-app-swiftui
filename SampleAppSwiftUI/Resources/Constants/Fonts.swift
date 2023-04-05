@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct Fonts {
-    struct Size {
+enum Fonts {
+    enum Size {
         static let coinInfo: CGFloat = 17
         static let searchBar: CGFloat = 15
     }

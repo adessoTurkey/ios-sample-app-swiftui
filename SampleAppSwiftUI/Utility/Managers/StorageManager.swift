@@ -11,17 +11,17 @@ class StorageManager: ObservableObject {
 
     static let shared = StorageManager()
 
-    @AppStorage("favoriteCoins") var favoriteCoins: [String] = [] {
+    @AppStorage("favoriteCoins") var favoriteCoins: [CoinCode] = [] {
         didSet {
             objectWillChange.send()
         }
     }
 
-    func isCoinFavorite(code: String) -> Bool {
+    func isCoinFavorite(code: CoinCode) -> Bool {
         favoriteCoins.contains(code)
     }
 
-    func checkFavorite(code: String) {
+    func toggleFavoriteCoin(code: CoinCode) {
         if favoriteCoins.isEmpty {
             addFavoriteCoin(code: code)
         } else {
@@ -33,21 +33,21 @@ class StorageManager: ObservableObject {
         }
     }
 
-    private func addFavoriteCoin(code: String) {
+    private func addFavoriteCoin(code: CoinCode) {
         DispatchQueue.main.async {
             self.favoriteCoins.append(code)
         }
     }
 
-    private func removeFavoriteCoin(code: String) {
+    private func removeFavoriteCoin(code: CoinCode) {
         DispatchQueue.main.async {
             self.favoriteCoins.removeAll(where: { $0 == code })
         }
     }
 
-    func manageFavorites(code: String) -> String {
+    func manageFavorites(code: CoinCode) -> String {
         let output = isCoinFavorite(code: code) ? "Removed from Favorites" : "Added to Favorites"
-        checkFavorite(code: code)
+        toggleFavoriteCoin(code: code)
         return output
     }
 

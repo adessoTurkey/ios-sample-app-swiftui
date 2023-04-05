@@ -14,7 +14,7 @@ struct CoinView: View {
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: Dimensions.CornerRadius.standard)
+            RoundedRectangle(cornerRadius: Dimensions.CornerRadius.default)
                 .fill(Color.coinCellBackground)
             HStack {
                 AsyncImage(url: viewModel.getURL(from: coinInfo.code)) { phase in
@@ -25,7 +25,7 @@ struct CoinView: View {
                             .imageFrame()
                     } else if phase.error != nil {
                         VStack {
-                            Image(systemName: "xmark")
+                            Image(systemName: Images.close)
                                 .foregroundColor(.red)
                                 .imageFrame()
                         }
@@ -37,7 +37,7 @@ struct CoinView: View {
                 .scaledToFit()
                 .imageFrame()
 
-                VStack(alignment: .leading, spacing: Spacings.standard) {
+                VStack(alignment: .leading, spacing: Spacings.default) {
                     Text(coinInfo.code)
                         .font(Fonts.coin)
                         .bold()
@@ -45,7 +45,7 @@ struct CoinView: View {
                         .foregroundColor(Color(uiColor: .systemGray))
                 }
                 Spacer()
-                VStack(alignment: .trailing, spacing: Spacings.standard) {
+                VStack(alignment: .trailing, spacing: Spacings.default) {
                     Text(viewModel.createPriceString(coinInfo: coinInfo))
                         .font(Fonts.coin)
                         .bold()

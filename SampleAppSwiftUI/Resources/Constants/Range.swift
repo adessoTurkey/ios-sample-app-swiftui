@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct Range {
+enum Range {
     static let currency: ClosedRange = 2...4
 }

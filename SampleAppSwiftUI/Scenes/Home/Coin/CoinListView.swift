@@ -11,10 +11,11 @@ struct CoinListView: View {
     var filteredCoins: [CoinInfo]
 
     @StateObject private var coinInfoViewModel = CoinInfoViewModel()
-    @StateObject private var storageManager = StorageManager.shared
 
     @State private var showingAlert = false
     @State private var alertTitle = ""
+
+    let favoriteChanged: () -> (Void)
 
     var body: some View {
         if filteredCoins.isEmpty {
@@ -39,7 +40,7 @@ struct CoinListView: View {
                         } label: {
                             Image(systemName: Images.favorites)
                         }
-                        .tint(storageManager.isCoinFavorite(code: coin.code) ? .red : .green)
+                        .tint(StorageManager.shared.isCoinFavorite(code: coin.code) ? .red : .green)
                     }
                 }
             }
@@ -51,8 +52,9 @@ struct CoinListView: View {
     }
 
     func checkFavorite(code: String) {
-        self.alertTitle = storageManager.manageFavorites(code: code)
+        self.alertTitle = StorageManager.shared.manageFavorites(code: code)
         showingAlert.toggle()
+        favoriteChanged()
     }
 
     func configureAlert() -> Alert {
@@ -63,7 +65,7 @@ struct CoinListView: View {
 struct CoinListView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            CoinListView(filteredCoins: [.demo, .demo, .demo])
+            CoinListView(filteredCoins: [.demo, .demo, .demo], favoriteChanged: {})
         }
     }
 }

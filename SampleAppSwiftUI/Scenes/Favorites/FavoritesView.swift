@@ -11,14 +11,13 @@ struct FavoritesView: View {
 
     @State private var searchTerm = ""
     @StateObject private var viewModel = FavoritesViewModel()
-    @StateObject private var storageManager = StorageManager.shared
 
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack {
                     SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.shortTop)
-                    CoinListView(filteredCoins: viewModel.filteredCoins)
+                    CoinListView(filteredCoins: viewModel.filteredCoins, favoriteChanged: viewModel.fetchFavorites)
                     Spacer()
                 }
                 .sidePadding(size: Paddings.side)
@@ -30,7 +29,7 @@ struct FavoritesView: View {
         .background(Color.lightGray)
         .onAppear(perform: viewModel.fetchFavorites)
         .onChange(of: searchTerm, perform: viewModel.filterResults(searchTerm:))
-        .onChange(of: storageManager.favoriteCoins) { _ in
+        .onChange(of: StorageManager.shared.favoriteCoins) { _ in
             viewModel.fetchFavorites()
         }
     }

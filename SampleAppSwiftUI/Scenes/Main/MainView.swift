@@ -10,6 +10,8 @@ import SwiftUI
 
 struct MainView: View {
 
+    @StateObject private var storageManager = StorageManager.shared
+
     var body: some View {
         TabView {
             HomeView()

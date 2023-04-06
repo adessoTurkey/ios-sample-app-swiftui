@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class StorageManager: ObservableObject {
+final class StorageManager: ObservableObject {
 
     static let shared = StorageManager()
 
@@ -16,6 +16,8 @@ class StorageManager: ObservableObject {
             objectWillChange.send()
         }
     }
+
+    private init() { }
 
     func isCoinFavorite(code: CoinCode) -> Bool {
         favoriteCoins.contains(code)

@@ -10,6 +10,8 @@ import SwiftUI
 
 struct MainView: View {
 
+    @StateObject private var storageManager = StorageManager.shared
+
     var body: some View {
         TabView {
             HomeView()
@@ -26,7 +28,7 @@ struct MainView: View {
                 }
         }
         .tint(.blue)
-        .shadow(radius: Spacings.standard)
+        .shadow(radius: Spacings.default)
     }
 }
 

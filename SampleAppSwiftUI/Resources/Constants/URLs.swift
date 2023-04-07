@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct URLs {
-    struct Icons {
+enum URLs {
+    enum Icons {
         static let baseURL = "https://cryptoicons.org/api/icon/"
     }
 }

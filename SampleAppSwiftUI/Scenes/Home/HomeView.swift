@@ -20,7 +20,9 @@ struct HomeView: View {
                     SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.largeTop)
                     HomeFilterView(filterTitle: viewModel.filterTitle)
                         .padding(.bottom, Paddings.filterBottom)
-                    CoinListView(filteredCoins: viewModel.filteredCoins)
+                    CoinListView(filteredCoins: viewModel.filteredCoins) {
+                        viewModel.fillModels(demo: true)
+}
                 }
                 .sidePadding(size: Paddings.side)
             }

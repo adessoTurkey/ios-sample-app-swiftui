@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct Images {
+enum Images {
     static let search = "magnifyingglass"
     static let filter = "slider.horizontal.3"
     static let favorites = "star.fill"
+    static let close = "xmark"
 }

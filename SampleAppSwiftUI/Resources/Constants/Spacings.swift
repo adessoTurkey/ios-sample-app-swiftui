@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct Spacings {
-    static let standard: CGFloat = 8
+enum Spacings {
+    static let `default`: CGFloat = 8
     static let home: CGFloat = 10
     static let settings: CGFloat = 18
 }

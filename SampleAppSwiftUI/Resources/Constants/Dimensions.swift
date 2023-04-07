@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct Dimensions {
-    struct CornerRadius {
-        static let standard: CGFloat = 18
+enum Dimensions {
+    enum CornerRadius {
+        static let `default`: CGFloat = 18
         static let settingsButton: CGFloat = 8
     }
 

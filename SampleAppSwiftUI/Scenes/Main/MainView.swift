@@ -22,6 +22,10 @@ struct MainView: View {
                 .tabItem {
                     Image(systemName: "star")
                 }
+            TestScreen()
+                .tabItem {
+                    Image(systemName: "xmark.circle")
+                }
             SettingsView()
                 .tabItem {
                     Image(systemName: "gear")

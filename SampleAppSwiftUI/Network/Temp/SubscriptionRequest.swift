@@ -7,11 +7,10 @@
 
 import Foundation
 
-struct SubscriptionRequest: Codable {
+struct OldSubscriptionRequest: Codable {
     let action: String
     let subs: [String]
 }
-
 
 
 enum SubscriptionRequestAction: String, CodingKey, Codable {

@@ -22,6 +22,7 @@ class HomeViewModel: ObservableObject {
 
     init(webSocketService: any WebSocketServiceProtocol = WebSocketService.shared) {
         self.webSocketService = webSocketService
+        self.startSocketConnection()
     }
 
     func startSocketConnection() {
@@ -68,11 +69,12 @@ class HomeViewModel: ObservableObject {
         guard reconnectionCount < maxReconnectionCount,
              let service = webSocketService.connect(endPoint: .baseCoinApi) else {
 //            TODO: Connection error
+            print("Service connection error.", terminator: "\n*******\n")
             return
         }
         service.setPing(time: 10)
         service.connectionHandler { webservice in
-            webservice.sendMessage(WebSocketExcangeRatesMessage())
+            webservice.sendMessage2(SampleSubscriptionRequest)
         } disconnected: { [weak self] closeCode in
             guard let self,
                   closeCode != .goingAway else { return }
@@ -90,7 +92,8 @@ class HomeViewModel: ObservableObject {
         if let coin: ExcangeRatesResponseModel = socketResponse.convert() {
             self.coinInfo = coin
         } else {
-//            TODO: handle another response
+            print("Parse Error", terminator: "\n*******\n")
         }
+        print(socketResponse,  terminator: "\n------\n")
     }
 }

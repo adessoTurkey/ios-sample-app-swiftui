@@ -13,11 +13,12 @@ import Foundation
     private var webSocketTask: URLSessionWebSocketTask?
     
     init() {
-        self.connect()
+//        self.connect()
     }
     
     private func connect() {
         guard let url = URL(string: "wss://streamer.cryptocompare.com/v2?api_key=df454843b965ac85d1bbd7a47d3d55c8c3d4e0c6a869f6f4c7a4e93a4bdba0a2") else { return }
+//        let url = WebSocketEndpoint.baseCoinApi.path
         let request = URLRequest(url: url)
         webSocketTask = URLSession.shared.webSocketTask(with: request)
         webSocketTask?.resume()
@@ -26,7 +27,7 @@ import Foundation
     
      private func receiveMessage() {
         webSocketTask?.receive { result in
-            print("************")
+            print("***--------******")
             print(result)
             switch result {
             case .failure(let error):
@@ -39,11 +40,11 @@ import Foundation
                         self.messages.append(Element(name: text))
                     }
                 case .data(let data):
-                    print("************")
+                    print("******--------******")
                     print(result)
-                    print("************")
+                    print("******--------******")
                     print(data)
-                    print("************")
+                    print("******--------******")
                     break
                 @unknown default:
                     break
@@ -53,7 +54,7 @@ import Foundation
     }
     
     func sendMessage() {
-        let req = SubscriptionRequest(action: "SubAdd" , subs: ["0~Coinbase~BTC~USD"])
+        let req = OldSubscriptionRequest(action: "SubAdd" , subs: ["0~Coinbase~BTC~USD"])
         guard let data = try? PropertyListEncoder.init().encode(req) else { return }
 //        print(req, terminator: "\n**----**\n")
         let taskData = URLSessionWebSocketTask.Message.data(data)

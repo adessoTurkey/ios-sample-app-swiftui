@@ -13,7 +13,7 @@ struct TestScreen: View {
     var body: some View {
         VStack {
             Button("Send Message") {
-                websocket.sendMessage()
+//                websocket.sendMessage()
             }
 
             List(websocket.messages) { message in

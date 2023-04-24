@@ -11,7 +11,7 @@ enum AllCoinServiceEndpoint: TargetEndpointProtocol {
     case allCoin(limit: Int = 3, unitToBeConverted: String = "USD")
 
     private struct Constants {
-        static let allCoinEndpoint = "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=3&tsym=USD"
+        static let allCoinEndpoint = "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=30&tsym=USD"
     }
 
     var path: String {

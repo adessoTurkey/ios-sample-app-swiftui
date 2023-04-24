@@ -26,6 +26,16 @@ struct AllCoinResponse: Codable {
         case rateLimit = "RateLimit"
         case hasWarning = "HasWarning"
     }
+    
+    func contvertToCoinInfo() -> [CoinInfo] {
+        guard let data else { return [] }
+        
+        var coinList = [CoinInfo]()
+        for coin in data {
+            coinList.append(coin.contvertToCoinInfo())
+        }
+        return coinList
+    }
 }
 
 // MARK: - Datum
@@ -38,6 +48,21 @@ struct Datum: Codable {
         case coinInfo = "CoinInfo"
         case raw = "RAW"
         case display = "DISPLAY"
+    }
+    
+    func contvertToCoinInfo() -> CoinInfo {
+        guard let coin = coinInfo,
+              let coinName = coin.fullName,
+              let coinCode = coin.name,
+              let coinChangePercentage = raw?.usd?.changepcthour,
+              let coinChangeAmount = raw?.usd?.openhour,
+              let coinPrice = raw?.usd?.price else { return .demo }
+        
+        return CoinInfo(title: coinName,
+                                code: coinCode,
+                                price: coinPrice,
+                                changePercentage: coinChangePercentage,
+                                changeAmount: coinChangeAmount)
     }
 }
 

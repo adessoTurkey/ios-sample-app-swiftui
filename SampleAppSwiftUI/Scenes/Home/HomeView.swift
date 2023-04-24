@@ -21,7 +21,7 @@ struct HomeView: View {
                     HomeFilterView(filterTitle: viewModel.filterTitle)
                         .padding(.bottom, Paddings.filterBottom)
                     CoinListView(filteredCoins: viewModel.filteredCoins) {
-                        viewModel.fillModels(demo: true)
+                        viewModel.fillModels()
 }
                 }
                 .sidePadding(size: Paddings.side)

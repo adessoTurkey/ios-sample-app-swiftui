@@ -34,6 +34,17 @@ class HomeViewModel: ObservableObject {
         if demo {
             fetchDemoModel()
         }
+        Task {
+            await fetchAllCoins()
+        }
+    }
+    
+    private func fetchAllCoins() async {
+        guard let dataSource = try? await AllCoinRemoteDataSource().getAllCoin() else { return }
+        DispatchQueue.main.async {
+            self.coinList = dataSource.contvertToCoinInfo()
+            self.filteredCoins = dataSource.contvertToCoinInfo()
+        }
     }
 
     private func fetchDemoModel() {

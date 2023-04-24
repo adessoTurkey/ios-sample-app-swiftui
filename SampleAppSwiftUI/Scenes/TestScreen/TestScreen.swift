@@ -9,11 +9,15 @@ import SwiftUI
 
 struct TestScreen: View {
     @ObservedObject var websocket = Websocket()
+    var useCase: AllCoinUseCaseProtocol = AllCoinUseCase()
     
     var body: some View {
         VStack {
             Button("Send Message") {
-//                websocket.sendMessage()
+                
+                Task{
+                    print(try await useCase.fetchAllCoin())
+                }
             }
 
             List(websocket.messages) { message in

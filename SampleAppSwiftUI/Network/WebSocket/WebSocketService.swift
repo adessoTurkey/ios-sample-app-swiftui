@@ -60,8 +60,8 @@ final class WebSocketService: NSObject, WebSocketServiceProtocol {
     }
     
     func sendMessage2(_ message: String) {
-        guard let messageString = message.toJSONString() else { return }
-        stream?.send(string: messageString)
+//        guard let messageString = message.toJSONString() else { return }
+        stream?.send(string: SampleSubscriptionRequest)
     }
 
     func disconnect() {

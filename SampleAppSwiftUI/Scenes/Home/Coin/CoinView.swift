@@ -50,6 +50,7 @@ struct CoinView: View {
                         .font(Fonts.coin)
                         .bold()
                     Text(viewModel.createChangeText(coinInfo: coinInfo))
+                        .font(Fonts.coinAmount)
                         .foregroundColor(configureTextColor(coinInfo))
                 }
             }

@@ -27,12 +27,12 @@ struct AllCoinResponse: Codable {
         case hasWarning = "HasWarning"
     }
     
-    func contvertToCoinInfo() -> [CoinInfo] {
+    func convertToCoinInfoArray() -> [CoinInfo] {
         guard let data else { return [] }
         
         var coinList = [CoinInfo]()
         for coin in data {
-            coinList.append(coin.contvertToCoinInfo())
+            coinList.append(coin.convertToCoinInfo())
         }
         return coinList
     }
@@ -50,7 +50,7 @@ struct Datum: Codable {
         case display = "DISPLAY"
     }
     
-    func contvertToCoinInfo() -> CoinInfo {
+    func convertToCoinInfo() -> CoinInfo {
         guard let coin = coinInfo,
               let coinName = coin.fullName,
               let coinCode = coin.name,

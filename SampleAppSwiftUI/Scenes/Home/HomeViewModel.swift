@@ -40,7 +40,7 @@ class HomeViewModel: ObservableObject {
     }
     
     private func fetchAllCoins() async {
-        guard let dataSource = try? await AllCoinRemoteDataSource().getAllCoin() else { return }
+        guard let dataSource = try? await AllCoinRemoteDataSource().getAllCoin(limit: 30, unitToBeConverted: "USD", page: 1) else { return }
         DispatchQueue.main.async {
             self.coinList = dataSource.contvertToCoinInfo()
             self.filteredCoins = dataSource.contvertToCoinInfo()

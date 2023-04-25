@@ -8,7 +8,7 @@
 import Foundation
 
 protocol AllCoinRemoteDataSourceProtocol {
-    func getAllCoin() async throws -> AllCoinResponse
+    func getAllCoin(limit: Int, unitToBeConverted: String, page: Int) async throws -> AllCoinResponse
 }
 
 class AllCoinRemoteDataSource: AllCoinRemoteDataSourceProtocol {
@@ -19,7 +19,7 @@ class AllCoinRemoteDataSource: AllCoinRemoteDataSourceProtocol {
         self.allCoinService = allCoinService
     }
 
-    func getAllCoin() async throws -> AllCoinResponse {
-        try await allCoinService.allCoinRequest()
+    func getAllCoin(limit: Int, unitToBeConverted: String, page: Int) async throws -> AllCoinResponse {
+        try await allCoinService.allCoinRequest(limit: limit, unitToBeConverted: unitToBeConverted, page: page)
     }
 }

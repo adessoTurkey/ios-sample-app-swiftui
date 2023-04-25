@@ -8,7 +8,7 @@
 import Foundation
 
 protocol AllCoinUseCaseProtocol {
-    func fetchAllCoin() async throws -> AllCoinResponse
+    func fetchAllCoin(limit: Int, unitToBeConverted: String, page: Int) async throws -> AllCoinResponse
 }
 
 class AllCoinUseCase: AllCoinUseCaseProtocol {
@@ -18,7 +18,7 @@ class AllCoinUseCase: AllCoinUseCaseProtocol {
         self.allCoinRepository = allCoinRepository
     }
 
-    func fetchAllCoin() async throws -> AllCoinResponse {
-        try await allCoinRepository.getAllCoin()
+    func fetchAllCoin(limit: Int, unitToBeConverted: String, page: Int) async throws -> AllCoinResponse {
+        try await allCoinRepository.getAllCoin(limit: limit, unitToBeConverted: unitToBeConverted, page: page)
     }
 }

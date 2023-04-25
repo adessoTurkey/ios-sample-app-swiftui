@@ -16,7 +16,7 @@ struct TestScreen: View {
             Button("Send Message") {
                 
                 Task{
-                    print(try await useCase.fetchAllCoin())
+                    print(try await useCase.fetchAllCoin(limit: 20, unitToBeConverted: "USD", page: 1))
                 }
             }
 

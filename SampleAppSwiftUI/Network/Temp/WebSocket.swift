@@ -13,7 +13,7 @@ import Foundation
     private var webSocketTask: URLSessionWebSocketTask?
     
     init() {
-//        self.connect()
+        self.connect()
     }
     
     private func connect() {
@@ -56,7 +56,7 @@ import Foundation
     func sendMessage() {
         let req = OldSubscriptionRequest(action: "SubAdd" , subs: ["0~Coinbase~BTC~USD"])
         guard let data = try? PropertyListEncoder.init().encode(req) else { return }
-//        print(req, terminator: "\n**----**\n")
+        print(req, terminator: "\n**----**\n")
         let taskData = URLSessionWebSocketTask.Message.data(data)
         webSocketTask?.send(taskData) { error in
           if let error = error {

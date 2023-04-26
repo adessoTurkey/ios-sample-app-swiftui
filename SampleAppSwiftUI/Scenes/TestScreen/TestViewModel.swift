@@ -1,15 +1,15 @@
 //
-//  HomeViewModel.swift
+//  TestViewModel.swift
 //  SampleAppSwiftUI
 //
-//  Created by Bozkurt, Umit on 21.02.2023.
+//  Created by Uslu, Teyhan on 25.04.2023.
 //
 
 import Foundation
 import SwiftUI
 import Combine
 
-class HomeViewModel: ObservableObject {
+class TestViewModel: ObservableObject {
     private var webSocketService: any WebSocketServiceProtocol
     private var cancellable = Set<AnyCancellable>()
     private var reconnectionCount: Int = 0
@@ -19,10 +19,12 @@ class HomeViewModel: ObservableObject {
     @Published var coinList: [CoinInfo] = []
     @Published var filteredCoins: [CoinInfo] = []
     @Published var filterTitle = "Most Popular"
+    
+    @Published var messages = [Element]()
 
     init(webSocketService: any WebSocketServiceProtocol = WebSocketService.shared) {
         self.webSocketService = webSocketService
-//        self.startSocketConnection()
+        self.startSocketConnection()
     }
 
     func startSocketConnection() {
@@ -32,50 +34,13 @@ class HomeViewModel: ObservableObject {
 
     func fillModels(demo: Bool = false) {
         if demo {
-            fetchDemoModel()
+//            fetchDemoModel()
         }
         Task {
-            await fetchAllCoins()
+//            await fetchAllCoins()
         }
     }
     
-    private func fetchAllCoins() async {
-        guard let dataSource = try? await AllCoinRemoteDataSource().getAllCoin(limit: 30, unitToBeConverted: "USD", page: 1) else { return }
-        DispatchQueue.main.async {
-            self.coinList = dataSource.convertToCoinInfoArray()
-            self.filteredCoins = dataSource.convertToCoinInfoArray()
-        }
-    }
-
-    private func fetchDemoModel() {
-        if let demoDataPath = Bundle.main.path(forResource: "CoinList", ofType: "json") {
-            let pathURL = URL(fileURLWithPath: demoDataPath)
-            do {
-                let data = try Data(contentsOf: pathURL, options: .mappedIfSafe)
-                let coinList = try JSONDecoder().decode([CoinInfo].self, from: data)
-                self.fillDemoData(coinList: coinList)
-            } catch let error {
-                print(error)
-            }
-        }
-    }
-
-    private func fillDemoData(coinList: [CoinInfo]) {
-        self.coinList = coinList
-        self.filteredCoins = coinList
-    }
-
-    func filterResults(searchTerm: String) {
-        if !searchTerm.isEmpty {
-            filteredCoins = coinList.filter { coin in
-                coin.title.lowercased().contains(searchTerm.lowercased()) ||
-                coin.code.lowercased().contains(searchTerm.lowercased())
-            }
-        } else {
-            filteredCoins = coinList
-        }
-    }
-
     private func connect() {
         guard reconnectionCount < maxReconnectionCount,
              let service = webSocketService.connect(endPoint: .baseCoinApi) else {
@@ -85,7 +50,8 @@ class HomeViewModel: ObservableObject {
         }
         service.setPing(time: 10)
         service.connectionHandler { webservice in
-            webservice.sendMessage2(SampleSubscriptionRequest)
+//            webservice.sendMessage2(SampleSubscriptionRequest)
+            webservice.sendMessage(<#T##message: WebSocketMessageProtocol##WebSocketMessageProtocol#>)
         } disconnected: { [weak self] closeCode in
             guard let self,
                   closeCode != .goingAway else { return }
@@ -106,5 +72,24 @@ class HomeViewModel: ObservableObject {
             print("Parse Error", terminator: "\n*******\n")
         }
         print(socketResponse,  terminator: "\n------\n")
+        
+        switch socketResponse {
+        case .string(let text):
+//                    self.messages.append(Element(name: text))
+            DispatchQueue.main.async {
+                self.messages.append(Element(name: text))
+            }
+        case .data(let data):
+            print("******--------******")
+            print(socketResponse)
+            print("******--------******")
+            print(data)
+            print("******--------******")
+            break
+        @unknown default:
+            break
+        }
+        
+        
     }
 }

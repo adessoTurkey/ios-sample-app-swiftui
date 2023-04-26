@@ -8,19 +8,18 @@
 import SwiftUI
 
 struct TestScreen: View {
-    @ObservedObject var websocket = Websocket()
+    @StateObject private var viewModel = TestViewModel()
     var useCase: AllCoinUseCaseProtocol = AllCoinUseCase()
     
     var body: some View {
         VStack {
             Button("Send Message") {
-                
                 Task{
-                    print(try await useCase.fetchAllCoin(limit: 20, unitToBeConverted: "USD", page: 1))
+//                    print(websocket.sendMessage())
+//                    print(try await useCase.fetchAllCoin(limit: 20, unitToBeConverted: "USD", page: 1))
                 }
             }
-
-            List(websocket.messages) { message in
+            List(viewModel.messages) { message in
                 Text(message.name)
             }
         }

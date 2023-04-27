@@ -12,16 +12,16 @@ struct OldSubscriptionRequest: Codable {
     let subs: [String]
 }
 
-
-enum SubscriptionRequestAction: String, CodingKey, Codable {
-    case subAdd
-    case subRemove
-    
-    enum CodingKeys: String, CodingKey {
-        case subAdd = "SubAdd"
-        case subRemove = "SubRemove"
-    }
-}
+//
+//enum SubscriptionRequestAction: String, CodingKey, Codable {
+//    case subAdd
+//    case subRemove
+//    
+//    enum CodingKeys: String, CodingKey {
+//        case subAdd = "SubAdd"
+//        case subRemove = "SubRemove"
+//    }
+//}
 
 struct DandikRequest: Codable {
     let action = "SubAdd"

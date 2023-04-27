@@ -13,6 +13,7 @@ struct TestScreen: View {
     
     var body: some View {
         VStack {
+            CoinView(coinInfo: viewModel.coinInfo ?? .demo, viewModel: .init())
             Button("Send Message") {
                 Task{
 //                    print(websocket.sendMessage())

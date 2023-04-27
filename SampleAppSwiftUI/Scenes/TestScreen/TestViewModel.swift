@@ -15,7 +15,7 @@ class TestViewModel: ObservableObject {
     private var reconnectionCount: Int = 0
     private var maxReconnectionCount: Int = 3
 
-    @Published var coinInfo: ExcangeRatesResponseModel?
+    @Published var coinInfo: CoinInfo?
     @Published var coinList: [CoinInfo] = []
     @Published var filteredCoins: [CoinInfo] = []
     @Published var filterTitle = "Most Popular"
@@ -50,8 +50,8 @@ class TestViewModel: ObservableObject {
         }
         service.setPing(time: 10)
         service.connectionHandler { webservice in
-            webservice.sendMessage2(SampleSubscriptionRequest)
-//            webservice.sendMessage(<#T##message: WebSocketMessageProtocol##WebSocketMessageProtocol#>)
+//            webservice.sendMessage2(SampleSubscriptionRequest)
+            webservice.sendMessage(FavoritesCoinRequest(action: .add, code: "ETH"))
         } disconnected: { [weak self] closeCode in
             guard let self,
                   closeCode != .goingAway else { return }
@@ -66,8 +66,9 @@ class TestViewModel: ObservableObject {
     }
 
     private func webSocketDidReceiveMessage(_ socketResponse: URLSessionWebSocketTask.Message) {
-        if let coin: ExcangeRatesResponseModel = socketResponse.convert() {
-            self.coinInfo = coin
+        if let coin: FavoritesCoinResponse = socketResponse.convert() {
+            self.coinInfo = .demo
+            coinInfo?.price = coin.price ?? 0
         } else {
             print("Parse Error", terminator: "\n*******\n")
         }

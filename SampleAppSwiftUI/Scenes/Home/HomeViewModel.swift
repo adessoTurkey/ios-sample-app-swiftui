@@ -27,7 +27,7 @@ class HomeViewModel: ObservableObject {
 
     func startSocketConnection() {
         reconnectionCount = 0
-        connect()
+//        connect()
     }
 
     func fillModels(demo: Bool = false) {

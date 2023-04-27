@@ -17,5 +17,8 @@ struct CoinInfo: Codable, Hashable, Identifiable {
     var changePercentage: Double
     var changeAmount: Double
 
-    static let demo = CoinInfo(title: "Bitcoin", code: "BTC", price: 29467.560, changePercentage: 29.74, changeAmount: 28.015)
+    static let demo = CoinInfo(title: "DEMO",
+                               code: "BTC", price: 29467.560,
+                               changePercentage: 29.74,
+                               changeAmount: 28.015)
 }

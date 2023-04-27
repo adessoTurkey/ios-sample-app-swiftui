@@ -43,6 +43,7 @@ struct CoinView: View {
                         .bold()
                     Text(coinInfo.title)
                         .foregroundColor(Color(uiColor: .systemGray))
+                        .font(Font.system(size: 13))
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: Spacings.default) {

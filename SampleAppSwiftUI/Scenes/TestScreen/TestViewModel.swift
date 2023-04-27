@@ -50,8 +50,8 @@ class TestViewModel: ObservableObject {
         }
         service.setPing(time: 10)
         service.connectionHandler { webservice in
-//            webservice.sendMessage2(SampleSubscriptionRequest)
-            webservice.sendMessage(<#T##message: WebSocketMessageProtocol##WebSocketMessageProtocol#>)
+            webservice.sendMessage2(SampleSubscriptionRequest)
+//            webservice.sendMessage(<#T##message: WebSocketMessageProtocol##WebSocketMessageProtocol#>)
         } disconnected: { [weak self] closeCode in
             guard let self,
                   closeCode != .goingAway else { return }

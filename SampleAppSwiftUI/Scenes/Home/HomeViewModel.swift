@@ -16,8 +16,8 @@ class HomeViewModel: ObservableObject {
     private var maxReconnectionCount: Int = 3
 
     @Published var coinInfo: ExcangeRatesResponseModel?
-    @Published var coinList: [CoinInfo] = []
-    @Published var filteredCoins: [CoinInfo] = []
+    @Published var coinList: [CoinData] = []
+    @Published var filteredCoins: [CoinData] = []
     @Published var filterTitle = "Most Popular"
 
     init(webSocketService: any WebSocketServiceProtocol = WebSocketService.shared) {
@@ -42,8 +42,8 @@ class HomeViewModel: ObservableObject {
     private func fetchAllCoins() async {
         guard let dataSource = try? await AllCoinRemoteDataSource().getAllCoin(limit: 30, unitToBeConverted: "USD", page: 1) else { return }
         DispatchQueue.main.async {
-            self.coinList = dataSource.convertToCoinInfoArray()
-            self.filteredCoins = dataSource.convertToCoinInfoArray()
+            self.coinList = dataSource.data
+            self.filteredCoins = dataSource.data
         }
     }
 
@@ -52,7 +52,7 @@ class HomeViewModel: ObservableObject {
             let pathURL = URL(fileURLWithPath: demoDataPath)
             do {
                 let data = try Data(contentsOf: pathURL, options: .mappedIfSafe)
-                let coinList = try JSONDecoder().decode([CoinInfo].self, from: data)
+                let coinList = try JSONDecoder().decode([CoinData].self, from: data)
                 self.fillDemoData(coinList: coinList)
             } catch let error {
                 print(error)
@@ -60,7 +60,7 @@ class HomeViewModel: ObservableObject {
         }
     }
 
-    private func fillDemoData(coinList: [CoinInfo]) {
+    private func fillDemoData(coinList: [CoinData]) {
         self.coinList = coinList
         self.filteredCoins = coinList
     }
@@ -68,8 +68,8 @@ class HomeViewModel: ObservableObject {
     func filterResults(searchTerm: String) {
         if !searchTerm.isEmpty {
             filteredCoins = coinList.filter { coin in
-                coin.title.lowercased().contains(searchTerm.lowercased()) ||
-                coin.code.lowercased().contains(searchTerm.lowercased())
+                coin.coinInfo.title.lowercased().contains(searchTerm.lowercased()) ||
+                coin.coinInfo.code.lowercased().contains(searchTerm.lowercased())
             }
         } else {
             filteredCoins = coinList

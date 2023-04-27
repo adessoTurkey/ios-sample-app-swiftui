@@ -15,9 +15,9 @@ class TestViewModel: ObservableObject {
     private var reconnectionCount: Int = 0
     private var maxReconnectionCount: Int = 3
 
-    @Published var coinInfo: CoinInfo?
-    @Published var coinList: [CoinInfo] = []
-    @Published var filteredCoins: [CoinInfo] = []
+    @Published var coinInfo: CoinData?
+    @Published var coinList: [CoinData] = []
+    @Published var filteredCoins: [CoinData] = []
     @Published var filterTitle = "Most Popular"
     
     @Published var messages = [Element]()
@@ -68,7 +68,7 @@ class TestViewModel: ObservableObject {
     private func webSocketDidReceiveMessage(_ socketResponse: URLSessionWebSocketTask.Message) {
         if let coin: FavoritesCoinResponse = socketResponse.convert() {
             self.coinInfo = .demo
-            coinInfo?.price = coin.price ?? 0
+//            coinInfo?.detail.usd.price = coin.price ?? 0
         } else {
             print("Parse Error", terminator: "\n*******\n")
         }

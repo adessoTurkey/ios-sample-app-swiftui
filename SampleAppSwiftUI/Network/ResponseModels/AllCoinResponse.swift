@@ -8,59 +8,48 @@
 import Foundation
 
 // MARK: - AllCoinResponse
-struct AllCoinResponse: Codable {
+struct AllCoinResponse: Codable, Hashable, Identifiable {
+    var id = UUID().uuidString
     let data: [CoinData]?
 
     enum CodingKeys: String, CodingKey {
         case data = "Data"
     }
-    
-    func convertToCoinInfoArray() -> [CoinInfo] {
-        guard let data else { return [] }
-        
-        var coinList = [CoinInfo]()
-        for coin in data {
-            coinList.append(coin.convertToCoinInfo())
-        }
-        return coinList
-    }
 }
 
 // MARK: - Datum
-struct CoinData: Codable {
+struct CoinData: Codable, Hashable, Identifiable {
+    var id = UUID().uuidString
     let coinInfo: CoinMarketCapsCoinInfo?
-    let raw: CoinRaw?
+    let detail: CoinRaw?
 
     enum CodingKeys: String, CodingKey {
         case coinInfo = "CoinInfo"
-        case raw = "RAW"
+        case detail = "RAW"
     }
     
-    func convertToCoinInfo() -> CoinInfo {
-        guard let coin = coinInfo,
-              let coinRaw = raw?.usd,
-              let coinName = coin.fullName,
-              let coinCode = coin.name,
-              let coinChangePercentage = coinRaw.changepcthour,
-              let coinChangeAmount = coinRaw.openhour,
-              let coinPrice = coinRaw.price else { return .demo }
-        
-        return CoinInfo(title: coinName,
-                        code: coinCode,
-                        price: coinPrice,
-                        changePercentage: coinChangePercentage,
-                        changeAmount: coinChangeAmount)
+    public func hash(into hasher: inout Hasher) {
+        return hasher.combine(id)
     }
+    
+    static func == (lhs: CoinData, rhs: CoinData) -> Bool {
+        lhs.coinInfo?.code == rhs.coinInfo?.code
+    }
+    
+    static let demo = CoinData(coinInfo: CoinMarketCapsCoinInfo(code: "BTC", title: "Demo"),
+                               detail: CoinRaw(usd: RawUsd(price: 29467.560,
+                                                           changeAmount: 28.015,
+                                                           changePercentage: 29.74)))
 }
 
 // MARK: - CoinInfo
 struct CoinMarketCapsCoinInfo: Codable {
-    let name: String?
-    let fullName: String?
+    let code: String?
+    let title: String?
 
     enum CodingKeys: String, CodingKey {
-        case name = "Name"
-        case fullName = "FullName"
+        case code = "Name"
+        case title = "FullName"
     }
 }
 
@@ -76,12 +65,12 @@ struct CoinRaw: Codable {
 // MARK: - RawUsd
 struct RawUsd: Codable {
     let price: Double?
-    let openhour: Double?
-    let changepcthour: Double?
+    let changeAmount: Double?
+    let changePercentage: Double?
     
     enum CodingKeys: String, CodingKey {
         case price = "PRICE"
-        case openhour = "OPENHOUR"
-        case changepcthour = "CHANGEPCTHOUR"
+        case changeAmount = "OPENHOUR"
+        case changePercentage = "CHANGEPCTHOUR"
     }
 }

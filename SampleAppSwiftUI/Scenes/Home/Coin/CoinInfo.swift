@@ -8,17 +8,17 @@
 import Foundation
 
 typealias CoinCode = String
-
-struct CoinInfo: Codable, Hashable, Identifiable {
-    var id = UUID().uuidString
-    var title: String
-    var code: CoinCode
-    var price: Double
-    var changePercentage: Double
-    var changeAmount: Double
-
-    static let demo = CoinInfo(title: "DEMO",
-                               code: "BTC", price: 29467.560,
-                               changePercentage: 29.74,
-                               changeAmount: 28.015)
-}
+//
+//struct CoinInfo: Codable, Hashable, Identifiable {
+//    var id = UUID().uuidString
+//    var title: String
+//    var code: CoinCode
+//    var price: Double
+//    var changePercentage: Double
+//    var changeAmount: Double
+//
+//    static let demo = CoinInfo(title: "DEMO",
+//                               code: "BTC", price: 29467.560,
+//                               changePercentage: 29.74,
+//                               changeAmount: 28.015)
+//}

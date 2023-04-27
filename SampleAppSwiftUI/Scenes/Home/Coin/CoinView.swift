@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CoinView: View {
 
-    var coinInfo: CoinInfo
+    var coinInfo: CoinData
     @ObservedObject var viewModel: CoinInfoViewModel
 
     var body: some View {
@@ -17,7 +17,7 @@ struct CoinView: View {
             RoundedRectangle(cornerRadius: Dimensions.CornerRadius.default)
                 .fill(Color.coinCellBackground)
             HStack {
-                AsyncImage(url: viewModel.getURL(from: coinInfo.code)) { phase in
+                AsyncImage(url: viewModel.getURL(from: coinInfo.coinInfo?.code ?? "")) { phase in
                     if let image = phase.image {
                         image
                             .resizable()
@@ -38,12 +38,15 @@ struct CoinView: View {
                 .imageFrame()
 
                 VStack(alignment: .leading, spacing: Spacings.default) {
-                    Text(coinInfo.code)
-                        .font(Fonts.coin)
-                        .bold()
-                    Text(coinInfo.title)
-                        .foregroundColor(Color(uiColor: .systemGray))
-                        .font(Font.system(size: 13))
+                    if let coinCode = coinInfo.coinInfo?.code,
+                       let coinTitle = coinInfo.coinInfo?.code  {
+                        Text(coinCode)
+                            .font(Fonts.coin)
+                            .bold()
+                        Text(coinTitle)
+                            .foregroundColor(Color(uiColor: .systemGray))
+                            .font(Font.system(size: 13))
+                    }
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: Spacings.default) {
@@ -60,8 +63,8 @@ struct CoinView: View {
         .frame(height: Dimensions.coinCellSize)
     }
 
-    func configureTextColor(_ coinInfo: CoinInfo) -> Color {
-        coinInfo.changeAmount < 0 ? .red : .green
+    func configureTextColor(_ coinInfo: CoinData) -> Color {
+        coinInfo.detail?.usd?.changeAmount ?? 1.0 < 0 ? .red : .green
     }
 }
 

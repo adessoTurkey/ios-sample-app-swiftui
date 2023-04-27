@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CoinListView: View {
-    var filteredCoins: [CoinInfo]
+    var filteredCoins: [CoinData]
 
     @StateObject private var coinInfoViewModel = CoinInfoViewModel()
 
@@ -36,11 +36,11 @@ struct CoinListView: View {
                     .listRowBackground(Color.clear)
                     .swipeActions {
                         Button {
-                            checkFavorite(code: coin.code)
+                            checkFavorite(code: coin.coinInfo.code)
                         } label: {
                             Image(systemName: Images.favorites)
                         }
-                        .tint(StorageManager.shared.isCoinFavorite(code: coin.code) ? .red : .green)
+                        .tint(StorageManager.shared.isCoinFavorite(code: coin.coinInfo.code) ? .red : .green)
                     }
                 }
             }

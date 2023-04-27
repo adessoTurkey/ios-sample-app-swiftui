@@ -9,26 +9,26 @@ import SwiftUI
 
 class CoinInfoViewModel: ObservableObject {
 
-    func createPriceString(coinInfo: CoinInfo) -> String {
-        coinInfo.price.formatted(.currency(code: "USD").precision(.fractionLength(2...4)))
+    func createPriceString(coinInfo: CoinData) -> String {
+        coinInfo.detail?.usd?.price?.formatted(.currency(code: "USD").precision(.fractionLength(2...4))) ?? "CoinInfoViewModel Error"
     }
 
     func getURL(from code: String) -> URL? {
         URL(string: "\(URLs.Icons.baseURL)\(code.lowercased())/\(Dimensions.imageWidth)")
     }
 
-    func createChangeText(coinInfo: CoinInfo) -> String {
+    func createChangeText(coinInfo: CoinData) -> String {
         "\(createPercentageText(coinInfo)) (\(createAmountText(coinInfo)))"
     }
 
-    private func createPercentageText(_ coinInfo: CoinInfo) -> String {
-        (coinInfo.changePercentage / 100)
+    private func createPercentageText(_ coinInfo: CoinData) -> String {
+        ((coinInfo.detail?.usd?.changePercentage ?? 999.9) / 100)
             .formatted(.percent)
     }
 
-    private func createAmountText(_ coinInfo: CoinInfo) -> String {
-        coinInfo.changeAmount
+    private func createAmountText(_ coinInfo: CoinData) -> String {
+        coinInfo.detail?.usd?.changeAmount?
             .formatted(.currency(code: "USD")
-                .precision(.fractionLength(Range.currency)))
+                .precision(.fractionLength(Range.currency))) ?? "CoinInfoViewModel Error"
     }
 }

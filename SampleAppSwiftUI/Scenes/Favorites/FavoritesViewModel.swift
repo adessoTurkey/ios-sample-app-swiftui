@@ -10,8 +10,8 @@ import SwiftUI
 import Combine
 
 class FavoritesViewModel: ObservableObject {
-    @Published var coins: [CoinInfo] = []
-    @Published var filteredCoins: [CoinInfo] = []
+    @Published var coins: [CoinData] = []
+    @Published var filteredCoins: [CoinData] = []
 
     func fetchFavorites() {
         fetchDemoModel()
@@ -23,7 +23,11 @@ class FavoritesViewModel: ObservableObject {
             filteredCoins.removeAll()
         } else {
             filteredCoins = coins.filter({ coin in
-                StorageManager.shared.favoriteCoins.contains(coin.code)
+                if coin.coinInfo?.code == nil {
+                    return false
+                } else {
+                    StorageManager.shared.favoriteCoins.contains((coin.coinInfo?.code)!)
+                }
             })
         }
     }
@@ -33,7 +37,7 @@ class FavoritesViewModel: ObservableObject {
             let pathURL = URL(fileURLWithPath: demoDataPath)
             do {
                 let data = try Data(contentsOf: pathURL, options: .mappedIfSafe)
-                let coinList = try JSONDecoder().decode([CoinInfo].self, from: data)
+                let coinList = try JSONDecoder().decode([CoinData].self, from: data)
                 self.fillDemoData(coinList: coinList)
             } catch let error {
                 print(error)
@@ -41,7 +45,7 @@ class FavoritesViewModel: ObservableObject {
         }
     }
 
-    private func fillDemoData(coinList: [CoinInfo]) {
+    private func fillDemoData(coinList: [CoinData]) {
         self.coins = coinList
         self.filteredCoins = coinList
     }
@@ -49,13 +53,21 @@ class FavoritesViewModel: ObservableObject {
     func filterResults(searchTerm: String = "") {
         if !searchTerm.isEmpty {
             filteredCoins = coins.filter { coin in
-                coin.title.lowercased().contains(searchTerm.lowercased()) ||
-                coin.code.lowercased().contains(searchTerm.lowercased()) &&
-                StorageManager.shared.favoriteCoins.contains(coin.code)
+                if let coinCode = coin.coinInfo?.code {
+                    coin.coinInfo?.title?.lowercased().contains(searchTerm.lowercased()) ?? true ||
+                    coin.coinInfo?.code?.lowercased().contains(searchTerm.lowercased())  ?? true &&
+                    StorageManager.shared.favoriteCoins.contains(coinCode)
+                }
             }
         } else {
             filteredCoins = coins.filter({ coin in
-                StorageManager.shared.favoriteCoins.contains(coin.code)
+                if let coinInfo = coin.coinInfo,
+                   let coinCode = coinInfo.code{
+                    StorageManager.shared.favoriteCoins.contains(coinCode)
+                    //TODO:  Result of call to 'contains' is unused
+                } else {
+                    return false
+                }
             })
         }
     }

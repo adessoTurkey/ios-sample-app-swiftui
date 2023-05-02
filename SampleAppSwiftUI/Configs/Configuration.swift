@@ -40,6 +40,7 @@ final class Configuration: ConfigurationProtocol {
     static var coinApiKey: String {
         let key = ""
         if key.isEmpty {
+            /// Get your API key from https://www.cryptocompare.com/
             #warning("Please Enter an API Key")
         }
         return key

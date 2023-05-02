@@ -41,7 +41,8 @@ struct CoinView: View {
                     Text(coinInfo.code)
                         .font(Fonts.coin)
                         .bold()
-                    Text(coinInfo.title)
+                    Text(limitTextCharacter(for: coinInfo.title, limit: Numbers.coinTitleCharacterLimit))
+                        .lineLimit(Numbers.coinTitleLineLimit)
                         .font(Fonts.coinName)
                         .foregroundColor(Color(uiColor: .systemGray))
                 }
@@ -59,8 +60,16 @@ struct CoinView: View {
         .frame(height: Dimensions.coinCellSize)
     }
 
+    func limitTextCharacter(for text: String, limit: Int) -> Substring {
+        if text.count > limit {
+            return "\(text.prefix(limit))..."
+        } else {
+            return text.prefix(limit)
+        }
+    }
+
     func configureTextColor(_ coinInfo: CoinInfo) -> Color {
-        coinInfo.changeAmount < 0.0 ? .red : .green
+        coinInfo.changeAmount < Numbers.absoluteZero ? .red : .green
     }
 }
 

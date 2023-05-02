@@ -9,6 +9,7 @@ import Foundation
 
 enum URLs {
     enum Icons {
-        static let baseURL = "https://cryptoicons.org/api/icon/"
+        static let baseURL = "https://assets.coincap.io/assets/icons/"
+        static let scaleURL = "@2x.png"
     }
 }

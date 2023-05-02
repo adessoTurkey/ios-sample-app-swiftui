@@ -9,8 +9,8 @@ import SwiftUI
 
 class CoinInfoViewModel: ObservableObject {
 
-    func createPriceString(coinInfo: CoinData) -> String {
-        coinInfo.detail?.usd?.price?.formatted(.currency(code: "USD").precision(.fractionLength(2...4))) ?? "CoinInfoViewModel Error"
+    func createPriceString(coinInfo: CoinInfo) -> String {
+        coinInfo.price.formatted(.currency(code: "USD").precision(.fractionLength(Range.currency)))
     }
 
     func getURL(from code: String) -> URL? {
@@ -21,9 +21,9 @@ class CoinInfoViewModel: ObservableObject {
         "\(createPercentageText(coinInfo)) (\(createAmountText(coinInfo)))"
     }
 
-    private func createPercentageText(_ coinInfo: CoinData) -> String {
-        ((coinInfo.detail?.usd?.changePercentage ?? 999.9) / 100)
-            .formatted(.percent)
+    private func createPercentageText(_ coinInfo: CoinInfo) -> String {
+        (coinInfo.changePercentage / 100)
+            .formatted(.percent.precision(.fractionLength(Range.currency)))
     }
 
     private func createAmountText(_ coinInfo: CoinData) -> String {

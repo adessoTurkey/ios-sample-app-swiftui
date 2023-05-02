@@ -38,15 +38,13 @@ struct CoinView: View {
                 .imageFrame()
 
                 VStack(alignment: .leading, spacing: Spacings.default) {
-                    if let coinCode = coinInfo.coinInfo?.code,
-                       let coinTitle = coinInfo.coinInfo?.code  {
-                        Text(coinCode)
-                            .font(Fonts.coin)
-                            .bold()
-                        Text(coinTitle)
-                            .foregroundColor(Color(uiColor: .systemGray))
-                            .font(Font.system(size: 13))
-                    }
+                    Text(coinInfo.code)
+                        .font(Fonts.coin)
+                        .bold()
+                    Text(limitTextCharacter(for: coinInfo.title, limit: Numbers.coinTitleCharacterLimit))
+                        .lineLimit(Numbers.coinTitleLineLimit)
+                        .font(Fonts.coinName)
+                        .foregroundColor(Color(uiColor: .systemGray))
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: Spacings.default) {
@@ -63,8 +61,16 @@ struct CoinView: View {
         .frame(height: Dimensions.coinCellSize)
     }
 
-    func configureTextColor(_ coinInfo: CoinData) -> Color {
-        coinInfo.detail?.usd?.changeAmount ?? 1.0 < 0 ? .red : .green
+    func limitTextCharacter(for text: String, limit: Int) -> Substring {
+        if text.count > limit {
+            return "\(text.prefix(limit))..."
+        } else {
+            return text.prefix(limit)
+        }
+    }
+
+    func configureTextColor(_ coinInfo: CoinInfo) -> Color {
+        coinInfo.changeAmount < Numbers.absoluteZero ? .red : .green
     }
 }
 

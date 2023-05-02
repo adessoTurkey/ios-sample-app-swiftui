@@ -14,7 +14,7 @@ class CoinInfoViewModel: ObservableObject {
     }
 
     func getURL(from code: String) -> URL? {
-        URL(string: "\(URLs.Icons.baseURL)\(code.lowercased())/\(Dimensions.imageWidth)")
+        URL(string: "\(URLs.Icons.baseURL)\(code.lowercased())\(URLs.Icons.scaleURL)")
     }
 
     func createChangeText(coinInfo: CoinData) -> String {

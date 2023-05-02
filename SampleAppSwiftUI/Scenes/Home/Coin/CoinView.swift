@@ -25,8 +25,8 @@ struct CoinView: View {
                             .imageFrame()
                     } else if phase.error != nil {
                         VStack {
-                            Image(systemName: Images.close)
-                                .foregroundColor(.red)
+                            Image("default-coin")
+                                .resizable()
                                 .imageFrame()
                         }
                     } else {

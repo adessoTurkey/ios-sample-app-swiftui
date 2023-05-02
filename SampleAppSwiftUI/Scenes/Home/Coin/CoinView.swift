@@ -42,6 +42,7 @@ struct CoinView: View {
                         .font(Fonts.coin)
                         .bold()
                     Text(coinInfo.title)
+                        .font(Fonts.coinName)
                         .foregroundColor(Color(uiColor: .systemGray))
                 }
                 Spacer()

@@ -59,7 +59,7 @@ struct CoinView: View {
     }
 
     func configureTextColor(_ coinInfo: CoinInfo) -> Color {
-        coinInfo.changeAmount < 0 ? .red : .green
+        coinInfo.changeAmount < 0.0 ? .red : .green
     }
 }
 

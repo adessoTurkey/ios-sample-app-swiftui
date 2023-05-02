@@ -38,22 +38,27 @@ struct CoinView: View {
                 .imageFrame()
 
                 VStack(alignment: .leading, spacing: Spacings.default) {
-                    Text(coinInfo.code)
-                        .font(Fonts.coin)
-                        .bold()
-                    Text(limitTextCharacter(for: coinInfo.title, limit: Numbers.coinTitleCharacterLimit))
-                        .lineLimit(Numbers.coinTitleLineLimit)
-                        .font(Fonts.coinName)
-                        .foregroundColor(Color(uiColor: .systemGray))
+                    if let coinInfo = coinInfo.coinInfo {
+                        Text(coinInfo.code ?? "")
+                            .font(Fonts.coin)
+                            .bold()
+                        Text(limitTextCharacter(for: coinInfo.title ?? "", limit: Numbers.coinTitleCharacterLimit))
+                            .lineLimit(Numbers.coinTitleLineLimit)
+                            .font(Fonts.coinName)
+                            .foregroundColor(Color(uiColor: .systemGray))
+                    }
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: Spacings.default) {
-                    Text(viewModel.createPriceString(coinInfo: coinInfo))
-                        .font(Fonts.coin)
-                        .bold()
-                    Text(viewModel.createChangeText(coinInfo: coinInfo))
-                        .font(Fonts.coinAmount)
-                        .foregroundColor(configureTextColor(coinInfo))
+                    if let rawData = coinInfo.detail,
+                       let usd = rawData.usd {
+                        Text(viewModel.createPriceString(rawData: usd))
+                            .font(Fonts.coin)
+                            .bold()
+                        Text(viewModel.createChangeText(rawData: usd))
+                            .font(Fonts.coinAmount)
+                            .foregroundColor(configureTextColor(usd))
+                    }
                 }
             }
             .sidePadding(size: Paddings.side)
@@ -69,8 +74,8 @@ struct CoinView: View {
         }
     }
 
-    func configureTextColor(_ coinInfo: CoinInfo) -> Color {
-        coinInfo.changeAmount < Numbers.absoluteZero ? .red : .green
+    func configureTextColor(_ rawData: RawUsd) -> Color {
+        rawData.changePercentage ?? Numbers.absoluteZero < Numbers.absoluteZero ? .red : .green
     }
 }
 

@@ -12,7 +12,7 @@ struct SubscriptionRequest: Codable {
     let subs: [String]
 }
 
-let SampleSubscriptionRequest = """
+let sampleSubscriptionRequest = """
 {
    "action": "SubAdd",
    "subs": ["5~CCCAGG~BTC~USD"]
@@ -37,10 +37,7 @@ enum SubscriptionRequestAction: String {
     case remove = "SubRemove"
 }
 
-
-
-
-// MARK: - FavoritesCoinResponse
+// MARK: FavoritesCoinResponse
 struct FavoritesCoinResponse: Codable {
     let price: Double?
 

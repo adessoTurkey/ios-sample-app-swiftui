@@ -16,8 +16,8 @@ enum AllCoinServiceEndpoint: TargetEndpointProtocol {
 
     var path: String {
         switch self {
-        case .allCoin(let limit, let toConvert, let page):
-            return String(format: Constants.allCoinEndpoint, limit, toConvert, page, Configuration.coinApiKey)
+            case .allCoin(let limit, let toConvert, let page):
+                return String(format: Constants.allCoinEndpoint, limit, toConvert, page, Configuration.coinApiKey)
         }
     }
 }

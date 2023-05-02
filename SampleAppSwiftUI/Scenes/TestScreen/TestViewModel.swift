@@ -19,7 +19,6 @@ class TestViewModel: ObservableObject {
     @Published var coinList: [CoinData] = []
     @Published var filteredCoins: [CoinData] = []
     @Published var filterTitle = "Most Popular"
-    
     @Published var messages = [Element]()
 
     init(webSocketService: any WebSocketServiceProtocol = WebSocketService.shared) {
@@ -40,7 +39,7 @@ class TestViewModel: ObservableObject {
 //            await fetchAllCoins()
         }
     }
-    
+
     private func connect() {
         guard reconnectionCount < maxReconnectionCount,
              let service = webSocketService.connect(endPoint: .baseCoinApi) else {
@@ -68,29 +67,27 @@ class TestViewModel: ObservableObject {
     private func webSocketDidReceiveMessage(_ socketResponse: URLSessionWebSocketTask.Message) {
         if let coin: FavoritesCoinResponse = socketResponse.convert() {
             self.coinInfo = .demo
-//            coinInfo?.detail.usd.price = coin.price ?? 0
+            coinInfo?.detail?.usd?.price = coin.price ?? 0
         } else {
             print("Parse Error", terminator: "\n*******\n")
         }
-        print(socketResponse,  terminator: "\n------\n")
-        
+        print(socketResponse, terminator: "\n------\n")
+
         switch socketResponse {
-        case .string(let text):
-//                    self.messages.append(Element(name: text))
-            DispatchQueue.main.async {
-                self.messages.append(Element(name: text))
-            }
-        case .data(let data):
-            print("******--------******")
-            print(socketResponse)
-            print("******--------******")
-            print(data)
-            print("******--------******")
-            break
-        @unknown default:
-            break
+            case .string(let text):
+//                        self.messages.append(Element(name: text))
+                DispatchQueue.main.async {
+                    self.messages.append(Element(name: text))
+                }
+            case .data(let data):
+                print("******--------******")
+                print(socketResponse)
+                print("******--------******")
+                print(data)
+                print("******--------******")
+            @unknown default:
+                break
         }
-        
-        
+
     }
 }

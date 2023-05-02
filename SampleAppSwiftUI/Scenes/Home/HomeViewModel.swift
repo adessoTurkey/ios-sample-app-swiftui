@@ -30,20 +30,23 @@ class HomeViewModel: ObservableObject {
 //        connect()
     }
 
-    func fillModels(demo: Bool = false) {
+    func fillModels(demo: Bool = false) async {
         if demo {
             fetchDemoModel()
         }
-        Task {
-            await fetchAllCoins()
-        }
+        await fetchAllCoins()
     }
-    
+
     private func fetchAllCoins() async {
-        guard let dataSource = try? await AllCoinRemoteDataSource().getAllCoin(limit: 30, unitToBeConverted: "USD", page: 1) else { return }
+        guard let dataSource = try? await AllCoinRemoteDataSource().getAllCoin(limit: 30, unitToBeConverted: "USD", page: 1) else {
+            print("Problem on the convert")
+            return
+        }
         DispatchQueue.main.async {
-            self.coinList = dataSource.data
-            self.filteredCoins = dataSource.data
+            if let data = dataSource.data {
+                self.coinList = data
+                self.filteredCoins = data
+            }
         }
     }
 
@@ -68,8 +71,14 @@ class HomeViewModel: ObservableObject {
     func filterResults(searchTerm: String) {
         if !searchTerm.isEmpty {
             filteredCoins = coinList.filter { coin in
-                coin.coinInfo.title.lowercased().contains(searchTerm.lowercased()) ||
-                coin.coinInfo.code.lowercased().contains(searchTerm.lowercased())
+                if let coinInfo = coin.coinInfo,
+                   let title = coinInfo.title,
+                   let code = coinInfo.code {
+                    return title.lowercased().contains(searchTerm.lowercased()) ||
+                    code.lowercased().contains(searchTerm.lowercased())
+                } else {
+                    return false
+                }
             }
         } else {
             filteredCoins = coinList
@@ -85,7 +94,7 @@ class HomeViewModel: ObservableObject {
         }
         service.setPing(time: 10)
         service.connectionHandler { webservice in
-            webservice.sendMessage2(SampleSubscriptionRequest)
+            webservice.sendMessage2(sampleSubscriptionRequest)
         } disconnected: { [weak self] closeCode in
             guard let self,
                   closeCode != .goingAway else { return }
@@ -105,6 +114,6 @@ class HomeViewModel: ObservableObject {
         } else {
             print("Parse Error", terminator: "\n*******\n")
         }
-        print(socketResponse,  terminator: "\n------\n")
+        print(socketResponse, terminator: "\n------\n")
     }
 }

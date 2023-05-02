@@ -40,7 +40,7 @@ final class Configuration: ConfigurationProtocol {
     static var coinApiKey: String {
         let key = ""
         if key.isEmpty {
-            return "df454843b965ac85d1bbd7a47d3d55c8c3d4e0c6a869f6f4c7a4e93a4bdba0a2"
+            #warning("Please Enter an API Key")
         }
         return key
     }

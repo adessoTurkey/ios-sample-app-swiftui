@@ -13,7 +13,7 @@ struct OldSubscriptionRequest: Codable {
 }
 
 //
-//enum SubscriptionRequestAction: String, CodingKey, Codable {
+// enum SubscriptionRequestAction: String, CodingKey, Codable {
 //    case subAdd
 //    case subRemove
 //    
@@ -21,16 +21,16 @@ struct OldSubscriptionRequest: Codable {
 //        case subAdd = "SubAdd"
 //        case subRemove = "SubRemove"
 //    }
-//}
+// }
 
 struct DandikRequest: Codable {
-    let action = "SubAdd"
-    let subs = ["5~CCCAGG~BTC~USD", "0~Coinbase~ETH~USD", "2~Binance~BTC~USDT"]
+    var action = "SubAdd"
+    var subs = ["5~CCCAGG~BTC~USD", "0~Coinbase~ETH~USD", "2~Binance~BTC~USDT"]
 }
 
 let sampleReq = """
 {
    "action": "SubAdd",
-   "subs": ["0~Coinbase~BTC~USD"]
+   "subs": ["5~CCCAGG~BTC~USD"]
 }
 """

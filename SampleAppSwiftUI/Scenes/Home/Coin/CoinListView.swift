@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CoinListView: View {
-    var filteredCoins: [CoinData]
+    @Binding var filteredCoins: [CoinData]
 
     @StateObject private var coinInfoViewModel = CoinInfoViewModel()
 
@@ -28,19 +28,22 @@ struct CoinListView: View {
         } else {
             List {
                 ForEach(filteredCoins) { coin in
-                    NavigationLink(destination: CoinDetailView()) {
-                        CoinView(coinInfo: coin, viewModel: coinInfoViewModel)
-                    }
-                    .listRowInsets(.init())
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color.clear)
-                    .swipeActions {
-                        Button {
-                            checkFavorite(code: coin.coinInfo.code)
-                        } label: {
-                            Image(systemName: Images.favorites)
+                    if let coinInfo = coin.coinInfo,
+                       coin.detail != nil {
+                        NavigationLink(destination: CoinDetailView()) {
+                            CoinView(coinInfo: coin, viewModel: coinInfoViewModel)
                         }
-                        .tint(StorageManager.shared.isCoinFavorite(code: coin.coinInfo.code) ? .red : .green)
+                        .listRowInsets(.init())
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.clear)
+                        .swipeActions {
+                            Button {
+                                checkFavorite(code: coinInfo.code ?? "")
+                            } label: {
+                                Image(systemName: Images.favorites)
+                            }
+                            .tint(StorageManager.shared.isCoinFavorite(code: coinInfo.code ?? "") ? .red : .green)
+                        }
                     }
                 }
             }
@@ -65,7 +68,7 @@ struct CoinListView: View {
 struct CoinListView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            CoinListView(filteredCoins: [.demo, .demo, .demo], favoriteChanged: {})
+            CoinListView(filteredCoins: .constant([.demo, .demo, .demo]), favoriteChanged: {})
         }
     }
 }

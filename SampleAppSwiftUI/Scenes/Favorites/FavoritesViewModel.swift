@@ -23,10 +23,11 @@ class FavoritesViewModel: ObservableObject {
             filteredCoins.removeAll()
         } else {
             filteredCoins = coins.filter({ coin in
-                if coin.coinInfo?.code == nil {
-                    return false
+                if let info = coin.coinInfo,
+                   let code = info.code {
+                    return StorageManager.shared.isCoinFavorite(code: code)
                 } else {
-                    StorageManager.shared.favoriteCoins.contains((coin.coinInfo?.code)!)
+                    return false
                 }
             })
         }
@@ -54,17 +55,18 @@ class FavoritesViewModel: ObservableObject {
         if !searchTerm.isEmpty {
             filteredCoins = coins.filter { coin in
                 if let coinCode = coin.coinInfo?.code {
-                    coin.coinInfo?.title?.lowercased().contains(searchTerm.lowercased()) ?? true ||
+                    return coin.coinInfo?.title?.lowercased().contains(searchTerm.lowercased()) ?? true ||
                     coin.coinInfo?.code?.lowercased().contains(searchTerm.lowercased())  ?? true &&
                     StorageManager.shared.favoriteCoins.contains(coinCode)
+                } else {
+                    return false
                 }
             }
         } else {
             filteredCoins = coins.filter({ coin in
                 if let coinInfo = coin.coinInfo,
-                   let coinCode = coinInfo.code{
-                    StorageManager.shared.favoriteCoins.contains(coinCode)
-                    //TODO:  Result of call to 'contains' is unused
+                   let coinCode = coinInfo.code {
+                    return StorageManager.shared.favoriteCoins.contains(coinCode)
                 } else {
                     return false
                 }

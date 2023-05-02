@@ -20,22 +20,19 @@ struct AllCoinResponse: Codable, Hashable, Identifiable {
 // MARK: - Datum
 struct CoinData: Codable, Hashable, Identifiable {
     var id = UUID().uuidString
-    let coinInfo: CoinMarketCapsCoinInfo?
-    let detail: CoinRaw?
+    var coinInfo: CoinMarketCapsCoinInfo?
+    var detail: CoinRaw?
+
+    static func == (lhs: CoinData, rhs: CoinData) -> Bool {
+        lhs.coinInfo == rhs.coinInfo &&
+        lhs.detail == rhs.detail
+    }
 
     enum CodingKeys: String, CodingKey {
         case coinInfo = "CoinInfo"
         case detail = "RAW"
     }
-    
-    public func hash(into hasher: inout Hasher) {
-        return hasher.combine(id)
-    }
-    
-    static func == (lhs: CoinData, rhs: CoinData) -> Bool {
-        lhs.coinInfo?.code == rhs.coinInfo?.code
-    }
-    
+
     static let demo = CoinData(coinInfo: CoinMarketCapsCoinInfo(code: "BTC", title: "Demo"),
                                detail: CoinRaw(usd: RawUsd(price: 29467.560,
                                                            changeAmount: 28.015,
@@ -43,9 +40,13 @@ struct CoinData: Codable, Hashable, Identifiable {
 }
 
 // MARK: - CoinInfo
-struct CoinMarketCapsCoinInfo: Codable {
-    let code: String?
+struct CoinMarketCapsCoinInfo: Codable, Hashable {
+    let code: CoinCode?
     let title: String?
+
+    static func == (lhs: CoinMarketCapsCoinInfo, rhs: CoinMarketCapsCoinInfo) -> Bool {
+        lhs.code == rhs.code
+    }
 
     enum CodingKeys: String, CodingKey {
         case code = "Name"
@@ -54,20 +55,29 @@ struct CoinMarketCapsCoinInfo: Codable {
 }
 
 // MARK: - Raw
-struct CoinRaw: Codable {
-    let usd: RawUsd?
+struct CoinRaw: Codable, Hashable {
+    var usd: RawUsd?
 
+    static func == (lhs: CoinRaw, rhs: CoinRaw) -> Bool {
+        lhs.usd == rhs.usd
+    }
     enum CodingKeys: String, CodingKey {
         case usd = "USD"
     }
 }
 
 // MARK: - RawUsd
-struct RawUsd: Codable {
-    let price: Double?
+struct RawUsd: Codable, Hashable {
+    var price: Double?
     let changeAmount: Double?
     let changePercentage: Double?
-    
+
+    static func == (lhs: RawUsd, rhs: RawUsd) -> Bool {
+        lhs.price == rhs.price &&
+        lhs.changeAmount == rhs.changeAmount &&
+        lhs.changePercentage == rhs.changePercentage
+    }
+
     enum CodingKeys: String, CodingKey {
         case price = "PRICE"
         case changeAmount = "OPENHOUR"

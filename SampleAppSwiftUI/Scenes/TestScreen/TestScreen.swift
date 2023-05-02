@@ -10,12 +10,12 @@ import SwiftUI
 struct TestScreen: View {
     @StateObject private var viewModel = TestViewModel()
     var useCase: AllCoinUseCaseProtocol = AllCoinUseCase()
-    
+
     var body: some View {
         VStack {
             CoinView(coinInfo: viewModel.coinInfo ?? .demo, viewModel: .init())
             Button("Send Message") {
-                Task{
+                Task {
 //                    print(websocket.sendMessage())
 //                    print(try await useCase.fetchAllCoin(limit: 20, unitToBeConverted: "USD", page: 1))
                 }

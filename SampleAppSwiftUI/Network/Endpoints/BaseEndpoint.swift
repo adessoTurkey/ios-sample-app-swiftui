@@ -14,10 +14,10 @@ enum BaseEndpoint: TargetEndpointProtocol {
 
     var path: String {
         switch self {
-        case .base:
-            return Configuration.baseURL
-        case .allCoin:
-            return "https://min-api.cryptocompare.com/data/top/mktcapfull"
+            case .base:
+                return Configuration.baseURL
+            case .allCoin:
+                return "https://min-api.cryptocompare.com/data/top/mktcapfull"
         }
     }
 }

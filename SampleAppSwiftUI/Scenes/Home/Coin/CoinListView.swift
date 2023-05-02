@@ -15,7 +15,7 @@ struct CoinListView: View {
     @State private var showingAlert = false
     @State private var alertTitle = ""
 
-    let favoriteChanged: () -> (Void)
+    let favoriteChanged: () -> Void
 
     var body: some View {
         if filteredCoins.isEmpty {

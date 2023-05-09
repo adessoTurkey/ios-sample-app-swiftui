@@ -39,9 +39,13 @@ enum SubscriptionRequestAction: String {
 
 // MARK: FavoritesCoinResponse
 struct FavoritesCoinResponse: Codable {
+    let code: String?
     let price: Double?
+    let lowestToday: Double?
 
     enum CodingKeys: String, CodingKey {
+        case code = "FROMSYMBOL"
         case price = "PRICE"
+        case lowestToday = "LOW24HOUR"
     }
 }

@@ -69,8 +69,8 @@ struct CoinRaw: Codable, Hashable {
 // MARK: - RawUsd
 struct RawUsd: Codable, Hashable {
     var price: Double?
-    let changeAmount: Double?
-    let changePercentage: Double?
+    var changeAmount: Double?
+    var changePercentage: Double?
 
     static func == (lhs: RawUsd, rhs: RawUsd) -> Bool {
         lhs.price == rhs.price &&

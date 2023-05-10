@@ -29,16 +29,8 @@ class FavoritesViewModel: ObservableObject {
     }
 
     private func fetchDemoModel() {
-        if let demoDataPath = Bundle.main.path(forResource: "CoinList", ofType: "json") {
-            let pathURL = URL(fileURLWithPath: demoDataPath)
-            do {
-                let data = try Data(contentsOf: pathURL, options: .mappedIfSafe)
-                let coinList = try JSONDecoder().decode([CoinInfo].self, from: data)
-                self.fillDemoData(coinList: coinList)
-            } catch let error {
-                print(error)
-            }
-        }
+        guard let coinList = JsonHelper.make([CoinInfo].self, .coinList) else { return }
+        self.fillDemoData(coinList: coinList)
     }
 
     private func fillDemoData(coinList: [CoinInfo]) {

@@ -61,6 +61,17 @@ targets:
                       echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
                   fi
   SampleAppSwiftUITests:
+    dependencies:
+      - target: SampleAppSwiftUI
+      - package: CocoaLumberjack
+        product: CocoaLumberjack
+        product: CocoaLumberjackSwift
+      - package: Pulse
+        product: Pulse
+        product: PulseUI
+      - package: R.swift
+        product: rswift
+        product: RswiftLibrary
     type: bundle.unit-test
     platform: iOS
     sources:

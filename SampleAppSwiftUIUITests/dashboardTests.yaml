@@ -1,0 +1,5 @@
+appId: com.adesso.SampleAppSwiftUI.development
+---
+- runFlow: dashboardSearchCoinUnsuccessfullyTest.yaml
+- runFlow: dashboardSearchCoinSuccessfullyTest.yaml
+- runFlow: dashboardSearchRandomTest.yaml

@@ -1,0 +1,6 @@
+appId: com.adesso.SampleAppSwiftUI.development
+---
+- launchApp
+- tapOn: "Ayarlar" 
+- tapOn: "0"
+- assertVisible "1"

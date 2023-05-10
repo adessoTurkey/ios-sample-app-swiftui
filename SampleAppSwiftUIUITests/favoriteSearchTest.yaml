@@ -1,0 +1,7 @@
+appId: com.adesso.SampleAppSwiftUI.development
+---
+- launchApp
+- tapOn: "Favori"
+- tapOn: "Search for a name or symbol"
+- inputRandomText
+- assertVisible: "No Coins found."

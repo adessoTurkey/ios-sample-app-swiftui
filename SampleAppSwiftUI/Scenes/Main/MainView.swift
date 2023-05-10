@@ -18,16 +18,19 @@ struct MainView: View {
                 .tag(TabIndex.home)
                 .tabItem {
                     Image(systemName: TabIndex.home.imageName())
+                        .accessibilityIdentifier("homeTabView")
                 }
             FavoritesView()
                 .tag(TabIndex.favorites)
                 .tabItem {
                     Image(systemName: TabIndex.favorites.imageName())
+                        .accessibilityIdentifier("favoriteTabView")
                 }
             SettingsView()
                 .tag(TabIndex.settings)
                 .tabItem {
                     Image(systemName: TabIndex.settings.imageName())
+                        .accessibilityIdentifier("settingsTabView")
                 }
         }
         .tint(.blue)

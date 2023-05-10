@@ -1,0 +1,11 @@
+appId: com.adesso.SampleAppSwiftUI.development
+---
+- launchApp
+- tapOn:
+    id: "settingsTabView"
+- tapOn:
+    id: "settingsViewParitySelectionPicker"
+- assertVisible:
+    id: "settingsViewParitySelectionPickerCell"
+- tapOn: "ETH"
+- assertVisible: "ETH"

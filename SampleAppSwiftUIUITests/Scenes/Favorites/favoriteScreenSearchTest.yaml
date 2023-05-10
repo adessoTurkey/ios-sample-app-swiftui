@@ -1,0 +1,9 @@
+appId: com.adesso.SampleAppSwiftUI.development
+---
+- launchApp
+- tapOn:
+    id: "favoriteTabView"
+- tapOn:
+    id: "searchBarViewInputField"
+- inputRandomText
+- assertVisible: "No Coins found."

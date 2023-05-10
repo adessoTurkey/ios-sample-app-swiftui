@@ -1,0 +1,7 @@
+appId: com.adesso.SampleAppSwiftUI.development
+---
+- launchApp
+- tapOn:
+    id: "searchBarViewInputField"
+- inputText: "Test coin"
+- assertVisible: "No Coins found."

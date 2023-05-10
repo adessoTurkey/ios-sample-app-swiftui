@@ -8,12 +8,15 @@
 import Foundation
 
 enum MockPath {
+    case testData
     case coinList
 
     var value: String {
         switch self {
+            case .testData:
+                return "testData"
             case .coinList:
-                return "CoinList"
+                return "coinList"
         }
     }
 }

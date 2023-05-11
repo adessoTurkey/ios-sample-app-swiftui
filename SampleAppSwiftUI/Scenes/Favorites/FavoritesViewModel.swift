@@ -29,7 +29,7 @@ class FavoritesViewModel: ObservableObject {
 
     func startSocketConnection() {
         reconnectionCount = 0
-        connect()
+//        connect()
     }
 
     func fetchFavorites() {
@@ -100,7 +100,7 @@ class FavoritesViewModel: ObservableObject {
         service.connectionHandler {[weak self] webservice in
             guard let self else { return }
             var subs: [String] = []
-            for coin in filteredCoins {
+            for coin in self.filteredCoins {
                 if let coinInfo = coin.coinInfo,
                    let code = coinInfo.code {
                     subs.append("5~CCCAGG~\(code)~USD")

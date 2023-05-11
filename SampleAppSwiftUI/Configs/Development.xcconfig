@@ -10,4 +10,4 @@
 // https://help.apple.com/xcode/#/dev745c5c974
 
 PRODUCT_BUNDLE_IDENTIFIER = com.adesso.SampleAppSwiftUI.development
-WebSocket_BASE_URL = wss://streamer.cryptocompare.com/v2
+WebSocket_BASE_URL = wss://streamer.cryptocompare.com/v2?api_key=05e4cee996b2cbd82a402ccef587bfc4db9dc88fd4083422594b8eb688bdfcb6

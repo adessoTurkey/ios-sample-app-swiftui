@@ -25,6 +25,11 @@ class TestViewModel: ObservableObject {
         self.webSocketService = webSocketService
         self.startSocketConnection()
     }
+    
+    deinit {
+        self.endConnet()
+        print("Ended Socket")
+    }
 
     func startSocketConnection() {
         reconnectionCount = 0
@@ -67,7 +72,7 @@ class TestViewModel: ObservableObject {
     private func webSocketDidReceiveMessage(_ socketResponse: URLSessionWebSocketTask.Message) {
         if let coin: FavoritesCoinResponse = socketResponse.convert() {
             self.coinInfo = .demo
-            coinInfo?.detail?.usd?.price = coin.price ?? 0
+            coinInfo?.detail?.usd?.price = coin.price
         } else {
             print("Parse Error", terminator: "\n*******\n")
         }
@@ -88,6 +93,9 @@ class TestViewModel: ObservableObject {
             @unknown default:
                 break
         }
-
+    }
+    
+    func endConnet() {
+        webSocketService.disconnect()
     }
 }

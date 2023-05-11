@@ -13,23 +13,9 @@ class FavoritesViewModel: ObservableObject {
     @Published var coins: [CoinData] = []
     @Published var filteredCoins: [CoinData] = []
 
-    private var webSocketService: any WebSocketServiceProtocol
-    private var cancellable = Set<AnyCancellable>()
-    private var reconnectionCount: Int = 0
-    private var maxReconnectionCount: Int = 3
-
     @Published var coinInfo: CoinData?
     @Published var coinList: [CoinData] = []
     @Published var filterTitle = "Most Popular"
-
-    init(webSocketService: any WebSocketServiceProtocol = WebSocketService.shared) {
-        self.webSocketService = webSocketService
-    }
-
-    func startSocketConnection() {
-        reconnectionCount = 0
-//        connect()
-    }
 
     func fetchFavorites() {
         Task {
@@ -82,10 +68,6 @@ class FavoritesViewModel: ObservableObject {
             })
 
         }
-    }
-
-    func disconnect() {
-        webSocketService.disconnect()
     }
 
     private func fetchDemoModel() {

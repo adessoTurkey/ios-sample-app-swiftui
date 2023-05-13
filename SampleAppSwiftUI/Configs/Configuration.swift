@@ -36,19 +36,24 @@ final class Configuration: ConfigurationProtocol {
     static var baseURL: String {
         ""
     }
+    
+    static var allCoinBaseUrl: String {
+        let url: String? = try? self.value(for: "all_coin_base_url")
+        return url ?? ""
+    }
 
     static var coinApiKey: String {
-        let key = ""
-        if key.isEmpty {
-//            /// Get your API key from https://www.cryptocompare.com/
-//            #warning("Please Enter an API Key")
-            return "df454843b965ac85d1bbd7a47d3d55c8c3d4e0c6a869f6f4c7a4e93a4bdba0a2"
+        let key: String? = try? self.value(for: "personal_api")
+        guard let key, !key.isEmpty else {
+            /// Get your API key from https://www.cryptocompare.com/
+            #warning("Please Enter an API Key")
+            return ""
         }
-        return key
+        return key 
     }
 
     static var webSocketBaseUrl: String {
-        let url: String? = try? self.value(for: "WebSocket_BASE_URL")
+        let url: String? = try? self.value(for: "webSocket_base_url")
         return url ?? ""
     }
 }

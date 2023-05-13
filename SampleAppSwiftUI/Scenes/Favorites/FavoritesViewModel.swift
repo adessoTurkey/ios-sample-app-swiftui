@@ -71,7 +71,7 @@ class FavoritesViewModel: ObservableObject {
     }
 
     private func fetchDemoModel() {
-        guard let coinList = JsonHelper.make([CoinInfo].self, .coinList) else { return }
+        guard let coinList = JsonHelper.make([CoinData].self, .coinList) else { return }
         self.fillDemoData(coinList: coinList)
     }
 

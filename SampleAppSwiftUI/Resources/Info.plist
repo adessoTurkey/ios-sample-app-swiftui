@@ -2,8 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>WebSocket_Base_URL</key>
-	<string>$(WebSocket_BASE_URL)</string>
+	<key>webSocket_base_url</key>
+	<string>$(webSocket_base_url)</string>
+	<key>all_coin_base_url</key>
+	<string>$(all_coin_base_url)</string>
+	<key>personal_api</key>
+	<string>$(personal_api)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

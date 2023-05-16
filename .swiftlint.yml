@@ -94,7 +94,6 @@ identifier_name:
   max_length:
     warning: 40
     error: 64
-  validates_start_with_lowercase: true
   excluded:
     - id
 
@@ -116,7 +115,6 @@ type_name:
     warning: 3
   max_length:
     warning: 1000
-  validates_start_with_lowercase: true
   excluded:
     - "ID"
     - "Id"

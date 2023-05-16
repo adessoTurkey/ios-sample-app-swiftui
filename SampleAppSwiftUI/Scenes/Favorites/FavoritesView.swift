@@ -17,7 +17,7 @@ struct FavoritesView: View {
             ScrollView {
                 VStack {
                     SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.shortTop)
-                    CoinListView(filteredCoins: viewModel.filteredCoins, favoriteChanged: viewModel.fetchFavorites)
+                    CoinListView(filteredCoins: $viewModel.filteredCoins, favoriteChanged: viewModel.fetchFavorites)
                     Spacer()
                 }
                 .sidePadding(size: Paddings.side)

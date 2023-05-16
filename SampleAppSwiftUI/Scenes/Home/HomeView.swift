@@ -16,13 +16,15 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack(spacing: Spacings.home) {
+                LazyVStack(spacing: Spacings.home) {
                     SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.largeTop)
                     HomeFilterView(filterTitle: viewModel.filterTitle)
                         .padding(.bottom, Paddings.filterBottom)
-                    CoinListView(filteredCoins: viewModel.filteredCoins) {
-                        viewModel.fillModels(demo: true)
-}
+                    CoinListView(filteredCoins: $viewModel.filteredCoins) {
+                        Task {
+                            await viewModel.fillModels()
+                        }
+                    }
                 }
                 .sidePadding(size: Paddings.side)
             }
@@ -30,8 +32,11 @@ struct HomeView: View {
         }
         .background(Color.lightGray)
         .ignoresSafeArea(.all, edges: [.top, .trailing, .leading])
-        // .task { viewModel.startSocketConnection() }
-        .onAppear { viewModel.fillModels(demo: true) }
+        .onAppear {
+            Task {
+                await viewModel.fillModels()
+            }
+        }
         .onChange(of: searchTerm, perform: viewModel.filterResults(searchTerm:))
     }
 }

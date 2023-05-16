@@ -9,5 +9,8 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-PRODUCT_BUNDLE_IDENTIFIER = com.adesso.SampleAppSwiftUI
-WebSocket_BASE_URL = wss:/$()/ws-sandbox.coinapi.io/v1/
+webSocket_base_url = wss:/$()/streamer.cryptocompare.com/v2?api_key=%@
+
+all_coin_base_url = https:/$()/min-api.cryptocompare.com/data/top/mktcapfull?limit=%d&tsym=%@&page=%d&api_key=%@
+
+personal_api = 

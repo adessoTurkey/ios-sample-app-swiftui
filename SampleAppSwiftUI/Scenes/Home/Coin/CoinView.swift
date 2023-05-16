@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CoinView: View {
 
-    var coinInfo: CoinInfo
+    var coinInfo: CoinData
     @ObservedObject var viewModel: CoinInfoViewModel
 
     var body: some View {
@@ -17,7 +17,7 @@ struct CoinView: View {
             RoundedRectangle(cornerRadius: Dimensions.CornerRadius.default)
                 .fill(Color.coinCellBackground)
             HStack {
-                AsyncImage(url: viewModel.getURL(from: coinInfo.code)) { phase in
+                AsyncImage(url: viewModel.getURL(from: coinInfo.coinInfo?.code ?? "")) { phase in
                     if let image = phase.image {
                         image
                             .resizable()
@@ -25,8 +25,8 @@ struct CoinView: View {
                             .imageFrame()
                     } else if phase.error != nil {
                         VStack {
-                            Image(systemName: Images.close)
-                                .foregroundColor(.red)
+                            Image("default-coin")
+                                .resizable()
                                 .imageFrame()
                         }
                     } else {
@@ -38,21 +38,27 @@ struct CoinView: View {
                 .imageFrame()
 
                 VStack(alignment: .leading, spacing: Spacings.default) {
-                    Text(coinInfo.code)
-                        .font(Fonts.coin)
-                        .bold()
-                    Text(limitTextCharacter(for: coinInfo.title, limit: Numbers.coinTitleCharacterLimit))
-                        .lineLimit(Numbers.coinTitleLineLimit)
-                        .font(Fonts.coinName)
-                        .foregroundColor(Color(uiColor: .systemGray))
+                    if let coinInfo = coinInfo.coinInfo {
+                        Text(coinInfo.code ?? "")
+                            .font(Fonts.coin)
+                            .bold()
+                        Text(limitTextCharacter(for: coinInfo.title ?? "", limit: Numbers.coinTitleCharacterLimit))
+                            .lineLimit(Numbers.coinTitleLineLimit)
+                            .font(Fonts.coinName)
+                            .foregroundColor(Color(uiColor: .systemGray))
+                    }
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: Spacings.default) {
-                    Text(viewModel.createPriceString(coinInfo: coinInfo))
-                        .font(Fonts.coin)
-                        .bold()
-                    Text(viewModel.createChangeText(coinInfo: coinInfo))
-                        .foregroundColor(configureTextColor(coinInfo))
+                    if let rawData = coinInfo.detail,
+                       let usd = rawData.usd {
+                        Text(viewModel.createPriceString(rawData: usd))
+                            .font(Fonts.coin)
+                            .bold()
+                        Text(viewModel.createChangeText(rawData: usd))
+                            .font(Fonts.coinAmount)
+                            .foregroundColor(configureTextColor(usd))
+                    }
                 }
             }
             .sidePadding(size: Paddings.side)
@@ -68,8 +74,8 @@ struct CoinView: View {
         }
     }
 
-    func configureTextColor(_ coinInfo: CoinInfo) -> Color {
-        coinInfo.changeAmount < Numbers.absoluteZero ? .red : .green
+    func configureTextColor(_ rawData: RawUsd) -> Color {
+        rawData.changePercentage ?? Numbers.absoluteZero < Numbers.absoluteZero ? .red : .green
     }
 }
 

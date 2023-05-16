@@ -8,5 +8,5 @@
 import Foundation
 
 enum Range {
-    static let currency: ClosedRange = 2...4
+    static let currency: ClosedRange = 2...3
 }

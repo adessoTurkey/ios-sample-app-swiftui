@@ -10,11 +10,14 @@ import Foundation
 
 enum BaseEndpoint: TargetEndpointProtocol {
     case base
+    case allCoin
 
     var path: String {
         switch self {
             case .base:
-                return Configuration.baseURL
+            return Configuration.baseURL
+            case .allCoin:
+            return Configuration.allCoinBaseUrl
         }
     }
 }

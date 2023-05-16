@@ -12,8 +12,10 @@ class WebServiceProvider {
     static let shared: WebServiceProvider = WebServiceProvider()
 
     let exampleService: ExampleServiceProtocol
+    let allCoinService: AllCoinServiceProtocol
 
     private init() {
         exampleService = ExampleService()
+        allCoinService = AllCoinService()
     }
 }

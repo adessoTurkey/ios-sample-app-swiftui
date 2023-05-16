@@ -32,6 +32,7 @@ large_tuple: # warn user when using 3 values in tuple, give error if there are 4
    - 4
 
 opt_in_rules:
+  - anyobject_protocol
   - closure_spacing
   - conditional_returns_on_newline
   - duplicate_imports
@@ -51,6 +52,8 @@ opt_in_rules:
   - colon
   - comma
    
+anyobject_protocol:
+  severity: error
 
 
 conditional_returns_on_newline:

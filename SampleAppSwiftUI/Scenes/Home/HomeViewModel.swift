@@ -14,14 +14,14 @@ class HomeViewModel: ObservableObject {
     @Published var coinList: [CoinData] = []
     @Published var filteredCoins: [CoinData] = []
     @Published var filterTitle = "Most Popular"
-    
+
     func fillModels(demo: Bool = false) async {
         if demo {
             fetchDemoModel()
         }
         await fetchAllCoins()
     }
-    
+
     private func fetchAllCoins() async {
         guard let dataSource = try? await AllCoinRemoteDataSource().getAllCoin(limit: 30, unitToBeConverted: "USD", page: 1) else {
             print("Problem on the convert")
@@ -34,17 +34,17 @@ class HomeViewModel: ObservableObject {
             }
         }
     }
-    
+
     private func fetchDemoModel() {
         guard let coinList = JsonHelper.make([CoinData].self, .coinList) else { return }
         self.fillDemoData(coinList: coinList)
     }
-    
+
     private func fillDemoData(coinList: [CoinData]) {
         self.coinList = coinList
         self.filteredCoins = coinList
     }
-    
+
     func filterResults(searchTerm: String) {
         if !searchTerm.isEmpty {
             filteredCoins = coinList.filter { coin in

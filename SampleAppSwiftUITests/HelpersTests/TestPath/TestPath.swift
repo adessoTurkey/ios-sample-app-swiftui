@@ -7,7 +7,7 @@
 
 import Foundation
 
-//enum TestPath: MockPath {
+// enum TestPath: MockPath {
 //    case testDataPath
 //
 //    var value: String {
@@ -16,4 +16,4 @@ import Foundation
 //                return "testDataPath"
 //        }
 //    }
-//}
+// }

@@ -117,7 +117,7 @@ class FavoritesViewModel: ObservableObject {
                 if let oldPrice = coin.lowestToday,
                    let newPrice = coin.price {
                     var newCoin = self.filteredCoins[favoriteIndex]
-                    newCoin.detail?.usd?.changePercentage = oldPrice / newPrice * 100
+                    newCoin.detail?.usd?.changePercentage = oldPrice / newPrice
                     newCoin.detail?.usd?.changeAmount = newPrice - oldPrice
                     newCoin.detail?.usd?.price = newPrice
                     if true {

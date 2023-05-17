@@ -11,17 +11,19 @@ struct SettingsView: View {
 
     @State private var isDarkModeOn = false
     @State private var selectedParity: Parity = .USD
-
+    @EnvironmentObject private var router: Router
     var body: some View {
-        VStack(alignment: .leading, spacing: Spacings.settings) {
-            viewTitle
-            darkButton
-            paritySelection
-            Spacer()
-            removeButton
+        NavigationStack(path: $router.settingsNavigationPath) {
+            VStack(alignment: .leading, spacing: Spacings.settings) {
+                viewTitle
+                darkButton
+                paritySelection
+                Spacer()
+                removeButton
+            }
+            .padding([.leading, .trailing], Spacings.settings)
+            .edgesIgnoringSafeArea(.top)
         }
-        .padding([.leading, .trailing], Spacings.settings)
-        .edgesIgnoringSafeArea(.top)
     }
 }
 

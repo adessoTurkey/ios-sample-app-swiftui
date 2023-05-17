@@ -11,9 +11,10 @@ struct FavoritesView: View {
 
     @State private var searchTerm = ""
     @StateObject private var viewModel = FavoritesViewModel()
-
+    @EnvironmentObject private var router: Router
+    
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $router.favoritesNavigationPath) {
             ScrollView {
                 VStack {
                     SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.shortTop)
@@ -24,6 +25,12 @@ struct FavoritesView: View {
                 .navigationTitle(Text("Favorites"))
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar(content: createTopBar)
+            }
+            .navigationDestination(for: Screen.self) { screen in
+                switch screen {
+                case .detail:
+                    CoinDetailView()
+                }
             }
         }
         .background(Color.lightGray)

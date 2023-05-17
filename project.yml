@@ -8,7 +8,7 @@ configs:
 options:
   bundleIdPrefix: com.adesso
   deploymentTarget:
-    iOS: 15.0
+    iOS: 16.0
 
 settings:
   enableBaseInternationalization: true

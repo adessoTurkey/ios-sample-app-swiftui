@@ -12,9 +12,9 @@ struct HomeView: View {
 
     @StateObject private var viewModel = HomeViewModel()
     @State private var searchTerm = ""
-
+    @EnvironmentObject private var router: Router
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $router.homeNavigationPath) {
             ScrollView {
                 LazyVStack(spacing: Spacings.home) {
                     SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.largeTop)
@@ -29,6 +29,12 @@ struct HomeView: View {
                 .sidePadding(size: Paddings.side)
             }
             .ignoresSafeArea(.all, edges: .top)
+            .navigationDestination(for: Screen.self) { screen in
+                switch screen {
+                case .detail:
+                    CoinDetailView()
+                }
+            }
         }
         .background(Color.lightGray)
         .ignoresSafeArea(.all, edges: [.top, .trailing, .leading])

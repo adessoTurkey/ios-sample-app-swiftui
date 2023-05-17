@@ -11,20 +11,23 @@ import SwiftUI
 struct MainView: View {
 
     @StateObject private var storageManager = StorageManager.shared
-
+    @EnvironmentObject private var router: Router
     var body: some View {
-        TabView {
+        TabView(selection: $router.selectedTab) {
             HomeView()
+                .tag(TabIndex.home)
                 .tabItem {
-                    Image(systemName: "house.fill")
+                    Image(systemName: TabIndex.home.imageName())
                 }
             FavoritesView()
+                .tag(TabIndex.favorites)
                 .tabItem {
-                    Image(systemName: "star")
+                    Image(systemName: TabIndex.favorites.imageName())
                 }
             SettingsView()
+                .tag(TabIndex.settings)
                 .tabItem {
-                    Image(systemName: "gear")
+                    Image(systemName: TabIndex.settings.imageName())
                 }
         }
         .tint(.blue)

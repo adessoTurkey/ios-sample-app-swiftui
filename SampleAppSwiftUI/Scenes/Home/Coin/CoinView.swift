@@ -25,7 +25,7 @@ struct CoinView: View {
                             .imageFrame()
                     } else if phase.error != nil {
                         VStack {
-                            Image(R.image.defaultCoin)
+                            Asset.Images.defaultCoin.swiftUIImage
                                 .resizable()
                                 .imageFrame()
                         }

@@ -12,6 +12,11 @@ import Combine
 class FavoritesViewModel: ObservableObject {
     @Published var coins: [CoinData] = []
     @Published var filteredCoins: [CoinData] = []
+    
+    private var webSocketService: any WebSocketServiceProtocol
+    private var cancellable = Set<AnyCancellable>()
+    private var reconnectionCount: Int = 0
+    private var maxReconnectionCount: Int = 3
 
     @Published var coinInfo: CoinData?
     @Published var coinList: [CoinData] = []
@@ -66,6 +71,7 @@ class FavoritesViewModel: ObservableObject {
             })
             print(coins)
             print(filteredCoins)
+            self.startSocketConnection()
         }
     }
     

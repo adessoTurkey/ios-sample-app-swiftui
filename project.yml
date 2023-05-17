@@ -46,23 +46,11 @@ targets:
       - SampleAppSwiftUITests
       - SampleAppSwiftUIUITests
     preBuildScripts:
-        - name: SwiftLint
-          script: |
-                  export PATH="$PATH:/opt/homebrew/bin"
-                  if which swiftlint > /dev/null; then
-                      swiftlint
-                  else
-                      echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
-                  fi
+        - path: scripts/installation/swiftlint.sh
+          name: SwiftLint
           basedOnDependencyAnalysis: false
-        - name: SwiftGen
-          script: |
-                  export PATH="$PATH:/opt/homebrew/bin"
-                  if which swiftgen > /dev/null; then
-                      swiftgen config run
-                  else
-                      echo "warning: SwiftGen not installed, download it from https://github.com/SwiftGen/SwiftGen"
-                  fi
+        - path: scripts/installation/swiftgen.sh
+          name: SwiftGen
           basedOnDependencyAnalysis: false
   SampleAppSwiftUITests:
     dependencies:

@@ -17,9 +17,6 @@ packages:
   CocoaLumberjack:
     url: https://github.com/CocoaLumberjack/CocoaLumberjack
     majorVersion: 3.8.0
-  R.swift:
-    url: https://github.com/mac-cain13/R.swift
-    majorVersion: 7.2.4
   Pulse:
     url: https://github.com/kean/Pulse
     majorVersion: 3.0.0
@@ -36,9 +33,6 @@ targets:
       - package: Pulse
         product: Pulse
         product: PulseUI
-      - package: R.swift
-        product: rswift
-        product: RswiftLibrary
     configFiles:
         Development: SampleAppSwiftUI/Configs/Development.xcconfig
         Production: SampleAppSwiftUI/Configs/Production.xcconfig
@@ -47,9 +41,6 @@ targets:
     platform: iOS
     sources:
       - path: SampleAppSwiftUI
-      - path: "SampleAppSwiftUI/Generated/R.generated.swift"
-        optional: true
-        type: file
     scheme:
       testTargets:
       - SampleAppSwiftUITests
@@ -63,13 +54,16 @@ targets:
                   else
                       echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
                   fi
-        - name: Generate Resources with R.swift
+          basedOnDependencyAnalysis: false
+        - name: SwiftGen
           script: |
-                  $SRCROOT/rswift generate $SRCROOT/R.generated.swift
-          inputFiles:
-              - $TEMP_DIR/rswift-lastrun
-          outputFiles:
-              - $SRCROOT/$TARGET_NAME/Generated/R.generated.swift
+                  export PATH="$PATH:/opt/homebrew/bin"
+                  if which swiftgen > /dev/null; then
+                      swiftgen config run
+                  else
+                      echo "warning: SwiftGen not installed, download it from https://github.com/SwiftGen/SwiftGen"
+                  fi
+          basedOnDependencyAnalysis: false
   SampleAppSwiftUITests:
     dependencies:
       - target: SampleAppSwiftUI
@@ -79,9 +73,6 @@ targets:
       - package: Pulse
         product: Pulse
         product: PulseUI
-      - package: R.swift
-        product: rswift
-        product: RswiftLibrary
     type: bundle.unit-test
     platform: iOS
     sources:

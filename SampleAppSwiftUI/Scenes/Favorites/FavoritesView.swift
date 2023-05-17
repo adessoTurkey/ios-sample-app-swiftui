@@ -28,6 +28,7 @@ struct FavoritesView: View {
         }
         .background(Color.lightGray)
         .onAppear(perform: viewModel.fetchFavorites)
+        .onDisappear(perform: viewModel.disconnect)
         .onChange(of: searchTerm, perform: viewModel.filterResults(searchTerm:))
         .onChange(of: StorageManager.shared.favoriteCoins) { _ in
             viewModel.fetchFavorites()

@@ -10,10 +10,15 @@ import Foundation
 enum WebSocketEndpoint: TargetEndpointProtocol {
     case baseCoinApi
 
+    private struct Constants {
+        static let webSocketEndpoint = Configuration.webSocketBaseUrl
+        static let apiKey = Configuration.coinApiKey
+    }
+
     var path: String {
         switch self {
             case .baseCoinApi:
-                return Configuration.webSocketBaseUrl
+            return String(format: Constants.webSocketEndpoint, Constants.apiKey)
         }
     }
 }

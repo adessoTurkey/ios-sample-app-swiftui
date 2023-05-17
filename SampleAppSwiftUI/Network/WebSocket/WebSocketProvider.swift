@@ -14,7 +14,7 @@ class WebSocketProvider: NSObject {
 
     init? (endPoint: TargetEndpointProtocol = WebSocketEndpoint.baseCoinApi,
            session: URLSession = URLSession.shared ) {
-        guard let url = URL(string: "wss://streamer.cryptocompare.com/v2?api_key=850c771ef83eef797b910583fd0ae30582b9046270a2b5b7368ccb58b51e05a4") else { return nil }
+        guard let url = URL(string: WebSocketEndpoint.baseCoinApi.path) else { return nil }
         self.socket = WebSocketStream(url: url,
                                       session: session)
     }

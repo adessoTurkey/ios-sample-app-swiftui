@@ -21,15 +21,21 @@ class FavoritesViewModel: ObservableObject {
     @Published var coinInfo: CoinData?
     @Published var coinList: [CoinData] = []
     @Published var filterTitle = "Most Popular"
-    @Published var messages = [Element]()
 
     init(webSocketService: any WebSocketServiceProtocol = WebSocketService.shared) {
         self.webSocketService = webSocketService
+        startSocketConnection()
+    }
+    
+    deinit {
+        self.disconnect()
+        print("Ended Socket")
     }
 
     func startSocketConnection() {
         reconnectionCount = 0
-//        connect()
+        disconnect()
+        connect()
     }
 
     func fetchFavorites() {
@@ -69,25 +75,10 @@ class FavoritesViewModel: ObservableObject {
             self.startSocketConnection()
         }
     }
-
-    private func fetchModelDetails() {
-        if StorageManager.shared.favoriteCoins.isEmpty {
-            filteredCoins.removeAll()
-        } else {
-            filteredCoins = coins.filter({ coin in
-                if let info = coin.coinInfo,
-                   let code = info.code {
-                    return StorageManager.shared.isCoinFavorite(code: code)
-                } else {
-                    return false
-                }
-            })
-
-        }
-    }
-
+    
     func disconnect() {
         webSocketService.disconnect()
+        print("FavoritesViewModel.webSocketService.disconnect")
     }
 
     private func connect() {
@@ -120,25 +111,29 @@ class FavoritesViewModel: ObservableObject {
             self.webSocketDidReceiveMessage(socketData)
         }.store(in: &cancellable)
     }
-
-    private func fetchDemoModel() {
-        if let demoDataPath = Bundle.main.path(forResource: "CoinList", ofType: "json") {
-            let pathURL = URL(fileURLWithPath: demoDataPath)
-            do {
-                let data = try Data(contentsOf: pathURL, options: .mappedIfSafe)
-                let coinList = try JSONDecoder().decode([CoinData].self, from: data)
-                self.fillDemoData(coinList: coinList)
-            } catch let error {
-                print(error)
+    
+    private func webSocketDidReceiveMessage(_ socketResponse: URLSessionWebSocketTask.Message) {
+        if let coin: FavoritesCoinResponse = socketResponse.convert() {
+            if let favoriteIndex = self.filteredCoins.firstIndex(where: { $0.coinInfo?.code == coin.code }) {
+                if let oldPrice = coin.lowestToday,
+                   let newPrice = coin.price {
+                    var newCoin = self.filteredCoins[favoriteIndex]
+                    newCoin.detail?.usd?.changePercentage = oldPrice / newPrice * 100
+                    newCoin.detail?.usd?.changeAmount = newPrice - oldPrice
+                    newCoin.detail?.usd?.price = newPrice
+                    if true {
+                        let title = newCoin.coinInfo?.title ?? ""
+                        newCoin.coinInfo?.title =  "\(title)+"
+                    }
+                    self.filteredCoins[favoriteIndex] = newCoin
+                }
             }
+        } else {
+            print("!Parse Error", socketResponse,
+                  separator: "\n", terminator: "\n---|||---\n")
         }
     }
-
-    private func fillDemoData(coinList: [CoinData]) {
-        self.coins = coinList
-        self.filteredCoins = coinList
-    }
-
+    
     func filterResults(searchTerm: String = "") {
         if !searchTerm.isEmpty {
             filteredCoins = coins.filter { coin in
@@ -160,38 +155,5 @@ class FavoritesViewModel: ObservableObject {
                 }
             })
         }
-    }
-
-    private func webSocketDidReceiveMessage(_ socketResponse: URLSessionWebSocketTask.Message) {
-        if let coin: FavoritesCoinResponse = socketResponse.convert() {
-            if let favoriteIndex = self.filteredCoins.firstIndex(where: { $0.coinInfo?.code == coin.code }) {
-                var newCoin = self.filteredCoins[favoriteIndex]
-                let oldPrice = coin.lowestToday ?? 0
-                let newPrice = coin.price ?? 0
-                newCoin.detail?.usd?.changePercentage = oldPrice / newPrice * 100
-                newCoin.detail?.usd?.changeAmount = newPrice - oldPrice
-                newCoin.detail?.usd?.price = newPrice
-                self.filteredCoins[favoriteIndex] = newCoin
-            }
-        } else {
-            print("Parse Error", terminator: "\n*******\n")
-        }
-        print(socketResponse, terminator: "\n------\n")
-
-        switch socketResponse {
-            case .string(let text):
-                DispatchQueue.main.async {
-                    self.messages.append(Element(name: text))
-                }
-            case .data(let data):
-                print("******--------******")
-                print(socketResponse)
-                print("******--------******")
-                print(data)
-                print("******--------******")
-            @unknown default:
-                break
-        }
-
     }
 }

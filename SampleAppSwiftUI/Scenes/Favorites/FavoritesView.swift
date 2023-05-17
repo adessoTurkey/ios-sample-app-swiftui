@@ -21,10 +21,10 @@ struct FavoritesView: View {
                     Spacer()
                 }
                 .sidePadding(size: Paddings.side)
-                .navigationTitle(Text("Favorites"))
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar(content: createTopBar)
             }
+            .navigationTitle(Text(Strings.favorites))
         }
         .background(Color.lightGray)
         .onAppear(perform: viewModel.fetchFavorites)

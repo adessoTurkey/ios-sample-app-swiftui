@@ -65,7 +65,7 @@ targets:
                   fi
         - name: Generate Resources with R.swift
           script: |
-                  "$SRCROOT/rswift" generate "$SRCROOT/R.generated.swift"
+                  $SRCROOT/rswift generate $SRCROOT/R.generated.swift
           inputFiles:
               - $TEMP_DIR/rswift-lastrun
           outputFiles:

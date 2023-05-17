@@ -77,13 +77,13 @@ final class NetworkLoaderTests: XCTestCase {
         let (session, sut) = makeSUT()
         let data = anyJsonRepresentation("example")
         let expectation = expectation(description: "Wait for request")
-
+        // swiftlint:disable unhandled_throwing_task
         Task {
             let receivedObject = try await sut.request(with: anyRequestObject(), responseModel: TestResponse.self)
             XCTAssertEqual(receivedObject.value, "example")
             expectation.fulfill()
+            // swiftlint:enable unhandled_throwing_task
         }
-
         session.completeWith(data: data)
         wait(for: [expectation], timeout: 1)
     }

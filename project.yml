@@ -63,13 +63,13 @@ targets:
                   else
                       echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
                   fi
-        - name: Generate Resources with R.swift
-          script: |
+        - script: |
                   "$SRCROOT/rswift" generate "$SRCROOT/R.generated.swift"
-          inputFiles:
-              - $TEMP_DIR/rswift-lastrun
-          outputFiles:
-              - $SRCROOT/$TARGET_NAME/Generated/R.generated.swift
+        name: Generate Resources with R.swift
+        inputFiles:
+          - $TEMP_DIR/rswift-lastrun
+        outputFiles:
+          - $SRCROOT/$TARGET_NAME/Generated/R.generated.swift
   SampleAppSwiftUITests:
     dependencies:
       - target: SampleAppSwiftUI

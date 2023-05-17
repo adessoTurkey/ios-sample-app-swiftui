@@ -1,8 +1,6 @@
-if test ! $(which brew); then
-    echo "Installing homebrew..."
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+export PATH="$PATH:/opt/homebrew/bin"
+if which swiftlint > /dev/null; then
+swiftlint
+else
+echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
 fi
-# Update homebrew recipes
-brew update
-brew install swiftlint
-echo "Ready to go!.."

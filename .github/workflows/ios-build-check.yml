@@ -19,7 +19,7 @@ jobs:
         with:
             spec: project.yaml
             quiet: true
-            version: '2.34.0'
+            version: 'latest'
       - name: Generate Project
         run: |
           xcodegen generate

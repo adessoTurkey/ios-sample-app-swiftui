@@ -1,5 +1,5 @@
 input_dir: SampleAppSwiftUI/Resources
-output_dir: SampleAppSwiftUI/Generated/
+output_dir: SampleAppSwiftUI/Resources/Constants
 
 strings:
     inputs:

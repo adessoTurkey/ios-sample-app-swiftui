@@ -8,23 +8,18 @@
 import SwiftUI
 
 struct FavoritesView: View {
-
     @State private var searchTerm = ""
     @StateObject private var viewModel = FavoritesViewModel()
     @EnvironmentObject private var router: Router
     
     var body: some View {
         NavigationStack(path: $router.favoritesNavigationPath) {
-            ScrollView {
-                VStack {
-                    SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.shortTop)
+            VStack {
+                SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.shortTop)
+                Divider()
+                ScrollView {
                     CoinListView(filteredCoins: $viewModel.filteredCoins, favoriteChanged: viewModel.fetchFavorites)
-                    Spacer()
                 }
-                .sidePadding(size: Paddings.side)
-                .navigationTitle(Text("Favorites"))
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar(content: createTopBar)
             }
             .navigationDestination(for: Screen.self) { screen in
                 switch screen {
@@ -32,13 +27,20 @@ struct FavoritesView: View {
                     CoinDetailView()
                 }
             }
+            .sidePadding(size: Paddings.side)
+            .navigationTitle(Text(Strings.favorites))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar(content: createTopBar)
         }
         .background(Color.lightGray)
         .onAppear(perform: viewModel.fetchFavorites)
+        .onDisappear(perform: viewModel.disconnect)
         .onChange(of: searchTerm, perform: viewModel.filterResults(searchTerm:))
-        .onChange(of: StorageManager.shared.favoriteCoins) { _ in
-            viewModel.fetchFavorites()
-        }
+        .onChange(of: StorageManager.shared.favoriteCoins, perform: fetchFavorites)
+    }
+
+    private func fetchFavorites(codes: [CoinCode]) {
+        viewModel.fetchFavorites()
     }
 
     @ToolbarContentBuilder

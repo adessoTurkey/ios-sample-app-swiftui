@@ -42,7 +42,7 @@ struct CoinData: Codable, Hashable, Identifiable {
 // MARK: - CoinInfo
 struct CoinMarketCapsCoinInfo: Codable, Hashable {
     let code: CoinCode?
-    let title: String?
+    var title: String?
 
     static func == (lhs: CoinMarketCapsCoinInfo, rhs: CoinMarketCapsCoinInfo) -> Bool {
         lhs.code == rhs.code

@@ -15,6 +15,7 @@ struct SampleAppSwiftUIApp: App {
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     private var loggingService: LoggingService
     @StateObject private var router: Router = Router()
+
     init() {
         loggingService = LoggingService()
     }

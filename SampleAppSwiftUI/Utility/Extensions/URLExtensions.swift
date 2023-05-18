@@ -10,13 +10,13 @@ import UIKit
 
 public extension URL {
     var isDeeplink: Bool {
-        return scheme == "sampleapp"
+        scheme == "sampleapp"
     }
-    
+
     var isUniversalLink: Bool {
-        return UIApplication.shared.canOpenURL(self)
+        UIApplication.shared.canOpenURL(self)
     }
-    
+
     var screenType: Screen? {
         guard isDeeplink else { return nil }
         if let host {

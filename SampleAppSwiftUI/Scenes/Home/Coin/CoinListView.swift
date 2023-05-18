@@ -57,7 +57,7 @@ struct CoinListView: View {
     private func navigateCoinDetail() {
         router.navigateCoinDetail()
     }
-    
+
     func checkFavorite(code: String) {
         self.alertTitle = StorageManager.shared.manageFavorites(code: code)
         showingAlert.toggle()

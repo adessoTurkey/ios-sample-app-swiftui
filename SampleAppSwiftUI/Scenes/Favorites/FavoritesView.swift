@@ -11,7 +11,7 @@ struct FavoritesView: View {
     @State private var searchTerm = ""
     @StateObject private var viewModel = FavoritesViewModel()
     @EnvironmentObject private var router: Router
-    
+
     var body: some View {
         NavigationStack(path: $router.favoritesNavigationPath) {
             VStack {
@@ -23,8 +23,8 @@ struct FavoritesView: View {
             }
             .navigationDestination(for: Screen.self) { screen in
                 switch screen {
-                case .detail:
-                    CoinDetailView()
+                    case .detail:
+                        CoinDetailView()
                 }
             }
             .sidePadding(size: Paddings.side)

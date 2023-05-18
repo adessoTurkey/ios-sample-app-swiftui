@@ -17,6 +17,7 @@ class FavoritesViewModel: ObservableObject {
     private var cancellable = Set<AnyCancellable>()
     private var reconnectionCount: Int = 0
     private var maxReconnectionCount: Int = 3
+    private let checkWebSocket = true
 
     @Published var coinInfo: CoinData?
     @Published var coinList: [CoinData] = []
@@ -29,7 +30,6 @@ class FavoritesViewModel: ObservableObject {
     
     deinit {
         self.disconnect()
-        print("Ended Socket")
     }
 
     func startSocketConnection() {
@@ -77,26 +77,25 @@ class FavoritesViewModel: ObservableObject {
     
     func disconnect() {
         webSocketService.disconnect()
-        print("FavoritesViewModel.webSocketService.disconnect")
     }
 
     private func connect() {
         guard reconnectionCount < maxReconnectionCount,
              let service = webSocketService.connect(endPoint: .baseCoinApi) else {
-            print("Service connection error.", terminator: "\n*******\n")
+            NSLog("Service connection error.")
             return
         }
         service.setPing(time: 10)
         service.connectionHandler {[weak self] webservice in
             guard let self else { return }
-            var subs: [String] = []
+            var subs: [CoinCode] = []
             for coin in self.filteredCoins {
                 if let coinInfo = coin.coinInfo,
                    let code = coinInfo.code {
-                    subs.append("5~CCCAGG~\(code)~USD")
+                    subs.append(code)
                 }
             }
-            let request = FavoritesCoinRequest(action: SubscriptionRequestAction.add.rawValue, subs: subs)
+            let request = FavoritesCoinRequest(action: .add, codeList: subs)
             webservice.sendMessage(request)
         } disconnected: { [weak self] closeCode in
             guard let self,
@@ -112,24 +111,22 @@ class FavoritesViewModel: ObservableObject {
     }
     
     private func webSocketDidReceiveMessage(_ socketResponse: URLSessionWebSocketTask.Message) {
-        if let coin: FavoritesCoinResponse = socketResponse.convert() {
-            if let favoriteIndex = self.filteredCoins.firstIndex(where: { $0.coinInfo?.code == coin.code }) {
-                if let oldPrice = coin.lowestToday,
-                   let newPrice = coin.price {
-                    var newCoin = self.filteredCoins[favoriteIndex]
-                    newCoin.detail?.usd?.changePercentage = oldPrice / newPrice
-                    newCoin.detail?.usd?.changeAmount = newPrice - oldPrice
-                    newCoin.detail?.usd?.price = newPrice
-                    if true {
-                        let title = newCoin.coinInfo?.title ?? ""
-                        newCoin.coinInfo?.title =  "\(title)+"
-                    }
-                    self.filteredCoins[favoriteIndex] = newCoin
-                }
+        guard let coin: FavoritesCoinResponse = socketResponse.convert() else {
+            NSLog("Parse Error: \n\(socketResponse)")
+            return
+        }
+        if let favoriteIndex = self.filteredCoins.firstIndex(where: { $0.coinInfo?.code == coin.code }),
+           let oldPrice = coin.lowestToday,
+           let newPrice = coin.price {
+            var newCoin = self.filteredCoins[favoriteIndex]
+            newCoin.detail?.usd?.changePercentage = oldPrice / newPrice
+            newCoin.detail?.usd?.changeAmount = newPrice - oldPrice
+            newCoin.detail?.usd?.price = newPrice
+            if checkWebSocket {
+                let title = newCoin.coinInfo?.title ?? ""
+                newCoin.coinInfo?.title =  "\(title)+"
             }
-        } else {
-            print("!Parse Error", socketResponse,
-                  separator: "\n", terminator: "\n---|||---\n")
+            self.filteredCoins[favoriteIndex] = newCoin
         }
     }
     

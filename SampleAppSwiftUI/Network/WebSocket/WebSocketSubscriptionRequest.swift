@@ -22,13 +22,20 @@ let sampleSubscriptionRequest = """
 // MARK: - FavoritesCoinRequest
 struct FavoritesCoinRequest: Codable {
     let action: String
-    let subs: [String]
+    var subs: [String]
 }
 
 extension FavoritesCoinRequest {
-    init(action: SubscriptionRequestAction, code: CoinCode, toChange: String = "USD") {
+    init(action: SubscriptionRequestAction, codeList: [CoinCode], toChange: String = "USD") {
         self.action = action.rawValue
-        self.subs = ["5~CCCAGG~\(code)~\(toChange)"]
+        self.subs = []
+        for code in codeList {
+            self.subs.append(addApiFormat(code: code, toChange: toChange))
+        }
+    }
+    
+    private func addApiFormat(code: CoinCode, toChange: String = "USD") -> String {
+        "5~CCCAGG~\(code)~\(toChange)"
     }
 }
 

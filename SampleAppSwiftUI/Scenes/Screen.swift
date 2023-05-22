@@ -9,5 +9,5 @@ import Foundation
 
 public enum Screen: String, Hashable {
     case detail
-    
+
 }

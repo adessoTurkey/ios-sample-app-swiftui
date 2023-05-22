@@ -1,0 +1,25 @@
+input_dir: SampleAppSwiftUI/Resources
+output_dir: SampleAppSwiftUI/Resources/Constants
+
+strings:
+    inputs:
+        - en.lproj
+    outputs:
+        templateName: structured-swift5
+        params:
+            publicAccess: true
+            enumName: Strings
+        output: Strings+Generated.swift
+xcassets:
+    inputs:
+        - Assets.xcassets
+        - Colors.xcassets
+        - Icons.xcassets
+        - Images.xcassets
+    outputs:
+        templateName: swift5
+        params:
+            forceProvidesNamespaces: true
+            forceFileNameEnum: true
+        output: Assets+Generated.swift
+

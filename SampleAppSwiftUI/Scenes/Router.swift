@@ -13,13 +13,11 @@ final public class Router: ObservableObject {
     @Published var favoritesNavigationPath: [Screen] = []
     @Published var settingsNavigationPath: [Screen] = []
     @Published var selectedTab: TabIndex = .home
-    
     var tabbarNames: [TabIndex] = [.home, .favorites, .settings]
-    
     func navigateCoinDetail() {
         if selectedTab == .home {
             homeNavigationPath.append(Screen.detail)
-        }else if selectedTab == .favorites {
+        } else if selectedTab == .favorites {
             favoritesNavigationPath.append(Screen.detail)
         }
     }
@@ -29,15 +27,14 @@ public enum TabIndex: String {
     case home
     case favorites
     case settings
-    
     func imageName() -> String {
         switch self {
-        case .home:
-            return "house.fill"
-        case .favorites:
-            return "star"
-        case .settings:
-            return "gear"
+            case .home:
+                return "house.fill"
+            case .favorites:
+                return "star"
+            case .settings:
+                return "gear"
         }
     }
 }

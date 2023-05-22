@@ -31,8 +31,8 @@ struct HomeView: View {
             .ignoresSafeArea(.all, edges: .top)
             .navigationDestination(for: Screen.self) { screen in
                 switch screen {
-                case .detail:
-                    CoinDetailView()
+                    case .detail:
+                        CoinDetailView()
                 }
             }
         }

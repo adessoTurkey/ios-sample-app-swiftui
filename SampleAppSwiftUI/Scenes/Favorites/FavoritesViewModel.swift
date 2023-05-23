@@ -12,7 +12,7 @@ import Combine
 class FavoritesViewModel: ObservableObject {
     @Published var coins: [CoinData] = []
     @Published var filteredCoins: [CoinData] = []
-    
+
     private var webSocketService: any WebSocketServiceProtocol
     private var cancellable = Set<AnyCancellable>()
     private var reconnectionCount: Int = 0
@@ -27,7 +27,7 @@ class FavoritesViewModel: ObservableObject {
         self.webSocketService = webSocketService
         startSocketConnection()
     }
-    
+
     deinit {
         self.disconnect()
     }
@@ -74,7 +74,7 @@ class FavoritesViewModel: ObservableObject {
             self.startSocketConnection()
         }
     }
-    
+
     func disconnect() {
         webSocketService.disconnect()
     }
@@ -109,7 +109,7 @@ class FavoritesViewModel: ObservableObject {
             self.webSocketDidReceiveMessage(socketData)
         }.store(in: &cancellable)
     }
-    
+
     private func webSocketDidReceiveMessage(_ socketResponse: URLSessionWebSocketTask.Message) {
         guard let coin: FavoritesCoinResponse = socketResponse.convert() else {
             NSLog("Parse Error: \n\(socketResponse)")
@@ -129,7 +129,7 @@ class FavoritesViewModel: ObservableObject {
             self.filteredCoins[favoriteIndex] = newCoin
         }
     }
-    
+
     func filterResults(searchTerm: String = "") {
         if !searchTerm.isEmpty {
             filteredCoins = coins.filter { coin in

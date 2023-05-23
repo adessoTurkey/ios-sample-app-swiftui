@@ -10,6 +10,9 @@ options:
   deploymentTarget:
     iOS: 15.0
 
+attributes:
+  BuildIndependentTargetsInParallel: true
+
 settings:
   enableBaseInternationalization: true
   

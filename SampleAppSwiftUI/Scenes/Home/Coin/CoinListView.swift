@@ -11,10 +11,9 @@ struct CoinListView: View {
     @Binding var filteredCoins: [CoinData]
 
     @StateObject private var coinInfoViewModel = CoinInfoViewModel()
-
     @State private var showingAlert = false
     @State private var alertTitle = ""
-
+    @EnvironmentObject private var router: Router
     let favoriteChanged: () -> Void
 
     var body: some View {
@@ -30,8 +29,9 @@ struct CoinListView: View {
                 ForEach(filteredCoins) { coin in
                     if let coinInfo = coin.coinInfo,
                        coin.detail != nil {
-                        NavigationLink(destination: CoinDetailView()) {
-                            CoinView(coinInfo: coin, viewModel: coinInfoViewModel)
+                        CoinView(coinInfo: coin, viewModel: coinInfoViewModel)
+                        .onTapGesture {
+                            navigateCoinDetail()
                         }
                         .listRowInsets(.init())
                         .listRowSeparator(.hidden)
@@ -52,6 +52,10 @@ struct CoinListView: View {
             .animation(.easeInOut, value: filteredCoins)
             .alert(isPresented: $showingAlert, content: configureAlert)
         }
+    }
+
+    private func navigateCoinDetail() {
+        router.navigateCoinDetail()
     }
 
     func checkFavorite(code: String) {

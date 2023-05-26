@@ -14,6 +14,7 @@ struct SampleAppSwiftUIApp: App {
         // Check out https://developer.apple.com/documentation/swiftui/scenephase for more information
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     private var loggingService: LoggingService
+    @StateObject private var router: Router = Router()
 
     init() {
         loggingService = LoggingService()
@@ -22,6 +23,7 @@ struct SampleAppSwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
+                .environmentObject(router)
                 .onChange(of: phase, perform: manageChanges(for:))
                 .onOpenURL(perform: onOpenURL(_:))
         }
@@ -50,5 +52,7 @@ struct SampleAppSwiftUIApp: App {
      func activated() {}
      func backgrounded() {}
      func deactivated() {}
-     func onOpenURL(_ url: URL) {} // URL Opening management. Same as AppDelegate's `application(_:open:options:)`
+     func onOpenURL(_ url: URL) {
+         router.onOpenURL(url)
+     }
  }

@@ -10,9 +10,9 @@ import SwiftUI
 struct FavoritesView: View {
     @State private var searchTerm = ""
     @StateObject private var viewModel = FavoritesViewModel()
-
+    @EnvironmentObject private var router: Router
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $router.favoritesNavigationPath) {
             VStack {
                 SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.shortTop)
                 Divider()
@@ -20,11 +20,16 @@ struct FavoritesView: View {
                     CoinListView(filteredCoins: $viewModel.filteredCoins, favoriteChanged: viewModel.fetchFavorites)
                 }
             }
+            .navigationDestination(for: Screen.self) { screen in
+                switch screen {
+                    case .detail:
+                        CoinDetailView()
+                }
+            }
             .sidePadding(size: Paddings.side)
             .navigationTitle(Text(Strings.favorites))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: createTopBar)
-
         }
         .background(Color.lightGray)
         .onAppear(perform: viewModel.fetchFavorites)

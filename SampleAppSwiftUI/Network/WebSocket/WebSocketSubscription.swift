@@ -33,16 +33,28 @@ class WebSocketSubscription<S: Subscriber>: Subscription where S.Input == URLSes
         }
     }
 
+//    private func listenSocket() async {
+//        guard let subscriber = subscriber else {
+//            debugPrint("no subscriber")
+//            return }
+//        do {
+//            for try await message in socket {
+//                _ = subscriber.receive(message)
+//            }
+//        } catch {
+//            debugPrint("Someting went wrong")
+//        }
+//    }
     private func listenSocket() async {
         guard let subscriber = subscriber else {
             debugPrint("no subscriber")
             return }
-        do {
-            for try await message in socket {
+
+        Task.detached { [weak self] in
+            guard let self else { return }
+            for try await message in self.socket {
                 _ = subscriber.receive(message)
             }
-        } catch {
-            debugPrint("Someting went wrong")
         }
     }
 }

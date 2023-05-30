@@ -29,8 +29,6 @@ final class WebSocketService: NSObject, WebSocketServiceProtocol {
     private var disconnectionHandler: (URLSessionWebSocketTask.CloseCode) -> Void = { _ in }
     private var connectionHandler: (any WebSocketServiceProtocol) -> Void = { _ in }
 
-    private override init() {}
-
     func connect(endPoint: TargetEndpointProtocol) -> (any WebSocketServiceProtocol)? {
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
         guard let provider = WebSocketProvider(endPoint: endPoint, session: session) else {

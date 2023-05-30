@@ -20,8 +20,7 @@ final class WebSocketServiceTest: XCTestCase {
     func test_connect_returnsItself_ifEndPointIsValid() {
         let sut = makeSUT()
         let endPoint = TestTargetEndpoint(path: anyWssUrl())
-//        XCTAssertNil(sut.connect(endPoint: endPoint), "Expected Itself, while valid Url, got sut \(String(describing: sut.stream))")
-        XCTAssertNotNil(sut.connect(endPoint: endPoint))
+        XCTAssertNotNil(sut.connect(endPoint: endPoint), "Expected Itself, while valid Url, got sut \(String(describing: sut.stream))")
     }
 
     func test_receive_receiveNotCalled_IfCalledWithoutConnect() {
@@ -37,6 +36,15 @@ final class WebSocketServiceTest: XCTestCase {
         sut.connect(endPoint: TestTargetEndpoint(path: anyWssUrl()))?
             .receive(subscriber: subscriber)
         XCTAssertTrue(subscriber.didReceiveCalled)
+    }
+
+    func test_disconnect_streamIsNil() {
+        let sut = makeSUT()
+        let endPoint = TestTargetEndpoint(path: anyWssUrl())
+        XCTAssertNotNil(sut.connect(endPoint: endPoint),
+                        "Expected Itself, while valid Url, got sut \(String(describing: sut.stream))")
+        sut.disconnect()
+        XCTAssertNil(sut.stream, "Expected nil, after disconnect method, got sut \(String(describing: sut.stream))")
     }
 
     // MARK: Helpers

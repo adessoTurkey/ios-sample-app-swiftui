@@ -8,7 +8,8 @@
 import Foundation
 
 enum Paddings {
-    static let side: CGFloat = 16
+    static let side: CGFloat = 8
+    static let cellVertical: CGFloat = 4
     static let filterBottom: CGFloat = 12
     static let titleTop: CGFloat = 75
 

@@ -20,7 +20,7 @@ struct SettingTextModifier: ViewModifier {
 }
 
 extension View {
-    func settingsTextStyle(fontType: Font.Weight, fontSize: Font, foregroundColor: Color) -> some View {
+    func settingsTextStyle(fontType: Font.Weight = .regular, fontSize: Font, foregroundColor: Color) -> some View {
         modifier(SettingTextModifier(fontType: fontType, fontSize: fontSize, foregroundColor: foregroundColor))
     }
 }

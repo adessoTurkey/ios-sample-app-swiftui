@@ -25,7 +25,6 @@ struct SearchBarView: View {
         }
         .frame(height: Dimensions.searchBarHeight)
         .cornerRadius(Dimensions.CornerRadius.default)
-        .sidePadding(size: Paddings.side)
         .lightShadow(color: .shadowColor)
         .padding(.top, topPadding)
         .padding(.bottom, Paddings.SearchBar.bottom)

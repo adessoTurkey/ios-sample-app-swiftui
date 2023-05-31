@@ -30,6 +30,7 @@ struct CoinListView: View {
                     if let coinInfo = coin.coinInfo,
                        coin.detail != nil {
                         CoinView(coinInfo: coin, viewModel: coinInfoViewModel)
+                            .padding(.vertical, Paddings.cellVertical)
                         .onTapGesture {
                             navigateCoinDetail()
                         }

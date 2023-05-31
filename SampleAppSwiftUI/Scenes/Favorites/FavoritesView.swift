@@ -21,9 +21,8 @@ struct FavoritesView: View {
                 }
             }
             .navigationDestination(for: Screen.self) { screen in
-                switch screen {
-                    case .detail:
-                        CoinDetailView()
+                if screen.type == .detail, let data = screen.data as? CoinData {
+                    CoinDetailView(coinData: data)
                 }
             }
             .sidePadding(size: Paddings.side)

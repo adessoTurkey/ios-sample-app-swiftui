@@ -9,8 +9,6 @@ import SwiftUI
 
 struct CoinListView: View {
     @Binding var filteredCoins: [CoinData]
-
-    @StateObject private var coinInfoViewModel = CoinInfoViewModel()
     @State private var showingAlert = false
     @State private var alertTitle = ""
     @EnvironmentObject private var router: Router
@@ -29,9 +27,9 @@ struct CoinListView: View {
                 ForEach(filteredCoins) { coin in
                     if let coinInfo = coin.coinInfo,
                        coin.detail != nil {
-                        CoinView(coinInfo: coin, viewModel: coinInfoViewModel)
+                        CoinView(coinInfo: coin)
                         .onTapGesture {
-                            navigateCoinDetail()
+                            navigateCoinDetail(coinData: coin)
                         }
                         .listRowInsets(.init())
                         .listRowSeparator(.hidden)
@@ -55,8 +53,8 @@ struct CoinListView: View {
         }
     }
 
-    private func navigateCoinDetail() {
-        router.navigateCoinDetail()
+    private func navigateCoinDetail(coinData: CoinData) {
+        router.navigateCoinDetail(coinData: coinData)
     }
 
     func checkFavorite(code: String) {

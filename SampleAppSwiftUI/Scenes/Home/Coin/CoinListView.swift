@@ -45,6 +45,7 @@ struct CoinListView: View {
                             }
                             .tint(StorageManager.shared.isCoinFavorite(code: coinInfo.code ?? "") ? .red : .green)
                         }
+                        .accessibilityIdentifier("coinView")
                     }
                 }
             }

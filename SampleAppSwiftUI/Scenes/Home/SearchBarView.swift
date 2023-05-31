@@ -20,6 +20,7 @@ struct SearchBarView: View {
                     .foregroundColor(.searchIcon)
                 TextField("Search for a name or symbol", text: $searchText)
                     .font(Fonts.searchBar)
+                    .accessibilityIdentifier("searchBarViewInputField")
             }
             .padding(.all)
         }

@@ -57,9 +57,11 @@ extension SettingsView {
                 Picker("Parities", selection: $selectedParity) {
                     ForEach(Parity.allCases) { parity in
                         Text(parity.rawValue)
+                            .accessibilityIdentifier("settingsViewParitySelectionPickerCell")
                     }
                 }
                 .tint(.settingsParitySetColor)
+                .accessibilityIdentifier("settingsViewParitySelectionPicker")
             }
             .settingsLineStyle(height: Dimensions.lineHeight)
             .padding(.bottom, Spacings.home)

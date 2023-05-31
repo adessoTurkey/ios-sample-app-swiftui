@@ -1,0 +1,4 @@
+appId: com.adesso.SampleAppSwiftUI.development
+---
+- runFlow: settingsScreenDarkModeToggleTest.yaml
+- runFlow: settingsScreenParitySelectionTest.yaml

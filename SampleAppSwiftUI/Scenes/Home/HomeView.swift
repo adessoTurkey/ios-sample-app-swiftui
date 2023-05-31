@@ -26,7 +26,7 @@ struct HomeView: View {
                         }
                     }
                 }
-                .sidePadding(size: Paddings.side)
+                .padding(.horizontal, Paddings.side)
             }
             .ignoresSafeArea(.all, edges: .top)
             .navigationDestination(for: Screen.self) { screen in

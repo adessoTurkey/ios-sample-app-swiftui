@@ -26,7 +26,7 @@ struct FavoritesView: View {
                         CoinDetailView()
                 }
             }
-            .sidePadding(size: Paddings.side)
+            .padding(.horizontal, Paddings.side)
             .navigationTitle(Text(Strings.favorites))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: createTopBar)

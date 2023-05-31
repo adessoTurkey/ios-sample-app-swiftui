@@ -22,4 +22,13 @@ enum Paddings {
         static let line: CGFloat = 8
         static let bottom: CGFloat = 14
     }
+
+    enum CoinDetailView {
+        static let top: CGFloat = 30
+    }
+
+    enum ChangePercentageView {
+        static let side: CGFloat = 12
+        static let top: CGFloat = 6
+    }
 }

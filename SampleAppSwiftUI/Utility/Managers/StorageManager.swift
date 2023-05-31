@@ -47,6 +47,7 @@ final class StorageManager: ObservableObject {
         }
     }
 
+    @discardableResult
     func manageFavorites(code: CoinCode) -> String {
         let output = isCoinFavorite(code: code) ? "Removed from Favorites" : "Added to Favorites"
         toggleFavoriteCoin(code: code)

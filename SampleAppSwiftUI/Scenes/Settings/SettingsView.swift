@@ -11,17 +11,19 @@ struct SettingsView: View {
 
     @State private var isDarkModeOn = false
     @State private var selectedParity: Parity = .USD
-
+    @EnvironmentObject private var router: Router
     var body: some View {
-        VStack(alignment: .leading, spacing: Spacings.settings) {
-            viewTitle
-            darkButton
-            paritySelection
-            Spacer()
-            removeButton
+        NavigationStack(path: $router.settingsNavigationPath) {
+            VStack(alignment: .leading, spacing: Spacings.settings) {
+                viewTitle
+                darkButton
+                paritySelection
+                Spacer()
+                removeButton
+            }
+            .padding([.leading, .trailing], Spacings.settings)
+            .edgesIgnoringSafeArea(.top)
         }
-        .padding([.leading, .trailing], Spacings.settings)
-        .edgesIgnoringSafeArea(.top)
     }
 }
 
@@ -55,9 +57,11 @@ extension SettingsView {
                 Picker("Parities", selection: $selectedParity) {
                     ForEach(Parity.allCases) { parity in
                         Text(parity.rawValue)
+                            .accessibilityIdentifier("settingsViewParitySelectionPickerCell")
                     }
                 }
                 .tint(.settingsParitySetColor)
+                .accessibilityIdentifier("settingsViewParitySelectionPicker")
             }
             .settingsLineStyle(height: Dimensions.lineHeight)
             .padding(.bottom, Spacings.home)

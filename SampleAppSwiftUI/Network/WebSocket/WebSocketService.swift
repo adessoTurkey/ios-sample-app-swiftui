@@ -9,8 +9,8 @@ import Foundation
 import Combine
 
 protocol WebSocketServiceProtocol: AnyObject, Publisher where Self.Output == URLSessionWebSocketTask.Message, Self.Failure == Error {
-    func connect(endPoint: TargetEndpointProtocol) -> (any WebSocketServiceProtocol)?
-    func sendMessage(_ message: WebSocketMessageProtocol)
+    func connect(endPoint: WebSocketEndpoint) -> (any WebSocketServiceProtocol)?
+    func sendMessage(_ message: FavoritesCoinRequest)
     func disconnect()
     func connectionHandler(connected: @escaping (any WebSocketServiceProtocol) -> Void,
                            disconnected: @escaping (URLSessionWebSocketTask.CloseCode) -> Void) -> AnyPublisher<URLSessionWebSocketTask.Message, Error>
@@ -51,7 +51,7 @@ final class WebSocketService: NSObject, WebSocketServiceProtocol {
         return self.eraseToAnyPublisher()
     }
 
-    func sendMessage(_ message: WebSocketMessageProtocol) {
+    func sendMessage(_ message: FavoritesCoinRequest) {
         guard let messageString = message.toJSONString() else { return }
         stream?.send(string: messageString)
     }

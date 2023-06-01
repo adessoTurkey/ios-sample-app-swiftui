@@ -8,7 +8,10 @@ configs:
 options:
   bundleIdPrefix: com.adesso
   deploymentTarget:
-    iOS: 15.0
+    iOS: 16.0
+
+attributes:
+  BuildIndependentTargetsInParallel: true
 
 settings:
   enableBaseInternationalization: true
@@ -17,9 +20,6 @@ packages:
   CocoaLumberjack:
     url: https://github.com/CocoaLumberjack/CocoaLumberjack
     majorVersion: 3.8.0
-  R.swift:
-    url: https://github.com/mac-cain13/R.swift
-    majorVersion: 7.2.4
   Pulse:
     url: https://github.com/kean/Pulse
     majorVersion: 3.0.0
@@ -36,9 +36,6 @@ targets:
       - package: Pulse
         product: Pulse
         product: PulseUI
-      - package: R.swift
-        product: rswift
-        product: RswiftLibrary
     configFiles:
         Development: SampleAppSwiftUI/Configs/Development.xcconfig
         Production: SampleAppSwiftUI/Configs/Production.xcconfig
@@ -52,14 +49,12 @@ targets:
       - SampleAppSwiftUITests
       - SampleAppSwiftUIUITests
     preBuildScripts:
-        - name: SwiftLint
-          script: |
-                  export PATH="$PATH:/opt/homebrew/bin"
-                  if which swiftlint > /dev/null; then
-                      swiftlint
-                  else
-                      echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
-                  fi
+        - path: scripts/installation/swiftlint.sh
+          name: SwiftLint
+          basedOnDependencyAnalysis: false
+        - path: scripts/installation/swiftgen.sh
+          name: SwiftGen
+          basedOnDependencyAnalysis: false
   SampleAppSwiftUITests:
     dependencies:
       - target: SampleAppSwiftUI
@@ -69,9 +64,6 @@ targets:
       - package: Pulse
         product: Pulse
         product: PulseUI
-      - package: R.swift
-        product: rswift
-        product: RswiftLibrary
     type: bundle.unit-test
     platform: iOS
     sources:

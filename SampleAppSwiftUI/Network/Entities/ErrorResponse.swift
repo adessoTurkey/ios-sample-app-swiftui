@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ErrorResponse: Decodable {
+class ErrorResponse: Codable {
     var code: Int?
     var message: String?
     var messages: [String: String]?

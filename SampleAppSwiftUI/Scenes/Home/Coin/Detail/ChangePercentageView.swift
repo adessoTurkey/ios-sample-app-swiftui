@@ -32,4 +32,3 @@ struct ChangePercentageView_Previews: PreviewProvider {
         ChangePercentageView(changeRate: CoinData.demo.detail?.usd ?? .init())
     }
 }
-

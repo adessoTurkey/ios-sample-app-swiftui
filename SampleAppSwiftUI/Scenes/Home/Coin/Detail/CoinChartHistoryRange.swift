@@ -39,3 +39,28 @@ extension CoinChartHistoryRange {
         }
     }
 }
+
+extension CoinChartHistoryRange {
+    struct XAxisFormatter {
+        var strideCalendarComponent: Calendar.Component
+        var strideCount: Int
+        var valueLabelDateFormatStyle: Date.FormatStyle
+    }
+
+    var xAxisFormatter: XAxisFormatter {
+        switch self {
+            case .oneDay:
+            return XAxisFormatter(strideCalendarComponent: .hour, strideCount: 4, valueLabelDateFormatStyle: .dateTime.hour(.defaultDigits(amPM: .abbreviated)))
+            case .oneWeek:
+                return XAxisFormatter(strideCalendarComponent: .day, strideCount: 1, valueLabelDateFormatStyle: .dateTime.day(.twoDigits))
+            case .oneMonth:
+                return XAxisFormatter(strideCalendarComponent: .day, strideCount: 7, valueLabelDateFormatStyle: .dateTime.day(.twoDigits))
+            case .threeMonth, .sixMonth:
+                return XAxisFormatter(strideCalendarComponent: .month, strideCount: 1, valueLabelDateFormatStyle: .dateTime.month(.abbreviated))
+            case .oneYear:
+                return XAxisFormatter(strideCalendarComponent: .month, strideCount: 3, valueLabelDateFormatStyle: .dateTime.month(.abbreviated))
+            case .all:
+                return XAxisFormatter(strideCalendarComponent: .year, strideCount: 1, valueLabelDateFormatStyle: .dateTime.year())
+        }
+    }
+}

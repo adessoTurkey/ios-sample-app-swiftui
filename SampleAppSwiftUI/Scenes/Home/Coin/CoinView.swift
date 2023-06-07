@@ -59,7 +59,7 @@ struct CoinView: View {
                     }
                 }
             }
-            .sidePadding(size: Paddings.side)
+            .padding(.horizontal, Paddings.side)
         }
         .frame(height: Dimensions.coinCellSize)
     }
@@ -86,7 +86,8 @@ struct CoinView_Previews: PreviewProvider {
         }
         .previewLayout(.sizeThatFits)
         .frame(height: Dimensions.coinCellSize)
-        .topBottomPadding()
-        .sidePadding(size: Paddings.side)
+        .padding(.horizontal, Paddings.side)
+        .padding(.vertical)
+
     }
 }

@@ -14,6 +14,7 @@ final public class Router: ObservableObject {
     @Published var settingsNavigationPath: [Screen] = []
     @Published var selectedTab: TabIndex = .home
     var tabbarNames: [TabIndex] = [.home, .favorites, .settings]
+
     func navigateCoinDetail() {
         if selectedTab == .home {
             homeNavigationPath.append(Screen.detail)

@@ -26,7 +26,6 @@ struct SearchBarView: View {
         }
         .frame(height: Dimensions.searchBarHeight)
         .cornerRadius(Dimensions.CornerRadius.default)
-        .sidePadding(size: Paddings.side)
         .lightShadow(color: .shadowColor)
         .padding(.top, topPadding)
         .padding(.bottom, Paddings.SearchBar.bottom)
@@ -38,6 +37,6 @@ struct SearchBarView_Previews: PreviewProvider {
         SearchBarView(searchText: .constant(""), topPadding: Paddings.SearchBar.shortTop)
             .previewLayout(.sizeThatFits)
             .frame(width: .infinity, height: Dimensions.searchBarHeight)
-            .topBottomPadding()
+            .padding(.vertical)
     }
 }

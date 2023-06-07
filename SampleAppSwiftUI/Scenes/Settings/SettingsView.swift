@@ -42,7 +42,7 @@ extension SettingsView {
     private var darkButton: some View {
         VStack {
             Toggle("Dark Mode:", isOn: $isDarkModeOn)
-                .settingsTextStyle(fontType: .bold, fontSize: .body, foregroundColor: .settingsLineTitleColor)
+                .settingsTextStyle(fontSize: .body, foregroundColor: .settingsLineTitleColor)
                 .settingsLineStyle(height: Dimensions.lineHeight)
         }
         .preferredColorScheme(isDarkModeOn ? .dark : .light)
@@ -52,7 +52,7 @@ extension SettingsView {
         VStack(spacing: 0) {
             HStack {
                 Text("Currency")
-                    .settingsTextStyle(fontType: .bold, fontSize: .body, foregroundColor: .settingsLineTitleColor)
+                    .settingsTextStyle(fontSize: .body, foregroundColor: .settingsLineTitleColor)
                 Spacer()
                 Picker("Parities", selection: $selectedParity) {
                     ForEach(Parity.allCases) { parity in

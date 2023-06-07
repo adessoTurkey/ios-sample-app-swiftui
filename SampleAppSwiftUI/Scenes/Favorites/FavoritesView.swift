@@ -16,9 +16,7 @@ struct FavoritesView: View {
             VStack {
                 SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.shortTop)
                 Divider()
-                ScrollView {
-                    CoinListView(filteredCoins: $viewModel.filteredCoins, favoriteChanged: viewModel.fetchFavorites)
-                }
+                CoinListView(filteredCoins: $viewModel.filteredCoins, favoriteChanged: viewModel.fetchFavorites)
             }
             .navigationDestination(for: Screen.self) { screen in
                 switch screen {
@@ -26,7 +24,7 @@ struct FavoritesView: View {
                         CoinDetailView()
                 }
             }
-            .sidePadding(size: Paddings.side)
+            .padding(.horizontal, Paddings.side)
             .navigationTitle(Text(Strings.favorites))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: createTopBar)

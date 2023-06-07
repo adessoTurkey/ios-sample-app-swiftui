@@ -13,7 +13,7 @@ struct LightShadowModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .shadow(color: color, radius: 3, y: 10)
+            .shadow(color: color, radius: 15, y: 4)
     }
 }
 

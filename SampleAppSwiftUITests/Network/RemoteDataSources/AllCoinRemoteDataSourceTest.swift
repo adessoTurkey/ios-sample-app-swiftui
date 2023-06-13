@@ -10,20 +10,31 @@ import XCTest
 
 final class AllCoinRemoteDataSourceTest: XCTestCase {
 
-    func test_getAllCoin_IfCalledAllCoinRequest() async {
+    let validLimit = 3
+    let validPage = 5
+    let validUnitToBeConverted = "USD"
+    let throwingUnitToBeConverted: String = "Create Throw"
+
+    func test_getAllCoin_WasCalledAllCoinRequest() async {
+        // GIVEN
         let (test, sut) = makeSUT()
-        _ = try? await sut.getAllCoin(limit: validLimit(),
-                        unitToBeConverted: validUnitToBeConverted(),
-                        page: validLimit())
+        // WHEN
+        _ = try? await sut.getAllCoin(limit: validLimit,
+                                      unitToBeConverted: validUnitToBeConverted,
+                                      page: validPage)
+        // THEN
         XCTAssertTrue(test.didReceiveCalled)
     }
 
-    func test_getAllCoin_IfAllCoinRequestThrows() async {
+    func test_getAllCoin_AllCoinRequestThrows() async {
+        // GIVEN
         let (_, sut) = makeSUT()
+        // WHEN
         do {
-          try await sut.getAllCoin(limit: validLimit(),
-                                             unitToBeConverted: throwingUnitToBeConverted,
-                                             page: validLimit())
+          try await sut.getAllCoin(limit: validLimit,
+                                   unitToBeConverted: throwingUnitToBeConverted,
+                                   page: validPage)
+        // THEN
           XCTFail("getAllCoin should have thrown an error")
         } catch {
         }
@@ -34,20 +45,6 @@ final class AllCoinRemoteDataSourceTest: XCTestCase {
         let anyAllCoinServiceProtocol = AnyAllCoinServiceProtocol()
         let sut = AllCoinRemoteDataSource(allCoinService: anyAllCoinServiceProtocol)
         return (anyAllCoinServiceProtocol, sut)
-    }
-
-    let throwingUnitToBeConverted: String = "Create Throw"
-
-    func validLimit() -> Int {
-        3
-    }
-
-    func validUnitToBeConverted() -> String {
-        "USD"
-    }
-
-    func validPage() -> Int {
-        5
     }
 
     class AnyAllCoinServiceProtocol: AllCoinServiceProtocol {

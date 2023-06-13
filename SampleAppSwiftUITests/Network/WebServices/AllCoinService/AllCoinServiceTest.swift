@@ -12,10 +12,13 @@ import XCTest
 final class AllCoinServiceTest: XCTestCase {
 
     func test_allCoinRequest_IfCalledAllCoinRequest() async {
+        //GIVEN
         let (test, sut) = makeSUT()
+        //WHEN
         _ = try? await sut.allCoinRequest(limit: validLimit(),
                         unitToBeConverted: validUnitToBeConverted(),
                         page: validLimit())
+        //THEN
         XCTAssertTrue(test.didReceiveCalled)
     }
 

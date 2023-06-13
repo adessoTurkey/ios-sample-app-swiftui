@@ -48,13 +48,13 @@ final class AllCoinUseCaseTest: XCTestCase {
         return (anyAllCoinRepository, sut)
     }
 
-    private class AnyAllCoinRepositoryClass: AllCoinRepositoryProtocol {
+    class AnyAllCoinRepositoryClass: AllCoinRepositoryProtocol {
         private(set) var didReceiveCalled = false
-        let throwingUnitToBeConverte: String = "Create Throw"
+        let throwingUnitToBeConverted: String = "Create Throw"
 
         func getAllCoin(limit: Int, unitToBeConverted: String, page: Int) async throws -> AllCoinResponse {
             didReceiveCalled = true
-            if unitToBeConverted == super.throwingUnitToBeConverted {
+            if unitToBeConverted == throwingUnitToBeConverted {
                 throw AdessoError.badResponse
             }
             return AllCoinResponse(data: nil)

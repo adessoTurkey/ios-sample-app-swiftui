@@ -1,38 +1,44 @@
 //
-//  AllCoinServiceTest.swift
+//  BaseServiceProtocolTest.swift
 //  SampleAppSwiftUITests
 //
-//  Created by Uslu, Teyhan on 6.06.2023.
+//  Created by Uslu, Teyhan on 13.06.2023.
 //
 
 @testable import SampleAppSwiftUI
 import XCTest
 
-final class AllCoinServiceTest: XCTestCase {
-
+final class BaseServiceProtocolTest: XCTestCase {
     let allCoinURLPath = "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=3&tsym=USD&page=1&api_key="
     let validLimit = 3
     let validUnitToBeConverted = "USD"
 
-    func test_allCoinRequest_WasCalledRequest() async {
+    func test_build_ReturnsAllCoinURLPath() async {
+        // GIVEN
+        let (_, sut) = makeSUT()
+        // WHEN
+        let test = try? await sut.build(endpoint: .allCoin())
+        // THEN
+        XCTAssertEqual(test, allCoinURLPath)
+    }
+
+    func test_authenticatedRequest_WasCalledRequest() async {
         // GIVEN
         let (test, sut) = makeSUT()
         // WHEN
-        _ = try? await sut.allCoinRequest(limit: validLimit,
-                                          unitToBeConverted: validUnitToBeConverted,
-                                          page: validLimit)
+        _ = try? await sut.authenticatedRequest(with: RequestObject(url: allCoinURLPath),
+                                                responseModel: AllCoinResponse.self)
         // THEN
         XCTAssertTrue(test.didReceiveCalled)
     }
 
-    func test_allCoinRequest_RequestThrows() async {
+    func test_authenticatedRequest_Throws() async {
         // GIVEN
         let (_, sut) = makeSUT()
         // WHEN
         do {
-          try await sut.allCoinRequest(limit: validLimit,
-                                       unitToBeConverted: validUnitToBeConverted,
-                                       page: validLimit)
+            try await sut.authenticatedRequest(with: RequestObject(url: allCoinURLPath),
+                                               responseModel: AllCoinResponse.self)
         // THEN
           XCTFail("allCoinRequest should have thrown an error")
         } catch {
@@ -40,9 +46,9 @@ final class AllCoinServiceTest: XCTestCase {
     }
 
     // MARK: Helpers
-    func makeSUT() -> (AnyNetworkLoaderClass, AllCoinService) {
+    func makeSUT() -> (AnyNetworkLoaderClass, AnyBaseServiceProtocol) {
         let anyNetworkLoaderClass = AnyNetworkLoaderClass()
-        let sut = AllCoinService(networkLoader: anyNetworkLoaderClass)
+        let sut = AnyBaseServiceProtocol(networkLoader: anyNetworkLoaderClass)
         return (anyNetworkLoaderClass, sut)
     }
 
@@ -65,6 +71,16 @@ final class AllCoinServiceTest: XCTestCase {
             } catch {
                 throw AdessoError.mappingFailed(data: Data())
             }
+        }
+    }
+
+    // Helpers
+    class AnyBaseServiceProtocol: BaseServiceProtocol {
+        var networkLoader: SampleAppSwiftUI.NetworkLoaderProtocol
+        typealias Endpoint = AllCoinServiceEndpoint
+
+        internal init(networkLoader: NetworkLoaderProtocol) {
+            self.networkLoader = networkLoader
         }
     }
 }

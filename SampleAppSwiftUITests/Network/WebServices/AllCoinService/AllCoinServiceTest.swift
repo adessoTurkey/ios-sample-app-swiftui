@@ -11,23 +11,30 @@ import XCTest
 
 final class AllCoinServiceTest: XCTestCase {
 
+    let allCoinURLPath = "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=3&tsym=USD&page=1&api_key="
+    let validLimit = 3
+    let validUnitToBeConverted = "USD"
+
     func test_allCoinRequest_IfCalledAllCoinRequest() async {
-        //GIVEN
+        // GIVEN
         let (test, sut) = makeSUT()
-        //WHEN
-        _ = try? await sut.allCoinRequest(limit: validLimit(),
-                        unitToBeConverted: validUnitToBeConverted(),
-                        page: validLimit())
-        //THEN
+        // WHEN
+        _ = try? await sut.allCoinRequest(limit: validLimit,
+                                          unitToBeConverted: validUnitToBeConverted,
+                                          page: validLimit)
+        // THEN
         XCTAssertTrue(test.didReceiveCalled)
     }
 
     func test_allCoinRequestn_IfAllCoinRequestThrows() async {
+        // GIVEN
         let (_, sut) = makeSUT()
+        // WHEN
         do {
-          try await sut.allCoinRequest(limit: validLimit(),
-                                       unitToBeConverted: validUnitToBeConverted(),
-                                       page: validLimit())
+          try await sut.allCoinRequest(limit: validLimit,
+                                       unitToBeConverted: validUnitToBeConverted,
+                                       page: validLimit)
+        // THEN
           XCTFail("allCoinRequest should have thrown an error")
         } catch {
         }
@@ -35,23 +42,32 @@ final class AllCoinServiceTest: XCTestCase {
 
     // MARK: BaseServiceProtocol
     func test_build_IfCalledAllCoinRequest() async {
+        // GIVEN
         let (_, sut) = makeSUT()
+        // WHEN
         let test = try? await sut.build(endpoint: .allCoin())
-        XCTAssertEqual(test, allCoinURLPath())
+        // THEN
+        XCTAssertEqual(test, allCoinURLPath)
     }
 
     func test_authenticatedRequest_IfCalledAllCoinRequest() async {
+        // GIVEN
         let (test, sut) = makeSUT()
-        _ = try? await sut.authenticatedRequest(with: RequestObject(url: allCoinURLPath()),
+        // WHEN
+        _ = try? await sut.authenticatedRequest(with: RequestObject(url: allCoinURLPath),
                                                 responseModel: AllCoinResponse.self)
+        // THEN
         XCTAssertTrue(test.didReceiveCalled)
     }
 
     func test_authenticatedRequest_IfAllCoinRequestThrows() async {
+        // GIVEN
         let (_, sut) = makeSUT()
+        // WHEN
         do {
-            try await sut.authenticatedRequest(with: RequestObject(url: allCoinURLPath()),
+            try await sut.authenticatedRequest(with: RequestObject(url: allCoinURLPath),
                                                     responseModel: AllCoinResponse.self)
+        // THEN
           XCTFail("allCoinRequest should have thrown an error")
         } catch {
         }
@@ -62,22 +78,6 @@ final class AllCoinServiceTest: XCTestCase {
         let anyNetworkLoaderClass = AnyNetworkLoaderClass()
         let sut = AllCoinService(networkLoader: anyNetworkLoaderClass)
         return (anyNetworkLoaderClass, sut)
-    }
-
-    func allCoinURLPath() -> String {
-        "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=3&tsym=USD&page=1&api_key="
-    }
-
-    func validLimit() -> Int {
-        3
-    }
-
-    func validUnitToBeConverted() -> String {
-        "USD"
-    }
-
-    func validPage() -> Int {
-        5
     }
 
     class AnyNetworkLoaderClass: NetworkLoaderProtocol {

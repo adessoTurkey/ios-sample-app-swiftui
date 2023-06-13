@@ -32,7 +32,7 @@ final class BaseServiceProtocolTest: XCTestCase {
         XCTAssertTrue(test.didReceiveCalled)
     }
 
-    func test_authenticatedRequest_Throws() async {
+    func test_authenticatedRequest_RequestThrows() async {
         // GIVEN
         let (_, sut) = makeSUT()
         // WHEN

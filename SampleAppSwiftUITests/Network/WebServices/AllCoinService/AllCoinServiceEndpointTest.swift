@@ -9,29 +9,18 @@
 import XCTest
 
 final class AllCoinServiceEndpointTest: XCTestCase {
-
     func test_Constants() async {
-        XCTAssertEqual(AllCoinServiceEndpoint.allCoin(limit: validLimit(),
-                                                      unitToBeConverted: validUnitToBeConverted(),
-                                                      page: validPage())
-                                              .path,
-                       allCoinFullURL())
-    }
-
-    // MARK: Helpers
-    func allCoinFullURL() -> String {
-        "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=\(validLimit())&tsym=\(validUnitToBeConverted())&page=\(validPage())&api_key="
-    }
-
-    func validLimit() -> Int {
-        3
-    }
-
-    func validUnitToBeConverted() -> String {
-        "USD"
-    }
-
-    func validPage() -> Int {
-        5
+        // GIVEN
+        let validLimit = 3
+        let validPage = 5
+        let validUnitToBeConverted = "USD"
+        let allCoinFullURL = "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=\(validLimit)&tsym=\(validUnitToBeConverted)&page=\(validPage)&api_key="
+        // WHEN
+        let testEndpoint = AllCoinServiceEndpoint.allCoin(limit: validLimit,
+                                                      unitToBeConverted: validUnitToBeConverted,
+                                                      page: validPage)
+        let testPath = testEndpoint.path
+        // THEN
+        XCTAssertEqual(testPath, allCoinFullURL)
     }
 }

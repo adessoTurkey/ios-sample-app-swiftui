@@ -17,8 +17,8 @@ final class AllCoinServiceEndpointTest: XCTestCase {
         let allCoinFullURL = "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=\(validLimit)&tsym=\(validUnitToBeConverted)&page=\(validPage)&api_key="
         // WHEN
         let testEndpoint = AllCoinServiceEndpoint.allCoin(limit: validLimit,
-                                                      unitToBeConverted: validUnitToBeConverted,
-                                                      page: validPage)
+                                                          unitToBeConverted: validUnitToBeConverted,
+                                                          page: validPage)
         let testPath = testEndpoint.path
         // THEN
         XCTAssertEqual(testPath, allCoinFullURL)

@@ -11,5 +11,9 @@ enum URLs {
     enum Icons {
         static let baseURL = "https://assets.coincap.io/assets/icons/"
         static let scaleURL = "@2x.png"
+
+        static func getURL(from coinCode: CoinCode) -> URL? {
+            URL(string: "\(baseURL)\(coinCode.lowercased())\(scaleURL)")
+        }
     }
 }

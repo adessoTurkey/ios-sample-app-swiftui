@@ -12,4 +12,7 @@ enum Images {
     static let filter = "slider.horizontal.3"
     static let favorites = "star.fill"
     static let close = "xmark"
+    static let arrowUpSquare = "arrow.up.square"
+    static let arrowDownSquare = "arrow.down.square"
+    static let star = "star"
 }

@@ -7,6 +7,8 @@
 
 import Foundation
 
+typealias CoinCode = String
+
 // MARK: - AllCoinResponse
 struct AllCoinResponse: Codable, Hashable, Identifiable {
     var id = UUID().uuidString

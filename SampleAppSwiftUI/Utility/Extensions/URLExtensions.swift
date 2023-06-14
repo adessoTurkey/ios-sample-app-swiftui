@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-public extension URL {
+extension URL {
     var isDeeplink: Bool {
         scheme == "sampleapp"
     }
@@ -17,10 +17,10 @@ public extension URL {
         UIApplication.shared.canOpenURL(self)
     }
 
-    var screenType: Screen? {
+    var screenType: ScreenType? {
         guard isDeeplink else { return nil }
         if let host {
-            return Screen.init(rawValue: host)
+            return ScreenType(rawValue: host)
         }
         return nil
     }

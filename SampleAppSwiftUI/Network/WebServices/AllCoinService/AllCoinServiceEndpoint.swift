@@ -11,13 +11,13 @@ enum AllCoinServiceEndpoint: TargetEndpointProtocol {
     case allCoin(limit: Int = 3, unitToBeConverted: String = "USD", page: Int = 1)
 
     private struct Constants {
-        static let allCoinEndpoint = Configuration.allCoinBaseUrl
+        static let allCoinEndpoint = "top/mktcapfull?limit=%d&tsym=%@&page=%d&api_key=%@"
     }
 
     var path: String {
         switch self {
             case .allCoin(let limit, let toConvert, let page):
-                return String(format: Constants.allCoinEndpoint, limit, toConvert, page, Configuration.coinApiKey)
+                return BaseEndpoint.base.path + String(format: Constants.allCoinEndpoint, limit, toConvert, page, Configuration.coinApiKey)
         }
     }
 }

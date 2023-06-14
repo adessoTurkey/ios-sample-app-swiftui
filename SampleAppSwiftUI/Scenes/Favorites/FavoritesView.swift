@@ -19,9 +19,8 @@ struct FavoritesView: View {
                 CoinListView(filteredCoins: $viewModel.filteredCoins, favoriteChanged: viewModel.fetchFavorites)
             }
             .navigationDestination(for: Screen.self) { screen in
-                switch screen {
-                    case .detail:
-                        CoinDetailView()
+                if screen.type == .detail, let data = screen.data as? CoinData {
+                    CoinDetailView(coinData: data)
                 }
             }
             .padding(.horizontal, Paddings.side)

@@ -8,16 +8,14 @@
 import SwiftUI
 
 struct CoinView: View {
-
     var coinInfo: CoinData
-    @ObservedObject var viewModel: CoinInfoViewModel
 
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: Dimensions.CornerRadius.default)
                 .fill(Color.coinCellBackground)
             HStack {
-                AsyncImage(url: viewModel.getURL(from: coinInfo.coinInfo?.code ?? "")) { phase in
+                AsyncImage(url: URLs.Icons.getURL(from: coinInfo.coinInfo?.code ?? "")) { phase in
                     if let image = phase.image {
                         image
                             .resizable()
@@ -52,10 +50,10 @@ struct CoinView: View {
                 VStack(alignment: .trailing, spacing: Spacings.default) {
                     if let rawData = coinInfo.detail,
                        let usd = rawData.usd {
-                        Text(viewModel.createPriceString(rawData: usd))
+                        Text(usd.createPriceString())
                             .font(Fonts.coin)
                             .bold()
-                        Text(viewModel.createChangeText(rawData: usd))
+                        Text(usd.createChangeText())
                             .font(Fonts.coinAmount)
                             .foregroundColor(configureTextColor(usd))
                     }
@@ -82,8 +80,8 @@ struct CoinView: View {
 struct CoinView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            CoinView(coinInfo: .demo, viewModel: .init())
-            CoinView(coinInfo: .demo, viewModel: .init())
+            CoinView(coinInfo: .demo)
+            CoinView(coinInfo: .demo)
                 .preferredColorScheme(.dark)
         }
         .previewLayout(.sizeThatFits)

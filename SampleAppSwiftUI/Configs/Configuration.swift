@@ -34,11 +34,7 @@ final class Configuration: ConfigurationProtocol {
     }
 
     static var baseURL: String {
-        ""
-    }
-
-    static var allCoinBaseUrl: String {
-        let url: String? = try? self.value(for: "all_coin_base_url")
+        let url: String? = try? self.value(for: "base_url")
         return url ?? ""
     }
 
@@ -49,7 +45,7 @@ final class Configuration: ConfigurationProtocol {
             #warning("Please Enter an API Key")
             return ""
         }
-    return key
+        return key
     }
 
     static var webSocketBaseUrl: String {

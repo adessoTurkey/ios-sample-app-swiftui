@@ -14,12 +14,12 @@ final public class Router: ObservableObject {
     @Published var settingsNavigationPath: [Screen] = []
     @Published var selectedTab: TabIndex = .home
     var tabbarNames: [TabIndex] = [.home, .favorites, .settings]
-
-    func navigateCoinDetail() {
+  
+    func navigateCoinDetail(coinData: CoinData) {
         if selectedTab == .home {
-            homeNavigationPath.append(Screen.detail)
+            homeNavigationPath.append(Screen(type: .detail, data: coinData))
         } else if selectedTab == .favorites {
-            favoritesNavigationPath.append(Screen.detail)
+            favoritesNavigationPath.append(Screen(type: .detail, data: coinData))
         }
     }
 }
@@ -42,13 +42,15 @@ public enum TabIndex: String {
 
 extension Router {
     func onOpenURL(_ url: URL) {
-        if let screen = url.screenType {
-            if selectedTab == .home && screen == .detail {
-                homeNavigationPath = [Screen.detail]
+        if let screenType = url.screenType {
+            if selectedTab == .home && screenType == .detail {
+                // TODO: parse data from deeplink url's query parameters and pass it to Screen
+                homeNavigationPath = [Screen(type: screenType, data: nil)]
                 return
             }
-            if selectedTab == .favorites && screen == .detail {
-                favoritesNavigationPath = [Screen.detail]
+
+            if selectedTab == .favorites && screenType == .detail {
+                favoritesNavigationPath = [Screen(type: screenType, data: nil)]
             }
         }
     }

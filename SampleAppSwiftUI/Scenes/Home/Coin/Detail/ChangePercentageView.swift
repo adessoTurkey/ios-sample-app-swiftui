@@ -19,8 +19,8 @@ struct ChangePercentageView: View {
             Label(changeRate.createPercentageText(), systemImage: isRised ? Images.arrowUpSquare : Images.arrowDownSquare)
                 .foregroundColor(isRised ? .green : .red)
                 .font(.subheadline)
-                .sidePadding(size: Paddings.ChangePercentageView.side)
-                .topBottomPadding(size: Paddings.ChangePercentageView.top)
+                .padding(.horizontal, Paddings.ChangePercentageView.side)
+                .padding(.vertical, Paddings.ChangePercentageView.top)
         }
         .background(Color(uiColor: .systemGray5))
         .clipShape(Capsule())

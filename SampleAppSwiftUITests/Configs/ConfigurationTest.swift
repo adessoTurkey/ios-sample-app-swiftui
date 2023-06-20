@@ -11,7 +11,7 @@ import XCTest
 final class ConfigurationTest: XCTestCase {
 
     let emptyString: String = ""
-    let validString: String = "all_coin_base_url"
+    let validString: String = "base_url"
 
     func test_isProduction() {
         #if Production
@@ -41,8 +41,8 @@ final class ConfigurationTest: XCTestCase {
     }
 
     func test_allCoinBaseUrl_returnsValidURL() {
-        let validAllCoinBaseUrl = "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=%d&tsym=%@&page=%d&api_key=%@"
-        XCTAssertEqual(Configuration.allCoinBaseUrl, validAllCoinBaseUrl)
+        let validAllCoinBaseUrl = "https://min-api.cryptocompare.com/data/"
+        XCTAssertEqual(Configuration.baseURL, validAllCoinBaseUrl)
     }
 
     func test_coinApiKey_returnsEmpty() {

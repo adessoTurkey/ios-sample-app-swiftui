@@ -15,15 +15,13 @@ struct HomeView: View {
     @EnvironmentObject private var router: Router
     var body: some View {
         NavigationStack(path: $router.homeNavigationPath) {
-            ScrollView {
-                LazyVStack(spacing: Spacings.home) {
-                    SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.largeTop)
-                    HomeFilterView(filterTitle: viewModel.filterTitle)
-                        .padding(.bottom, Paddings.filterBottom)
-                    CoinListView(filteredCoins: $viewModel.filteredCoins) {
-                        Task {
-                            await viewModel.fillModels()
-                        }
+            VStack(spacing: Spacings.home) {
+                SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.largeTop)
+                HomeFilterView(filterTitle: viewModel.filterTitle)
+                    .padding(.bottom, Paddings.filterBottom)
+                CoinListView(filteredCoins: $viewModel.filteredCoins) {
+                    Task {
+                        await viewModel.fillModels()
                     }
                 }
                 .padding(.horizontal, Paddings.side)

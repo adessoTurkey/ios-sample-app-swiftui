@@ -62,7 +62,7 @@ struct CoinDetailView: View {
                                     dataModel: chartDataModel,
                                     selectedXDateText: $viewModel.priceChartSelectedXDateText
                                 )
-                                .sidePadding(size: 16)
+                                .padding(.horizontal, 16)
                                 .padding(.top, 34)
                                 .padding(.bottom, 18)
                             } else {
@@ -73,8 +73,8 @@ struct CoinDetailView: View {
                     .frame(minHeight: 300)
                     .cornerRadius(Dimensions.CornerRadius.default)
                 }
-                .sidePadding(size: Paddings.side)
-                .topBottomPadding(size: Paddings.CoinDetailView.top)
+                .padding(.horizontal, Paddings.side)
+                .padding(.vertical, Paddings.CoinDetailView.top)
             }
             .navigationTitle(Text(verbatim: viewModel.coinData.coinInfo?.title ?? ""))
             .navigationBarTitleDisplayMode(.inline)

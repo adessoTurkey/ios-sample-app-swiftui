@@ -17,7 +17,7 @@ jobs:
       - name: Xcodegen
         uses: xavierLowmiller/xcodegen-action@1.1.2
         with:
-            spec: project.yaml
+            spec: project.yml
             quiet: true
             version: 'latest'
       - name: Generate Project

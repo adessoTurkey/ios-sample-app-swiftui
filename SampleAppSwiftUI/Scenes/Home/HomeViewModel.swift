@@ -15,6 +15,9 @@ class HomeViewModel: ObservableObject {
     @Published var filteredCoins: [CoinData] = []
     @Published var filterTitle = "Most Popular"
 
+    let listPageLimit = 10
+    @State var isLoading: Bool = false
+
     func fillModels(demo: Bool = false) async {
         if demo {
             fetchDemoModel()
@@ -22,15 +25,16 @@ class HomeViewModel: ObservableObject {
         await fetchAllCoins()
     }
 
-    private func fetchAllCoins() async {
-        guard let dataSource = try? await AllCoinRemoteDataSource().getAllCoin(limit: 30, unitToBeConverted: "USD", page: 1) else {
+    private func fetchAllCoins(page: Int = 1) async {
+        guard let dataSource = try? await AllCoinRemoteDataSource().getAllCoin(limit: self.listPageLimit, unitToBeConverted: "USD", page: page) else {
             print("Problem on the convert")
             return
         }
         DispatchQueue.main.async {
             if let data = dataSource.data {
-                self.coinList = data
-                self.filteredCoins = data
+                self.coinList.append(contentsOf: data)
+                self.filteredCoins.append(contentsOf: data)
+                self.isLoading = false
             }
         }
     }
@@ -60,5 +64,27 @@ class HomeViewModel: ObservableObject {
         } else {
             filteredCoins = coinList
         }
+    }
+}
+
+extension HomeViewModel: ViewModelProtocol {
+    func checkLastItem(_ item: CoinData) {
+        guard isLoading else { return }
+
+        let offset = 0
+        let index = coinList.count - offset - 1
+        guard index < 0 else { return }
+        let id = coinList[index].id
+
+        if item.id == id {
+            isLoading = true
+            Task {
+                await fetchAllCoins(page: getCurrentPage())
+            }
+        }
+    }
+
+    func getCurrentPage() -> Int {
+        (coinList.count / listPageLimit) + 1
     }
 }

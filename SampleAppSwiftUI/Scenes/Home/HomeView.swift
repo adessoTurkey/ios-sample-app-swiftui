@@ -20,7 +20,7 @@ struct HomeView: View {
                     SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.largeTop)
                     HomeFilterView(filterTitle: viewModel.filterTitle)
                         .padding(.bottom, Paddings.filterBottom)
-                    CoinListView(filteredCoins: $viewModel.filteredCoins) {
+                    CoinListView(viewModel: viewModel, filteredCoins: $viewModel.filteredCoins) {
                         Task {
                             await viewModel.fillModels()
                         }

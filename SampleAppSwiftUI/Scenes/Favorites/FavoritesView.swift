@@ -16,7 +16,7 @@ struct FavoritesView: View {
             VStack {
                 SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.shortTop)
                 Divider()
-                CoinListView(filteredCoins: $viewModel.filteredCoins, favoriteChanged: viewModel.fetchFavorites)
+                CoinListView(viewModel: viewModel, filteredCoins: $viewModel.filteredCoins, favoriteChanged: viewModel.fetchFavorites)
             }
             .navigationDestination(for: Screen.self) { screen in
                 if screen.type == .detail, let data = screen.data as? CoinData {

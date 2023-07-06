@@ -30,8 +30,11 @@ jobs:
         run: |
           APP_PATH=$(find . -name "*.app" | head -n 1)
           echo "Found .app file: $APP_PATH"
+      - name: Set APP_PATH environment variable
+        run: |
+          echo "::set-env name=APP_PATH::$(find . -name '*.app' | head -n 1)"
       - name: UI Test
         uses: mobile-dev-inc/action-maestro-cloud@v1.1.1
         with:
           api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
-          app-file: $APP_PATH
+          app-file: ${{ env.APP_PATH }}

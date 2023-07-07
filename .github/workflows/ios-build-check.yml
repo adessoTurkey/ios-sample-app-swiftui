@@ -32,6 +32,8 @@ jobs:
           echo "::set-output name=app_path::$(find . -name '*.app' | head -n 1)"
       - name: UI Test
         uses: mobile-dev-inc/action-maestro-cloud@v1.1.1
+        env:
+          API_KEY: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
         with:
-          api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
-          app-file: ${{ steps.locate_app.outputs.app_path }}
+          app_file: ${{ steps.locate_app.outputs.app_path }}
+          api-key: ${{ env.API_KEY }}

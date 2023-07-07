@@ -26,14 +26,15 @@ jobs:
       - name: Build
         run: |
           xcodebuild -scheme SampleAppSwiftUI clean build -sdk iphoneos -configuration Development CODE_SIGNING_ALLOWED=No
-      - id: locate_app
-        name: Locate .app file
+        env:
+          DEVELOPER_DIR: /Applications/Xcode_13.2.1.app/Contents/Developer
+      - name: Locate .app file
         run: |
-          echo "::set-output name=app_path::$(find . -name '*.app' | head -n 1)"
+          APP_PATH=$(find . -name "*.app" | head -n 1)
+          echo "Found .app file: $APP_PATH"
+        shell: bash
       - name: UI Test
         uses: mobile-dev-inc/action-maestro-cloud@v1.1.1
-        env:
-          API_KEY: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
         with:
-          app_file: ${{ steps.locate_app.outputs.app_path }}
-          api-key: ${{ env.API_KEY }}
+          api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
+          app-file: ${{ env.APP_PATH }}

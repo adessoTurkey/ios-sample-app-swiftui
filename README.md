@@ -54,7 +54,7 @@ Gitflow is a legacy Git workflow that was originally a disruptive and novel stra
 | **Hotfix**  | The hotfix branch is utilized in the Git pipeline to swiftly address required changes in your main branch. Your main branch should serve as the base for the hotfix branch, and it should be merged back into both the main and develop branches.                                       |
 | **Release** | The release branch should be used when preparing new production releases. Typically, the work being performed on release branches concerns finishing touches and minor bugs specific to releasing new code, with code that should be addressed separately from the main develop branch. |
 
-- Branch names should start with feature, hotfix or release according to purpose of the branch then should continue with ticket ID. see example: feature/SASU-1234
+- Branch names should start with feature, hotfix or release according to purpose of the branch then should continue with ticket ID. see example: feature/SASU-1234_some-issue
 - Pull requests should refer to specific issue with ticketid. see example: [SASU-1234] - New feature
 - Merge strategy: Rebase and Merge is preffered for maintaining a linear project history.
 

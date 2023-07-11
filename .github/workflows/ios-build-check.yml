@@ -5,6 +5,9 @@ on:
     branches: [ develop ]
   pull_request:
     branches: [ develop ]
+    
+env:
+  APP_PATH: $(find . -name "*.app" | head -n 1)
 
 jobs:
   build:
@@ -26,11 +29,6 @@ jobs:
       - name: Build
         run: |
           xcodebuild -scheme SampleAppSwiftUI clean build -sdk iphoneos -configuration Development CODE_SIGNING_ALLOWED=No
-      - name: Locate .app file
-        env:
-          APP_PATH: $(find . -name "*.app" | head -n 1)
-        run: |
-          echo "Found .app file: $APP_PATH"
       - name: UI Test
         uses: mobile-dev-inc/action-maestro-cloud@v1.1.1
         with:

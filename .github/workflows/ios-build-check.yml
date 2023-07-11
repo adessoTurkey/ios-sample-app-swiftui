@@ -28,9 +28,9 @@ jobs:
           xcodegen generate
       - name: Build
         run: |
-          xcodebuild -scheme SampleAppSwiftUI clean build -sdk iphoneos -configuration Development CODE_SIGNING_ALLOWED=No
+          xcodebuild -scheme SampleAppSwiftUI clean build -sdk iphoneos -configuration Development CODE_SIGNING_ALLOWED=No -destination 'platform=iOS Simulator,name=iPhone 13'
       - name: UI Test
         uses: mobile-dev-inc/action-maestro-cloud@v1.1.1
         with:
           api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
-          app-file: ${{ env.APP_PATH }}
+          app-file: SampleAppSwiftUI.app

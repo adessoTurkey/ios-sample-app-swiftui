@@ -28,7 +28,7 @@ jobs:
           xcodegen generate
       - name: Build
         run: |
-          xcodebuild -scheme SampleAppSwiftUI clean build -sdk iphoneos -configuration Development CODE_SIGNING_ALLOWED=No -destination 'platform=iOS Simulator,name=iPhone 13' CONFIGURATION_BUILD_DIR=$PWD/build
+          xcodebuild -scheme SampleAppSwiftUI clean build -sdk iphoneos -configuration Development CODE_SIGNING_ALLOWED=No -destination 'generic/platform=iOS Simulator' CONFIGURATION_BUILD_DIR=$PWD/build
       - name: UI Test
         uses: mobile-dev-inc/action-maestro-cloud@v1.1.1
         with:

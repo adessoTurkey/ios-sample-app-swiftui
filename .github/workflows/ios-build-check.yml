@@ -30,4 +30,4 @@ jobs:
         uses: mobile-dev-inc/action-maestro-cloud@v1.1.1
         with:
           api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
-          app-file: SampleAppSwiftUI.app
+          app-file: **/Build/Products/Development-iphoneos/SampleAppSwiftUI.app

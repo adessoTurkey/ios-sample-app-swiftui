@@ -27,8 +27,9 @@ jobs:
         run: |
           xcodebuild -scheme SampleAppSwiftUI clean build -sdk iphoneos -configuration Development CODE_SIGNING_ALLOWED=No
       - name: Locate .app file
+        env:
+          APP_PATH: $(find . -name "*.app" | head -n 1)
         run: |
-          APP_PATH=$(find . -name "*.app" | head -n 1)
           echo "Found .app file: $APP_PATH"
         shell: bash
       - name: UI Test

@@ -69,11 +69,11 @@ class HomeViewModel: ObservableObject {
 
 extension HomeViewModel: ViewModelProtocol {
     func checkLastItem(_ item: CoinData) {
-        guard isLoading else { return }
+        guard !isLoading else { return }
 
-        let offset = 0
+        let offset = 2
         let index = coinList.count - offset - 1
-        guard index < 0 else { return }
+        guard index > 0 else { return }
         let id = coinList[index].id
 
         if item.id == id {

@@ -53,8 +53,8 @@ class FavoritesViewModel: ObservableObject {
         }
         DispatchQueue.main.async {
             if let data = dataSource.data {
-                self.coinList.append(contentsOf: data)
-                self.filteredCoins.append(contentsOf: data)
+                self.coinList = data
+                self.filteredCoins = data
                 self.isLoading = false
                 self.getFavoriteCoinList()
             }
@@ -160,11 +160,11 @@ class FavoritesViewModel: ObservableObject {
 
 extension FavoritesViewModel: ViewModelProtocol {
     func checkLastItem(_ item: CoinData) {
-        guard isLoading else { return }
+        guard !isLoading else { return }
 
         let offset = 0
         let index = coinList.count - offset - 1
-        guard index < 0 else { return }
+        guard index > 0 else { return }
         let id = coinList[index].id
 
         if item.id == id {

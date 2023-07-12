@@ -4,9 +4,15 @@
 
 # iOS SwiftUI Sample App
 
-This is the iOS SwiftUI Sample App created by adesso Turkey. The project serves as a comprehensive showcase of the best practices in iOS development by utilizing latest available technology. Other open source 
+This is the iOS SwiftUI Sample App created by adesso Turkey. The project serves as a comprehensive showcase of the best practices in iOS development by utilizing latest available technology. By listing the cryptocurrency market's top coins, the application allows users to see, search and favorite their desired coin to watch it's price change in real time. 
 
-
+### Spesifications
+- Minimum target of iOS 16
+- Usage of Swift concurrency (async/await)
+- WebSocket implementation for real-time price change.
+- Up-to-date SWiftUI features (Navigation stack etc.)
+- Using only [SPM](https://www.swift.org/package-manager/) for package dependencies.
+- Able to favorite and save the coins using [AppStorage](https://developer.apple.com/documentation/swiftui/appstorage).
 ## Table of Contents
 
 - [Prerequisites](#Prerequisites)
@@ -91,7 +97,7 @@ Gitflow is a legacy Git workflow that was originally a disruptive and novel stra
 | [Pulse](https://github.com/kean/Pulse)                                | Pulse is a powerful logging system for Apple Platforms. Native. Built with SwiftUI. |
 | [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack) | Powerful & flexible logging framework.                                              |
 | [SwiftLog](https://github.com/apple/swift-log)                        | Logging API for Swift that works well with compatible API's.                        |
-
+| [Maestro](https://github.com/mobile-dev-inc/maestro) | Flexible UI test automation tool.
 ## Useful Tools and Resources
 
 - [SwiftLint][github/swiftlint] - A tool to enforce Swift style and conventions.

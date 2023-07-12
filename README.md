@@ -1,4 +1,4 @@
-[![swift-version](https://img.shields.io/badge/swift-5.7-brightgreen.svg)](https://github.com/apple/swift)
+[![swift-version](https://img.shields.io/badge/swift-5.8-brightgreen.svg)](https://github.com/apple/swift)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/adessoTurkey/boilerplate-ios-swiftui/iOS%20Build%20Check%20Workflow/develop)
 
@@ -18,7 +18,7 @@ This is the iOS SwiftUI Sample App created by adesso Turkey for demonstrating th
 
 ## Prerequisites
 
-- Swift 5.8
+- [Swift 5.8](https://developer.apple.com/support/xcode/)
 - [MacOS Monterey (12.5 or higher)](https://www.apple.com/by/macos/monterey/features/)
 - [Xcode 14 or higher](https://developer.apple.com/documentation/xcode-release-notes/xcode-14-release-notes)
 - [Swiftlint][github/swiftlint]
@@ -33,14 +33,12 @@ Because XcodeGen is used in this project, there will be no `.xcodeproj` or `.xcw
 xcodegen generate
 ```
 
-Swiftlint and SwiftGen can also be installed via included scripts in the repository. Under the directory of `{project_root}/scripts/installation` simply run either or both of
+Swiftlint and SwiftGen can also be installed via included scripts in the repository. Under the `{project_root}/scripts/installation` directory, simply run either or both of:
 
 ```
 sh swiftlint.sh
 sh swiftgen.sh
 ```
-
-commands.
 
 ## Branching Strategy
 
@@ -108,7 +106,7 @@ Gitflow is a legacy Git workflow that was originally a disruptive and novel stra
 ## License
 
 ```
-Copyright 2020 adesso Turkey
+Copyright 2023 adesso Turkey
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

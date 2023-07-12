@@ -110,7 +110,7 @@ struct CoinPriceHistoryChartView: View {
                     .foregroundStyle(viewModel.foregroundMarkColor)
             }
         }
-        .sidePadding()
+        .padding()
     }
 
     private func chartPlotStyle(_ plotContent: ChartPlotContent) -> some View {

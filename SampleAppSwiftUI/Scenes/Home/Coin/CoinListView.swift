@@ -53,7 +53,6 @@ struct CoinListView<ViewModel: ViewModelProtocol>: View {
                     ProgressView()
                 }
             }
-            .frame(minHeight: UIScreen.main.bounds.height)
             .listStyle(.plain)
             .animation(.easeInOut, value: filteredCoins)
             .alert(isPresented: $showingAlert, content: configureAlert)

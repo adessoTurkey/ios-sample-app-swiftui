@@ -4,7 +4,8 @@
 
 # iOS SwiftUI Sample App
 
-This is the iOS SwiftUI Sample App created by adesso Turkey for demonstrating the best practices of development and it's processes using example cases.
+This is the iOS SwiftUI Sample App created by adesso Turkey. The project serves as a comprehensive showcase of the best practices in iOS development by utilizing latest available technology. Other open source 
+
 
 ## Table of Contents
 

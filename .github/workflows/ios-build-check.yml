@@ -5,6 +5,9 @@ on:
     branches: [ develop ]
   pull_request:
     branches: [ develop ]
+    
+env:
+  APP_PATH: $(find . -name "*.app" | head -n 1)
 
 jobs:
   build:
@@ -25,4 +28,9 @@ jobs:
           xcodegen generate
       - name: Build
         run: |
-          xcodebuild -scheme SampleAppSwiftUI clean build -sdk iphoneos -configuration Development CODE_SIGNING_ALLOWED=No
+          xcodebuild -scheme SampleAppSwiftUI clean build -sdk iphoneos -configuration Development CODE_SIGNING_ALLOWED=No -destination 'generic/platform=iOS Simulator' CONFIGURATION_BUILD_DIR=$PWD/build
+      - name: UI Test
+        uses: mobile-dev-inc/action-maestro-cloud@v1
+        with:
+          api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
+          app-file: build/SampleAppSwiftUI.app

@@ -4,15 +4,17 @@
 
 # iOS SwiftUI Sample App
 
-This is the iOS SwiftUI Sample App created by adesso Turkey. The project serves as a comprehensive showcase of the best practices in iOS development by utilizing latest available technology. By listing the cryptocurrency market's top coins, the application allows users to see, search and favorite their desired coin to watch it's price change in real time. 
+This is the iOS SwiftUI Sample App created by adesso Turkey. The project serves as a comprehensive showcase of the best practices in iOS development by utilizing latest available technology. By listing the cryptocurrency market's top coins, the application allows users to see, search and favorite their desired coin to watch it's price change in real time.
 
 ### Spesifications
+
 - Minimum target of iOS 16
 - Usage of Swift concurrency (async/await)
 - WebSocket implementation for real-time price change.
 - Up-to-date SWiftUI features (Navigation stack etc.)
 - Using only [SPM](https://www.swift.org/package-manager/) for package dependencies.
 - Able to favorite and save the coins using [AppStorage](https://developer.apple.com/documentation/swiftui/appstorage).
+
 ## Table of Contents
 
 - [Prerequisites](#Prerequisites)
@@ -97,13 +99,16 @@ Gitflow is a legacy Git workflow that was originally a disruptive and novel stra
 | [Pulse](https://github.com/kean/Pulse)                                | Pulse is a powerful logging system for Apple Platforms. Native. Built with SwiftUI. |
 | [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack) | Powerful & flexible logging framework.                                              |
 | [SwiftLog](https://github.com/apple/swift-log)                        | Logging API for Swift that works well with compatible API's.                        |
-| [Maestro](https://github.com/mobile-dev-inc/maestro) | Flexible UI test automation tool.
+| [Maestro](https://github.com/mobile-dev-inc/maestro)                  | Flexible UI test automation tool.                                                   |
+
 ## Useful Tools and Resources
 
+- [SwiftGen](https://github.com/SwiftGen/SwiftGen) - SwiftGen is a tool to automatically generate Swift code for resources of your projects (like images, localised strings, etc), to make them type-safe to use.
+- [XcodeGen](https://github.com/yonaskolb/XcodeGen) - XcodeGen is a command line tool written in Swift that generates your Xcode project using your folder structure and a project spec.
 - [SwiftLint][github/swiftlint] - A tool to enforce Swift style and conventions.
 - [TestFlight](https://help.apple.com/itunes-connect/developer/#/devdc42b26b8) - TestFlight beta testing lets you distribute beta builds of your app to testers and collect feedback.
-- [Appcenter](https://appcenter.ms/) - Continuously build, test, release, and monitor apps for every platform.
-- [Figma Link](https://www.figma.com/file/RAgvUa7cfDTVteU8Z6Qv1z/SampleAppSwiftUI?node-id=48%3A2425&t=jRUyk0dLzFPejhfL-1)
+- [GithubActions](https://github.com/features/actions) - CI/CD faeature to build, test, and deploy your code right from GitHub.
+- [Figma Link](https://www.figma.com/file/RAgvUa7cfDTVteU8Z6Qv1z/SampleAppSwiftUI?node-id=48%3A2425&t=jRUyk0dLzFPejhfL-1) - UI design files for the project.
 - [Open Issues](https://github.com/adessoTurkey/ios-sample-app-swiftui/issues)
 
 ## Join the crew!

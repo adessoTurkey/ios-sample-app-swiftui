@@ -44,16 +44,16 @@ class FavoritesViewModel: ObservableObject {
     }
 
     private func fetchAllCoins() async {
-        guard let dataSource = try? await AllCoinRemoteDataSource().getAllCoin(limit: 30, unitToBeConverted: "USD", page: 1) else {
+        guard let dataSource = try? await SelectedCoinsRemoteDataSource()
+            .getSelectedCoins(StorageManager.shared.favoriteCoins)
+        else {
             print("Problem on the convert")
             return
         }
         DispatchQueue.main.async {
-            if let data = dataSource.data {
-                self.coinList = data
-                self.filteredCoins = data
-                self.getFavoriteCoinList()
-            }
+            self.filteredCoins = dataSource.convert()
+            self.coins = dataSource.convert()
+            self.startSocketConnection()
         }
     }
 

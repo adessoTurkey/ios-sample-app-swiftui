@@ -34,3 +34,4 @@ jobs:
         with:
           api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
           app-file: build/SampleAppSwiftUI.app
+          command: maestro cloud --ios-version 16 $APP_PATH myflows/

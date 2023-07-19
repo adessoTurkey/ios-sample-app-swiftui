@@ -1,4 +1,6 @@
 appId: com.adesso.SampleAppSwiftUI.development
+onFlowStart:
+  - maestro cloud --ios-version 16 SampleAppSwiftUI.app
 ---
 - launchApp
 - tapOn:

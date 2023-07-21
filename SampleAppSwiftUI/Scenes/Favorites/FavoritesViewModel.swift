@@ -20,7 +20,6 @@ class FavoritesViewModel: ObservableObject {
     private let checkWebSocket = true
 
     @Published var coinInfo: CoinData?
-    @Published var coinList: [CoinData] = []
     @Published var filterTitle = "Most Popular"
 
     let listPageLimit = 10
@@ -28,7 +27,6 @@ class FavoritesViewModel: ObservableObject {
 
     init(webSocketService: any WebSocketServiceProtocol = WebSocketService.shared) {
         self.webSocketService = webSocketService
-        startSocketConnection()
     }
 
     deinit {
@@ -40,43 +38,18 @@ class FavoritesViewModel: ObservableObject {
         disconnect()
         connect()
     }
-    func fetchFavorites() {
-        Task {
-            await fetchAllCoins()
-        }
-    }
 
-    private func fetchAllCoins(page: Int = 1) async {
-        guard let dataSource = try? await AllCoinRemoteDataSource().getAllCoin(limit: self.listPageLimit, unitToBeConverted: "USD", page: page) else {
-            print("Problem on the convert")
-            return
-        }
+    func fetchFavorites() {
         DispatchQueue.main.async {
-            if let data = dataSource.data {
-                self.coinList = data
-                self.filteredCoins = data
-                self.isLoading = false
-                self.getFavoriteCoinList()
-            }
+            self.isLoading = false
+            self.getFavoriteCoinList()
+            self.startSocketConnection()
         }
     }
 
     private func getFavoriteCoinList() {
-        if StorageManager.shared.favoriteCoins.isEmpty {
-            filteredCoins.removeAll()
-        } else {
-            filteredCoins = coinList.filter({ coin in
-                if let info = coin.coinInfo,
-                   let code = info.code {
-                    return StorageManager.shared.isCoinFavorite(code: code)
-                } else {
-                    return false
-                }
-            })
-            print(coins)
-            print(filteredCoins)
-            self.startSocketConnection()
-        }
+        coins = StorageManager.shared.favoriteCoins
+        filteredCoins = coins
     }
 
     func disconnect() {
@@ -140,7 +113,7 @@ class FavoritesViewModel: ObservableObject {
                 if let coinCode = coin.coinInfo?.code {
                     return coin.coinInfo?.title?.lowercased().contains(searchTerm.lowercased()) ?? true ||
                     coin.coinInfo?.code?.lowercased().contains(searchTerm.lowercased())  ?? true &&
-                    StorageManager.shared.favoriteCoins.contains(coinCode)
+                    StorageManager.shared.isCoinFavorite(coinCode)
                 } else {
                     return false
                 }
@@ -149,7 +122,7 @@ class FavoritesViewModel: ObservableObject {
             filteredCoins = coins.filter({ coin in
                 if let coinInfo = coin.coinInfo,
                    let coinCode = coinInfo.code {
-                    return StorageManager.shared.favoriteCoins.contains(coinCode)
+                    return StorageManager.shared.isCoinFavorite(coinCode)
                 } else {
                     return false
                 }
@@ -160,22 +133,8 @@ class FavoritesViewModel: ObservableObject {
 
 extension FavoritesViewModel: ViewModelProtocol {
     func checkLastItem(_ item: CoinData) {
-        guard !isLoading else { return }
-
-        let offset = 0
-        let index = coinList.count - offset - 1
-        guard index > 0 else { return }
-        let id = coinList[index].id
-
-        if item.id == id {
-            isLoading = true
-            Task {
-                await fetchAllCoins(page: getCurrentPage())
-            }
-        }
     }
-
     func getCurrentPage() -> Int {
-        (coinList.count / listPageLimit) + 1
+        return 0
     }
 }

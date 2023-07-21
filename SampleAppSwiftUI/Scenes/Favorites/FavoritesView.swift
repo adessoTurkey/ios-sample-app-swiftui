@@ -35,7 +35,7 @@ struct FavoritesView: View {
         .onChange(of: StorageManager.shared.favoriteCoins, perform: fetchFavorites)
     }
 
-    private func fetchFavorites(codes: [CoinCode]) {
+    private func fetchFavorites(codes: [CoinData]) {
         viewModel.fetchFavorites()
     }
 

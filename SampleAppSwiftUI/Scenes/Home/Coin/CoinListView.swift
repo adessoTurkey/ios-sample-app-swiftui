@@ -40,11 +40,11 @@ struct CoinListView<ViewModel: ViewModelProtocol>: View {
                         .listRowBackground(Color.clear)
                         .swipeActions {
                             Button {
-                                checkFavorite(code: coinInfo.code ?? "")
+                                checkFavorite(coinData: coin)
                             } label: {
                                 Image(systemName: Images.favorites)
                             }
-                            .tint(StorageManager.shared.isCoinFavorite(code: coinInfo.code ?? "") ? .red : .green)
+                            .tint(StorageManager.shared.isCoinFavorite(coinInfo.code ?? "") ? .red : .green)
                         }
                         .accessibilityIdentifier("coinView")
                     }
@@ -63,8 +63,8 @@ struct CoinListView<ViewModel: ViewModelProtocol>: View {
         router.navigateCoinDetail(coinData: coinData)
     }
 
-    func checkFavorite(code: String) {
-        self.alertTitle = StorageManager.shared.manageFavorites(code: code)
+    func checkFavorite(coinData: CoinData) {
+        self.alertTitle = StorageManager.shared.manageFavorites(coinData: coinData)
         showingAlert.toggle()
         favoriteChanged()
     }

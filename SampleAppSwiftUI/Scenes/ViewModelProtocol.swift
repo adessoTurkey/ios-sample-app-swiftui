@@ -12,3 +12,7 @@ protocol ViewModelProtocol: ObservableObject {
 
     func checkLastItem(_ item: CoinData)
 }
+
+extension ViewModelProtocol {
+    func checkLastItem(_ item: CoinData) {}
+}

@@ -131,10 +131,4 @@ class FavoritesViewModel: ObservableObject {
     }
 }
 
-extension FavoritesViewModel: ViewModelProtocol {
-    func checkLastItem(_ item: CoinData) {
-    }
-    func getCurrentPage() -> Int {
-        return 0
-    }
-}
+extension FavoritesViewModel: ViewModelProtocol {}

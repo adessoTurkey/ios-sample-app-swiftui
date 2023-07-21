@@ -24,8 +24,7 @@ struct HomeView: View {
                         await viewModel.fillModels()
                     }
                 }
-                .padding(.horizontal, Paddings.side)
-            }
+            }.padding(.horizontal, Paddings.side)
             .ignoresSafeArea(.all, edges: .top)
             .navigationDestination(for: Screen.self) { screen in
                 if screen.type == .detail, let data = screen.data as? CoinData {

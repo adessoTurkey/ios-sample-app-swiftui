@@ -9,5 +9,10 @@ import Foundation
 
 protocol ViewModelProtocol: ObservableObject {
     var isLoading: Bool { get set }
+
     func checkLastItem(_ item: CoinData)
+}
+
+extension ViewModelProtocol {
+    func checkLastItem(_ item: CoinData) {}
 }

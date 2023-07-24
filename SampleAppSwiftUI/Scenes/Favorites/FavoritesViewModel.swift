@@ -57,24 +57,6 @@ class FavoritesViewModel: ObservableObject {
         }
     }
 
-    private func getFavoriteCoinList() {
-        if StorageManager.shared.favoriteCoins.isEmpty {
-            filteredCoins.removeAll()
-        } else {
-            filteredCoins = coinList.filter({ coin in
-                if let info = coin.coinInfo,
-                   let code = info.code {
-                    return StorageManager.shared.isCoinFavorite(code: code)
-                } else {
-                    return false
-                }
-            })
-            print(coins)
-            print(filteredCoins)
-            self.startSocketConnection()
-        }
-    }
-
     func disconnect() {
         webSocketService.disconnect()
     }
@@ -126,6 +108,7 @@ class FavoritesViewModel: ObservableObject {
                 let title = newCoin.coinInfo?.title ?? ""
                 newCoin.coinInfo?.title =  "\(title)+"
             }
+            self.coins[favoriteIndex] = newCoin
             self.filteredCoins[favoriteIndex] = newCoin
         }
     }

@@ -7,10 +7,11 @@
 
 import Foundation
 
-struct CoinNewsResponse: Codable {
+struct CoinNewsResponse: Codable, Hashable, Identifiable {
+    var id = UUID()
     let type: Int
     let message: String
-    let data: [Datum]
+    let data: [CoinNewData]?
     let hasWarning: Bool
 
     enum CodingKeys: String, CodingKey {
@@ -22,29 +23,17 @@ struct CoinNewsResponse: Codable {
 }
 
 // MARK: - Datum
-struct Datum: Codable {
+struct CoinNewData: Codable, Hashable, Identifiable {
     let id: String
-    let guid: String
-    let publishedOn: Int
     let imageurl: String
     let title: String
     let url: String
-    let body, tags: String
-    let upvotes, downvotes, categories: String
-    let sourceInfo: SourceInfo
+    let body: String
     let source: String
 
     enum CodingKeys: String, CodingKey {
-        case id, guid
-        case publishedOn = "published_on"
-        case imageurl, title, url, body, tags, upvotes, downvotes, categories
-        case sourceInfo = "source_info"
+        case id
+        case imageurl, title, url, body
         case source
     }
-}
-
-// MARK: - SourceInfo
-struct SourceInfo: Codable {
-    let name: String
-    let img: String
 }

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct CoinDetailView: View {
     @StateObject private var viewModel: CoinDetailViewModel
-
     init(coinData: CoinData) {
         _viewModel = StateObject(wrappedValue: CoinDetailViewModel(coinData: coinData))
     }
@@ -75,6 +74,43 @@ struct CoinDetailView: View {
                 }
                 .padding(.horizontal, Paddings.side)
                 .padding(.vertical, Paddings.CoinDetailView.top)
+                NavigationView {
+                    VStack {
+                        if let newsModel = viewModel.coinNewsDataModel {
+                            List {
+                                Section("News") {
+                                    ForEach(newsModel) { model in
+                                        NavigationLink(destination: WebView(url: URL(string: model.url))) {
+                                            HStack {
+                                                AsyncImage(url: URL(string: model.imageurl)) { phase in
+                                                    if let image = phase.image {
+                                                        image.resizable()
+                                                    } else {
+                                                        Resources.Images.worldNews.swiftUIImage.resizable()
+                                                    }
+                                                }
+                                                .scaledToFit()
+                                                .clipShape(Circle())
+                                                .frame(width: Dimensions.imageWidth, height: Dimensions.imageHeight)
+                                                HStack(alignment: .bottom) {
+                                                    Text(model.title)
+                                                        .limitedCharacterCount(55, model.title, "...")
+                                                    Text("Read More..")
+                                                        .font(.system(size: 12))
+                                                        .foregroundColor(Color.blue)
+                                                        .underline()
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            .listStyle(.inset)
+                            .frame(minHeight: 300)
+                            .padding(.horizontal, Paddings.side)
+                        }
+                    }
+                }
             }
             .navigationTitle(Text(verbatim: viewModel.coinData.coinInfo?.title ?? ""))
             .navigationBarTitleDisplayMode(.inline)
@@ -101,7 +137,6 @@ struct CoinDetailView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             CoinDetailView(coinData: CoinData.demo)
-
             NavigationView {
                 CoinDetailView(coinData: CoinData.demo)
             }

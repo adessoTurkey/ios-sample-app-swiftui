@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CoinDetailView: View {
     @StateObject private var viewModel: CoinDetailViewModel
+
     init(coinData: CoinData) {
         _viewModel = StateObject(wrappedValue: CoinDetailViewModel(coinData: coinData))
     }
@@ -69,11 +70,10 @@ struct CoinDetailView: View {
                             }
                         }
                     }
-                    .frame(minHeight: 300)
+                    .frame(minHeight: 250)
                     .cornerRadius(Dimensions.CornerRadius.default)
                 }
                 .padding(.horizontal, Paddings.side)
-                .padding(.vertical, Paddings.CoinDetailView.top)
                 NavigationView {
                     VStack {
                         if let newsModel = viewModel.coinNewsDataModel {
@@ -106,7 +106,6 @@ struct CoinDetailView: View {
                                 }
                             }
                             .listStyle(.inset)
-                            .frame(minHeight: 300)
                             .padding(.horizontal, Paddings.side)
                         }
                     }

@@ -70,56 +70,11 @@ struct CoinDetailView: View {
                             }
                         }
                     }
-                    .frame(minHeight: 250)
+                    .frame(minHeight: 300)
                     .cornerRadius(Dimensions.CornerRadius.default)
                 }
                 .padding(.horizontal, Paddings.side)
-                NavigationView {
-                    VStack {
-                        if let newsModel = viewModel.coinNewsDataModel {
-                            List {
-                                Section("News") {
-                                    ForEach(newsModel.prefix(5)) { model in
-                                        NavigationLink(destination: WebView(url: URL(string: model.url))) {
-                                            HStack {
-                                                AsyncImage(url: URL(string: model.imageurl)) { phase in
-                                                    if let image = phase.image {
-                                                        image.resizable()
-                                                    } else {
-                                                        Resources.Images.worldNews.swiftUIImage.resizable()
-                                                    }
-                                                }
-                                                .scaledToFit()
-                                                .clipShape(Circle())
-                                                .frame(width: Dimensions.imageWidth, height: Dimensions.imageHeight)
-                                                Text(model.title)
-                                                    .limitedCharacterCount(60, model.title, "...")
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            .scrollDisabled(true)
-                            .listStyle(.inset)
-                        }
-                    }
-                }
-                Button {
-                } label: {
-                    NavigationLink(destination: CoinNewsListView(coinData: viewModel.coinData)) {
-                        Text("View More")
-                            .frame(width: UIScreen.main.bounds.size.width - 70)
-                            .font(.system(size: 18))
-                            .padding()
-                            .foregroundColor(Color.searchIcon)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 25)
-                                    .stroke(Color.lightGray, lineWidth: 2)
-                            )
-                    }
-                }.background(Color.lightGray)
-                    .cornerRadius(25)
-                Spacer()
+                .padding(.vertical, Paddings.CoinDetailView.top)
             }
             .navigationTitle(Text(verbatim: viewModel.coinData.coinInfo?.title ?? ""))
             .navigationBarTitleDisplayMode(.inline)
@@ -146,6 +101,7 @@ struct CoinDetailView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             CoinDetailView(coinData: CoinData.demo)
+
             NavigationView {
                 CoinDetailView(coinData: CoinData.demo)
             }

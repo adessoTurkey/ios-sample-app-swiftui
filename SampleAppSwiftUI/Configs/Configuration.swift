@@ -42,7 +42,8 @@ final class Configuration: ConfigurationProtocol {
         let key: String? = try? self.value(for: "personal_api")
         guard let key, !key.isEmpty else {
             /// Get your API key from https://www.cryptocompare.com/
-            return "fee600f44d9b682844543c4b6d0eb5715228f8ca6ac9ba8a87aff4432f1f3fe0"
+            #warning("Please Enter an API Key")
+            return ""
         }
         return key
     }

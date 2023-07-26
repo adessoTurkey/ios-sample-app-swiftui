@@ -8,15 +8,17 @@
 import Foundation
 import SwiftUI
 import Charts
+import Observation
 
-class CoinPriceHistoryChartViewModel: ObservableObject {
+@Observable
+class CoinPriceHistoryChartViewModel {
     var selectedRange: CoinChartHistoryRange
     var dataModel: CoinPriceHistoryChartDataModel
-    @Binding var selectedXDateText: String
+    var selectedXDateText: String
     /// Holds the selected x value of chart when user is dragging on it
-    @Published var selectedX: (any Plottable)?
+    var selectedX: (any Plottable)?
 
-    init(selectedRange: CoinChartHistoryRange, dataModel: CoinPriceHistoryChartDataModel, selectedXDateText: Binding<String>) {
+    init(selectedRange: CoinChartHistoryRange, dataModel: CoinPriceHistoryChartDataModel, selectedXDateText: String) {
         self.selectedRange = selectedRange
         self.dataModel = dataModel
         self._selectedXDateText = selectedXDateText

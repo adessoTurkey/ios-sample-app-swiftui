@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct CoinDetailView: View {
-    @StateObject private var viewModel: CoinDetailViewModel
+    @State private var viewModel: CoinDetailViewModel
 
     init(coinData: CoinData) {
-        _viewModel = StateObject(wrappedValue: CoinDetailViewModel(coinData: coinData))
+        _viewModel = State(wrappedValue: CoinDetailViewModel(coinData: coinData))
     }
 
     var body: some View {
@@ -61,7 +61,7 @@ struct CoinDetailView: View {
                                 CoinPriceHistoryChartView(
                                     selectedRange: viewModel.chartHistoryRangeSelection,
                                     dataModel: chartDataModel,
-                                    selectedXDateText: $viewModel.priceChartSelectedXDateText
+                                    selectedXDateText: viewModel.priceChartSelectedXDateText
                                 )
                                 .padding(.horizontal, 16)
                                 .padding(.top, 34)

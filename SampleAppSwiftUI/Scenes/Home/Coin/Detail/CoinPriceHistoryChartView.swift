@@ -9,10 +9,10 @@ import SwiftUI
 import Charts
 
 struct CoinPriceHistoryChartView: View {
-    @StateObject private var viewModel: CoinPriceHistoryChartViewModel
+    @State private var viewModel: CoinPriceHistoryChartViewModel
 
-    init(selectedRange: CoinChartHistoryRange, dataModel: CoinPriceHistoryChartDataModel, selectedXDateText: Binding<String>) {
-        _viewModel = StateObject(
+    init(selectedRange: CoinChartHistoryRange, dataModel: CoinPriceHistoryChartDataModel, selectedXDateText: String) {
+        _viewModel = State(
             wrappedValue: CoinPriceHistoryChartViewModel(
                 selectedRange: selectedRange,
                 dataModel: dataModel,
@@ -145,7 +145,7 @@ struct CoinPriceHistoryChartView: View {
                 CoinPriceHistoryChartView(
                     selectedRange: item,
                     dataModel: .demo,
-                    selectedXDateText: .constant("")
+                    selectedXDateText: ""
                 )
             }
         }
@@ -154,7 +154,7 @@ struct CoinPriceHistoryChartView: View {
                 CoinPriceHistoryChartView(
                     selectedRange: item,
                     dataModel: .demo,
-                    selectedXDateText: .constant("")
+                    selectedXDateText: ""
                 )
             }
         }

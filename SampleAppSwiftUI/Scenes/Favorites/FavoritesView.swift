@@ -9,8 +9,9 @@ import SwiftUI
 
 struct FavoritesView: View {
     @State private var searchTerm = ""
-    @StateObject private var viewModel = FavoritesViewModel()
-    @EnvironmentObject private var router: Router
+    @State private var viewModel = FavoritesViewModel()
+    @Binding var router: Router
+
     var body: some View {
         NavigationStack(path: $router.favoritesNavigationPath) {
             VStack(spacing: Spacings.favorites) {
@@ -52,5 +53,5 @@ struct FavoritesView: View {
 }
 
 #Preview {
-    FavoritesView()
+    FavoritesView(router: .constant(.init()))
 }

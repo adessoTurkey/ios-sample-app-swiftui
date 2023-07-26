@@ -14,7 +14,7 @@ struct SampleAppSwiftUIApp: App {
         // Check out https://developer.apple.com/documentation/swiftui/scenephase for more information
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     private var loggingService: LoggingService
-    @StateObject private var router: Router = Router()
+    @State private var router: Router = Router()
 
     init() {
         loggingService = LoggingService()
@@ -22,8 +22,7 @@ struct SampleAppSwiftUIApp: App {
 
     var body: some Scene {
         WindowGroup {
-            MainView()
-                .environmentObject(router)
+            MainView(router: $router)
                 .onChange(of: phase, { _, newValue in
                     manageChanges(for: newValue)
                 })

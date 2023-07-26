@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct CoinListView<ViewModel: ViewModelProtocol>: View {
-    @ObservedObject var viewModel: ViewModel
+    @State var viewModel: ViewModel
     @Binding var filteredCoins: [CoinData]
     @State private var showingAlert = false
     @State private var alertTitle = ""
-    @EnvironmentObject private var router: Router
+    @State private var router: Router = Router()
     let favoriteChanged: () -> Void
 
     var body: some View {

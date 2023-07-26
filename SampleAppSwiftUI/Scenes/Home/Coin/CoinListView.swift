@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct CoinListView: View {
+struct CoinListView<ViewModel: ViewModelProtocol>: View {
+    @ObservedObject var viewModel: ViewModel
     @Binding var filteredCoins: [CoinData]
     @State private var showingAlert = false
     @State private var alertTitle = ""
@@ -28,6 +29,9 @@ struct CoinListView: View {
                     if let coinInfo = coin.coinInfo,
                        coin.detail != nil {
                         CoinView(coinInfo: coin)
+                        .onAppear {
+                            viewModel.checkLastItem(coin)
+                        }
                         .onTapGesture {
                             navigateCoinDetail(coinData: coin)
                         }
@@ -36,14 +40,17 @@ struct CoinListView: View {
                         .listRowBackground(Color.clear)
                         .swipeActions {
                             Button {
-                                checkFavorite(code: coinInfo.code ?? "")
+                                checkFavorite(coinData: coin)
                             } label: {
                                 Image(systemName: Images.favorites)
                             }
-                            .tint(StorageManager.shared.isCoinFavorite(code: coinInfo.code ?? "") ? .red : .green)
+                            .tint(StorageManager.shared.isCoinFavorite(coinInfo.code ?? "") ? .red : .green)
                         }
                         .accessibilityIdentifier("coinView")
                     }
+                }
+                if viewModel.isLoading {
+                    ProgressView()
                 }
             }
             .listStyle(.plain)
@@ -56,8 +63,8 @@ struct CoinListView: View {
         router.navigateCoinDetail(coinData: coinData)
     }
 
-    func checkFavorite(code: String) {
-        self.alertTitle = StorageManager.shared.manageFavorites(code: code)
+    func checkFavorite(coinData: CoinData) {
+        self.alertTitle = StorageManager.shared.manageFavorites(coinData: coinData)
         showingAlert.toggle()
         favoriteChanged()
     }
@@ -70,7 +77,7 @@ struct CoinListView: View {
 struct CoinListView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            CoinListView(filteredCoins: .constant([.demo, .demo, .demo]), favoriteChanged: {})
+            CoinListView(viewModel: HomeViewModel(), filteredCoins: .constant([.demo, .demo, .demo]), favoriteChanged: {})
         }
     }
 }

@@ -5,6 +5,7 @@
 //  Created by Abay, Batuhan on 22.05.2023.
 //
 
+import PreviewSnapshots
 import SwiftUI
 
 struct ChangePercentageView: View {
@@ -29,6 +30,16 @@ struct ChangePercentageView: View {
 
 struct ChangePercentageView_Previews: PreviewProvider {
     static var previews: some View {
-        ChangePercentageView(changeRate: CoinData.demo.detail?.usd ?? .init())
+        snapshots.previews
+    }
+
+    static var snapshots: PreviewSnapshots<RawUsd> {
+        .init(configurations: [
+            .init(name: "Positive Change", state: CoinData.demo.detail?.usd ?? .init()),
+            .init(name: "Neutral", state: RawUsd(changePercentage: 0)),
+            .init(name: "Negative", state: RawUsd(changePercentage: -14.33))
+        ]) { state in
+            ChangePercentageView(changeRate: state)
+        }
     }
 }

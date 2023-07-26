@@ -81,10 +81,6 @@ struct CoinView: View {
 struct CoinView_Previews: PreviewProvider {
     static var previews: some View {
         snapshots.previews
-            .previewLayout(.sizeThatFits)
-            .frame(height: Dimensions.coinCellSize)
-            .padding(.horizontal, Paddings.side)
-            .padding(.vertical)
     }
 
     static var snapshots: PreviewSnapshots<CoinData> {
@@ -92,6 +88,8 @@ struct CoinView_Previews: PreviewProvider {
             .init(name: "BTC", state: .demo),
             .init(name: "DOGE", state: CoinData.demoCoin(from: "DOGE")),
             .init(name: "ETH", state: CoinData.demoCoin(from: "ETH"))
-        ], configure: { state in CoinView(coinInfo: state) })
+        ]) { state in
+            CoinView(coinInfo: state)
+        }
     }
 }

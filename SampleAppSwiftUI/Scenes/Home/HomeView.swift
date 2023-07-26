@@ -6,6 +6,7 @@
 //  Copyright © 2022 Adesso Turkey. All rights reserved.
 //
 
+import PreviewSnapshots
 import SwiftUI
 
 struct HomeView: View {
@@ -45,7 +46,18 @@ struct HomeView: View {
 }
 
 struct HomeView_Previews: PreviewProvider {
+    private static let router = Router()
+
     static var previews: some View {
-        HomeView()
+        snapshots.previews
+    }
+
+    static var snapshots: PreviewSnapshots<Void?> {
+        .init(configurations: [
+            .init(name: "Home view", state: nil)
+        ]) { _ in
+            HomeView()
+                .environmentObject(router)
+        }
     }
 }

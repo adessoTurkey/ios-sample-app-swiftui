@@ -5,6 +5,7 @@
 //  Created by Sucu, Ege on 17.03.2023.
 //
 
+import PreviewSnapshots
 import SwiftUI
 
 struct SearchBarView: View {
@@ -34,9 +35,16 @@ struct SearchBarView: View {
 
 struct SearchBarView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBarView(searchText: .constant(""), topPadding: Paddings.SearchBar.shortTop)
-            .previewLayout(.sizeThatFits)
-            .frame(width: .infinity, height: Dimensions.searchBarHeight)
-            .padding(.vertical)
+        snapshots.previews.previewLayout(.sizeThatFits)
+    }
+
+    static var snapshots: PreviewSnapshots<String> {
+        .init(configurations: [
+            .init(name: "Empty text", state: ""),
+            .init(name: "Short text", state: "Culpa occaecat nostrud."),
+            .init(name: "Long text", state: "Non veniam occaecat et ullamco ad aliquip laborum elit ea incididunt id non Lorem deserunt.")
+        ]) { state in
+            SearchBarView(searchText: .constant(state), topPadding: 0)
+        }
     }
 }

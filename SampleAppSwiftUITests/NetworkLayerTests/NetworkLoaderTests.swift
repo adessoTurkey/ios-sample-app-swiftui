@@ -17,10 +17,12 @@ final class NetworkLoaderTests: XCTestCase {
     }
 
     func test_request_performsOneGETRequestWithRequestObject() {
-        let (session, sut) = makeSUT()
-        let url = anyURL()
-        let requestObject = anyRequestObject(with: url.absoluteString)
         let expectation = expectation(description: "Wait for request")
+        let (session, sut) = makeSUT()
+        guard let url = anyURL() else {
+            return
+        }
+        let requestObject = anyRequestObject(with: url.absoluteString)
 
         Task {
             _ = try? await sut.request(with: requestObject, responseModel: TestResponse.self)
@@ -124,11 +126,12 @@ final class NetworkLoaderTests: XCTestCase {
 
     func anyJsonRepresentation(_ value: String) -> Data {
         let json = ["value": value]
-        return try? JSONSerialization.data(withJSONObject: json) ?? Data()
+        let data = try? JSONSerialization.data(withJSONObject: json)
+        return data ?? Data()
     }
 
-    private func anyURL() -> URL {
-        guard URL(string: "http://www.a-url.com") != nil else { return .init() }
+    private func anyURL() -> URL? {
+        URL(string: "http://www.a-url.com")
     }
 
     private func anyNSError() -> NSError {
@@ -150,8 +153,9 @@ final class NetworkLoaderTests: XCTestCase {
             } else {
                 guard let url = request.url,
                         HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: nil) != nil
-                else { return Data("any data".utf8, HTTPURLResponse()) }
+                else { return (Data("any data".utf8), HTTPURLResponse()) }
             }
+            return (Data("any data".utf8), HTTPURLResponse())
         }
 
         func completeWith(error: NSError, at index: Int = 0) {

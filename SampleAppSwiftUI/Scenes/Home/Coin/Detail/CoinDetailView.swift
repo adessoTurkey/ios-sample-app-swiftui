@@ -5,6 +5,7 @@
 //  Created by Abay, Batuhan on 22.05.2023.
 //
 
+import PreviewSnapshots
 import SwiftUI
 
 struct CoinDetailView: View {
@@ -84,8 +85,8 @@ struct CoinDetailView: View {
                         viewModel.updateCoinFavoriteState()
                     } label: {
                         viewModel.isFavorite
-                        ? Image(systemName: Images.favorites)
-                        : Image(systemName: Images.star)
+                            ? Image(systemName: Images.favorites)
+                            : Image(systemName: Images.star)
                     }
                     .tint(.gray)
                 }
@@ -99,12 +100,16 @@ struct CoinDetailView: View {
 
 struct CoinDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            CoinDetailView(coinData: CoinData.demo)
+        NavigationView {
+            snapshots.previews
+        }
+    }
 
-            NavigationView {
-                CoinDetailView(coinData: CoinData.demo)
-            }
+    static var snapshots: PreviewSnapshots<CoinData> {
+        .init(configurations: [
+            .init(name: "Coin detail view", state: .demo)
+        ]) { state in
+            CoinDetailView(coinData: state)
         }
     }
 }

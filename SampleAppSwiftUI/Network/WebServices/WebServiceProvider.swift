@@ -14,12 +14,10 @@ class WebServiceProvider {
     let exampleService: ExampleServiceProtocol
     let allCoinService: AllCoinServiceProtocol
     let coinPriceHistoryService: CoinPriceHistoryServiceProtocol
-    let coinNewsService: CoinNewsServiceProtocol
 
     private init() {
         exampleService = ExampleService()
         allCoinService = AllCoinService()
         coinPriceHistoryService = CoinPriceHistoryService()
-        coinNewsService = CoinNewsService()
     }
 }

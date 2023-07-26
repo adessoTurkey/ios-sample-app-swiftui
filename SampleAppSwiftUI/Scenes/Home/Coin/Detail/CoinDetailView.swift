@@ -79,7 +79,7 @@ struct CoinDetailView: View {
                         if let newsModel = viewModel.coinNewsDataModel {
                             List {
                                 Section("News") {
-                                    ForEach(newsModel) { model in
+                                    ForEach(newsModel.prefix(5)) { model in
                                         NavigationLink(destination: WebView(url: URL(string: model.url))) {
                                             HStack {
                                                 AsyncImage(url: URL(string: model.imageurl)) { phase in
@@ -92,24 +92,34 @@ struct CoinDetailView: View {
                                                 .scaledToFit()
                                                 .clipShape(Circle())
                                                 .frame(width: Dimensions.imageWidth, height: Dimensions.imageHeight)
-                                                HStack(alignment: .bottom) {
-                                                    Text(model.title)
-                                                        .limitedCharacterCount(55, model.title, "...")
-                                                    Text("Read More..")
-                                                        .font(.system(size: 12))
-                                                        .foregroundColor(Color.blue)
-                                                        .underline()
-                                                }
+                                                Text(model.title)
+                                                    .limitedCharacterCount(60, model.title, "...")
                                             }
                                         }
                                     }
                                 }
                             }
+                            .scrollDisabled(true)
                             .listStyle(.inset)
-                            .padding(.horizontal, Paddings.side)
                         }
                     }
                 }
+                Button {
+                } label: {
+                    NavigationLink(destination: CoinNewsListView(coinData: viewModel.coinData)) {
+                        Text("View More")
+                            .frame(width: UIScreen.main.bounds.size.width - 70)
+                            .font(.system(size: 18))
+                            .padding()
+                            .foregroundColor(Color.searchIcon)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 25)
+                                    .stroke(Color.lightGray, lineWidth: 2)
+                            )
+                    }
+                }.background(Color.lightGray)
+                    .cornerRadius(25)
+                Spacer()
             }
             .navigationTitle(Text(verbatim: viewModel.coinData.coinInfo?.title ?? ""))
             .navigationBarTitleDisplayMode(.inline)

@@ -24,11 +24,11 @@ struct FavoritesView: View {
                 }
             }
             .padding(.horizontal, Paddings.side)
-            .navigationTitle(Text(Strings.favorites))
+            .navigationTitle(Text("Favorites"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: createTopBar)
         }
-        .background(Color.lightGray)
+        .background(Color(.lightestGray))
         .onAppear(perform: viewModel.fetchFavorites)
         .onDisappear(perform: viewModel.disconnect)
         .onChange(of: searchTerm, { _, newValue in

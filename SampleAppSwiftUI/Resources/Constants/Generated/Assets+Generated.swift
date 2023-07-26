@@ -28,7 +28,7 @@ internal enum Resources {
   }
   internal enum Colors {
     internal static let color = ColorAsset(name: "Color")
-    internal static let lightGray = ColorAsset(name: "LightGray")
+    internal static let lightestGray = ColorAsset(name: "LightestGray")
     internal enum SearchBar {
       internal static let searchBarBackground = ColorAsset(name: "SearchBarBackground")
       internal static let searchIcon = ColorAsset(name: "SearchIcon")

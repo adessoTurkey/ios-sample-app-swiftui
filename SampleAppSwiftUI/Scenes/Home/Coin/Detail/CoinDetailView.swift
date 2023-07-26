@@ -23,7 +23,8 @@ struct CoinDetailView: View {
                             image.resizable()
                         } else if phase.error != nil {
                             VStack {
-                                Resources.Images.defaultCoin.swiftUIImage.resizable()
+                                Image(.defaultCoin)
+                                    .resizable()
                             }
                         } else {
                             ProgressView()

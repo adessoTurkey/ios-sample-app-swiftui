@@ -32,7 +32,7 @@ struct HomeView: View {
                 }
             }
         }
-        .background(Color.lightGray)
+        .background(Color(.lightestGray))
         .ignoresSafeArea(.all, edges: [.top, .trailing, .leading])
         .onAppear {
             Task {

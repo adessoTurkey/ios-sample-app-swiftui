@@ -5,21 +5,60 @@
 //  Created by Meryem Şahin on 24.07.2023.
 //
 
-import SwiftUI
 import WebKit
+import SwiftUI
 
 struct WebView: UIViewRepresentable {
     let url: URL?
+    var activityIndicator: UIActivityIndicatorView! = UIActivityIndicatorView(frame: CGRect(x: (UIScreen.main.bounds.width / 2) - 30,
+                                                                                            y: (UIScreen.main.bounds.height / 2) - 30, width: 60, height: 60))
 
-    func makeUIView(context: Context) -> WKWebView {
-         print(context)
-         return WKWebView()
-    }
+    func makeUIView(context: Context) -> UIView {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        let webview = WKWebView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        webview.navigationDelegate = context.coordinator
 
-    func updateUIView(_ webView: WKWebView, context: Context) {
         if let url = self.url {
             let request = URLRequest(url: url)
-            webView.load(request)
+            webview.load(request)
         }
+        view.addSubview(webview)
+        activityIndicator.backgroundColor = UIColor.systemGray5
+        activityIndicator.startAnimating()
+        activityIndicator.color = UIColor.white
+        activityIndicator.layer.cornerRadius = 8
+        activityIndicator.clipsToBounds = true
+
+        view.addSubview(activityIndicator)
+        return view
+    }
+
+    func makeCoordinator() -> WebViewHelper {
+        WebViewHelper(self)
+    }
+
+    func updateUIView(_ uiView: UIView, context: Context) { }
+}
+
+class WebViewHelper: NSObject, WKNavigationDelegate {
+
+    var parent: WebView
+
+    init(_ parent: WebView) {
+        self.parent = parent
+        super.init()
+    }
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        parent.activityIndicator.isHidden = true
+    }
+
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        parent.activityIndicator.isHidden = true
+        print("error: \(error)")
+    }
+
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        parent.activityIndicator.isHidden = true
+        print("error \(error)")
     }
 }

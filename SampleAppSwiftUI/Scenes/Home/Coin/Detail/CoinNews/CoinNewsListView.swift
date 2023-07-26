@@ -13,11 +13,10 @@ struct CoinNewsListView: View {
     init(coinData: CoinData) {
         _viewModel = StateObject(wrappedValue: CoinDetailViewModel(coinData: coinData))
     }
-    
     var body: some View {
         VStack {
-            NavigationView {
-                VStack {
+            ScrollView {
+                NavigationView {
                     if let newsModel = viewModel.coinNewsDataModel {
                         List {
                             ForEach(newsModel) { model in
@@ -34,16 +33,17 @@ struct CoinNewsListView: View {
                                         .clipShape(Circle())
                                         .frame(width: Dimensions.imageWidth, height: Dimensions.imageHeight)
                                         Text(model.title)
-                                            .limitedCharacterCount(60, model.title, "...")
                                     }
                                 }
                             }
                         }
                         .listStyle(.inset)
                     }
-                }
-            }.navigationTitle("News")
-            .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.large)
+                }.frame(height: UIScreen.main.bounds.height)
+                .navigationTitle("News")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .navigationViewStyle(.automatic)
+            }
         }
         .onAppear {
             viewModel.onAppear()

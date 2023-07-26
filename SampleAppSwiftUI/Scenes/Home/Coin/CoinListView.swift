@@ -76,6 +76,6 @@ struct CoinListView<ViewModel: ViewModelProtocol>: View {
 
 #Preview {
     NavigationView {
-        CoinListView(filteredCoins: .constant([.demo, .demo, .demo]), favoriteChanged: {})
+        CoinListView(viewModel: FavoritesViewModel(), filteredCoins: .constant([.demo, .demo, .demo]), favoriteChanged: {})
     }
 }

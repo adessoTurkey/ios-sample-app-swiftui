@@ -39,16 +39,12 @@ struct HomeView: View {
                 await viewModel.fillModels()
             }
         }
-        .onChange(of: searchTerm, perform: viewModel.filterResults(searchTerm:))
+        .onChange(of: searchTerm, { _, newValue in
+            viewModel.filterResults(searchTerm: newValue)
+        })
     }
 }
 
 #Preview {
     HomeView()
 }
-
-// struct HomeView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        HomeView()
-//    }
-// }

@@ -97,14 +97,11 @@ struct CoinDetailView: View {
     }
 }
 
-struct CoinDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
+#Preview {
+    Group {
+        NavigationView {
             CoinDetailView(coinData: CoinData.demo)
-
-            NavigationView {
-                CoinDetailView(coinData: CoinData.demo)
-            }
+                .previewLayout(.sizeThatFits)
         }
     }
 }

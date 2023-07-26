@@ -18,8 +18,6 @@ struct HomeFilterView: View {
     }
 }
 
-struct HomeFilterView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeFilterView(filterTitle: "")
-    }
+#Preview {
+    HomeFilterView(filterTitle: "")
 }

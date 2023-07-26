@@ -27,8 +27,6 @@ struct ChangePercentageView: View {
     }
 }
 
-struct ChangePercentageView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChangePercentageView(changeRate: CoinData.demo.detail?.usd ?? .init())
-    }
+#Preview {
+    ChangePercentageView(changeRate: CoinData.demo.detail?.usd ?? .init())
 }

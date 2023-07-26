@@ -32,11 +32,8 @@ struct SearchBarView: View {
     }
 }
 
-struct SearchBarView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchBarView(searchText: .constant(""), topPadding: Paddings.SearchBar.shortTop)
-            .previewLayout(.sizeThatFits)
-            .frame(width: .infinity, height: Dimensions.searchBarHeight)
-            .padding(.vertical)
-    }
+#Preview {
+    SearchBarView(searchText: .constant(""), topPadding: Paddings.SearchBar.shortTop)
+        .frame(width: .infinity, height: Dimensions.searchBarHeight)
+        .padding(.vertical)
 }

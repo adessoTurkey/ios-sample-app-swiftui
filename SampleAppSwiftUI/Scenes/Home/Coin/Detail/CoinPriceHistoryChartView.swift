@@ -138,31 +138,26 @@ struct CoinPriceHistoryChartView: View {
     }
 }
 
-struct CoinPriceHistoryChartView_Previews: PreviewProvider {
-    static var previews: some View {
+#Preview {
+    Group {
         Group {
-            Group {
-                ForEach(CoinChartHistoryRange.allCases) { item in
-                    CoinPriceHistoryChartView(
-                        selectedRange: item,
-                        dataModel: .demo,
-                        selectedXDateText: .constant("")
-                    )
-                    .previewDisplayName(item.rawValue)
-                }
+            ForEach(CoinChartHistoryRange.allCases) { item in
+                CoinPriceHistoryChartView(
+                    selectedRange: item,
+                    dataModel: .demo,
+                    selectedXDateText: .constant("")
+                )
             }
-
-            Group {
-                ForEach(CoinChartHistoryRange.allCases) { item in
-                    CoinPriceHistoryChartView(
-                        selectedRange: item,
-                        dataModel: .demo,
-                        selectedXDateText: .constant("")
-                    )
-                    .previewDisplayName(item.rawValue + "DARK")
-                }
-            }
-            .preferredColorScheme(.dark)
         }
+        Group {
+            ForEach(CoinChartHistoryRange.allCases) { item in
+                CoinPriceHistoryChartView(
+                    selectedRange: item,
+                    dataModel: .demo,
+                    selectedXDateText: .constant("")
+                )
+            }
+        }
+        .preferredColorScheme(.dark)
     }
 }

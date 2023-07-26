@@ -74,10 +74,8 @@ struct CoinListView<ViewModel: ViewModelProtocol>: View {
     }
 }
 
-struct CoinListView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            CoinListView(viewModel: HomeViewModel(), filteredCoins: .constant([.demo, .demo, .demo]), favoriteChanged: {})
-        }
+#Preview {
+    NavigationView {
+        CoinListView(filteredCoins: .constant([.demo, .demo, .demo]), favoriteChanged: {})
     }
 }

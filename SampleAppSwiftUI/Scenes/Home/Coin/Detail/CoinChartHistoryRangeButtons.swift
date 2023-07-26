@@ -34,8 +34,6 @@ struct CoinChartHistoryRangeButtons: View {
     }
 }
 
-struct CoinChartHistoryRangeButtons_Previews: PreviewProvider {
-    static var previews: some View {
-        CoinChartHistoryRangeButtons(selection: .constant(.oneMonth))
-    }
+#Preview {
+    CoinChartHistoryRangeButtons(selection: .constant(.oneMonth))
 }

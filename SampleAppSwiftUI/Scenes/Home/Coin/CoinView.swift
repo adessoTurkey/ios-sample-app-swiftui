@@ -77,17 +77,13 @@ struct CoinView: View {
     }
 }
 
-struct CoinView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            CoinView(coinInfo: .demo)
-            CoinView(coinInfo: .demo)
-                .preferredColorScheme(.dark)
-        }
-        .previewLayout(.sizeThatFits)
-        .frame(height: Dimensions.coinCellSize)
-        .padding(.horizontal, Paddings.side)
-        .padding(.vertical)
-
+#Preview {
+    Group {
+        CoinView(coinInfo: .demo)
+        CoinView(coinInfo: .demo)
+            .preferredColorScheme(.dark)
     }
+    .frame(height: Dimensions.coinCellSize)
+    .padding(.horizontal, Paddings.side)
+    .padding(.vertical)
 }

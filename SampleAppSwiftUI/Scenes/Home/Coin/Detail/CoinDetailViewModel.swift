@@ -48,12 +48,12 @@ class CoinDetailViewModel: ObservableObject {
     }
 
     func checkIsCoinFavorite() {
-        isFavorite = StorageManager.shared.isCoinFavorite(code: coinData.coinInfo?.code ?? "")
+        isFavorite = StorageManager.shared.isCoinFavorite(coinData.coinInfo?.code ?? "")
     }
 
     func updateCoinFavoriteState() {
         isFavorite.toggle()
-        StorageManager.shared.manageFavorites(code: coinData.coinInfo?.code ?? "")
+        StorageManager.shared.manageFavorites(coinData: coinData)
     }
 
     func fetchCoinPriceHistory(forSelectedRange range: CoinChartHistoryRange) {

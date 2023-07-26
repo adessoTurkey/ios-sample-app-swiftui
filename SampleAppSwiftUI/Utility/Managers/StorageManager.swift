@@ -11,7 +11,7 @@ final class StorageManager: ObservableObject {
 
     static let shared = StorageManager()
 
-    @AppStorage("favoriteCoins") var favoriteCoins: [CoinCode] = [] {
+    @AppStorage("favoriteCoins") var favoriteCoins: [CoinData] = [] {
         didSet {
             objectWillChange.send()
         }
@@ -19,38 +19,46 @@ final class StorageManager: ObservableObject {
 
     private init() { }
 
-    func isCoinFavorite(code: CoinCode) -> Bool {
-        favoriteCoins.contains(code)
+    func isCoinFavorite(_ coinCode: CoinCode) -> Bool {
+        favoriteCoins.contains { coinData in
+            if let coinInfo = coinData.coinInfo, let code = coinInfo.code {
+                return code == coinCode
+            }
+            return false
+        }
     }
 
-    func toggleFavoriteCoin(code: CoinCode) {
+    func toggleFavoriteCoin(coinData: CoinData) {
         if favoriteCoins.isEmpty {
-            addFavoriteCoin(code: code)
+            addFavoriteCoin(coinData: coinData)
         } else {
-            if isCoinFavorite(code: code) {
-                removeFavoriteCoin(code: code)
+            if isCoinFavorite(coinData.coinInfo?.code ?? "") {
+                removeFavoriteCoin(coinData.coinInfo?.code ?? "")
             } else {
-                addFavoriteCoin(code: code)
+                addFavoriteCoin(coinData: coinData)
             }
         }
     }
 
-    private func addFavoriteCoin(code: CoinCode) {
+    private func addFavoriteCoin(coinData: CoinData) {
         DispatchQueue.main.async {
-            self.favoriteCoins.append(code)
+            self.favoriteCoins.append(coinData)
         }
     }
 
-    private func removeFavoriteCoin(code: CoinCode) {
-        DispatchQueue.main.async {
-            self.favoriteCoins.removeAll(where: { $0 == code })
+    private func removeFavoriteCoin(_ coinCode: CoinCode) {
+        favoriteCoins.removeAll { coinData in
+            if let coinInfo = coinData.coinInfo, let code = coinInfo.code {
+                return code == coinCode
+            }
+            return false
         }
     }
 
     @discardableResult
-    func manageFavorites(code: CoinCode) -> String {
-        let output = isCoinFavorite(code: code) ? "Removed from Favorites" : "Added to Favorites"
-        toggleFavoriteCoin(code: code)
+    func manageFavorites(coinData: CoinData) -> String {
+        let output = isCoinFavorite(coinData.coinInfo?.code ?? "") ? "Removed from Favorites" : "Added to Favorites"
+        toggleFavoriteCoin(coinData: coinData)
         return output
     }
 

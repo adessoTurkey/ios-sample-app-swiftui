@@ -26,6 +26,16 @@ class FavoritesViewModel: ObservableObject {
     init(webSocketService: any WebSocketServiceProtocol = WebSocketService.shared) {
         self.webSocketService = webSocketService
         startSocketConnection()
+        tryCoreData()
+    }
+
+    func tryCoreData() {
+        let manager = CoreDataManager()
+        manager.addFavoriteCoin(coin: CoinData.demo)
+        let list = manager.getCoins()
+        for coin in  list {
+            print(coin.coinInfo?.code, coin.coinInfo?.title)
+        }
     }
 
     deinit {

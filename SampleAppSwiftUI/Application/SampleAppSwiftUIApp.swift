@@ -15,7 +15,6 @@ struct SampleAppSwiftUIApp: App {
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     private var loggingService: LoggingService
     @StateObject private var router: Router = Router()
-    let coreDataManager = CoreDataManager.shared
 
     init() {
         loggingService = LoggingService()
@@ -25,14 +24,12 @@ struct SampleAppSwiftUIApp: App {
         WindowGroup {
             MainView()
                 .environmentObject(router)
-                .environment(\.managedObjectContext, coreDataManager.container.viewContext)
                 .onChange(of: phase, perform: manageChanges(for:))
                 .onOpenURL(perform: onOpenURL(_:))
         }
     }
 
     private func manageChanges(for phase: ScenePhase) {
-        coreDataManager.save()
         switch phase {
             case .active:
                 // App became active

@@ -68,14 +68,16 @@ class CoinPriceHistoryChartViewModel: ObservableObject {
     }
 
     func onChangeDrag(value: DragGesture.Value, chartProxy: ChartProxy, geometryProxy: GeometryProxy) {
-        let xCurrent = value.location.x - geometryProxy[chartProxy.plotAreaFrame].origin.x
+        if let plotFrame = chartProxy.plotFrame {
+            let xCurrent = value.location.x - geometryProxy[plotFrame].origin.x
 
-        if let selectedDate: Date = chartProxy.value(atX: xCurrent),
-           let startDate = dataModel.prices.first?.date,
-           let lastDate = dataModel.prices.last?.date,
-           selectedDate >= startDate && selectedDate <= lastDate {
-            selectedX = selectedDate
-            selectedXDateText = calculatedSelectedXDateText
+            if let selectedDate: Date = chartProxy.value(atX: xCurrent),
+               let startDate = dataModel.prices.first?.date,
+               let lastDate = dataModel.prices.last?.date,
+               selectedDate >= startDate && selectedDate <= lastDate {
+                selectedX = selectedDate
+                selectedXDateText = calculatedSelectedXDateText
+            }
         }
     }
 

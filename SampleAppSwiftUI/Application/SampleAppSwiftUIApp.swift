@@ -24,7 +24,9 @@ struct SampleAppSwiftUIApp: App {
         WindowGroup {
             MainView()
                 .environmentObject(router)
-                .onChange(of: phase, perform: manageChanges(for:))
+                .onChange(of: phase, { _, newValue in
+                    manageChanges(for: newValue)
+                })
                 .onOpenURL(perform: onOpenURL(_:))
         }
     }

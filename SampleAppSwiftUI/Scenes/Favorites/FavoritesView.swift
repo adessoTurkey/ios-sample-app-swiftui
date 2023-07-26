@@ -31,8 +31,12 @@ struct FavoritesView: View {
         .background(Color.lightGray)
         .onAppear(perform: viewModel.fetchFavorites)
         .onDisappear(perform: viewModel.disconnect)
-        .onChange(of: searchTerm, perform: viewModel.filterResults(searchTerm:))
-        .onChange(of: StorageManager.shared.favoriteCoins, perform: fetchFavorites)
+        .onChange(of: searchTerm, { _, newValue in
+            viewModel.filterResults(searchTerm: newValue)
+        })
+        .onChange(of: StorageManager.shared.favoriteCoins, { _, newValue in
+            fetchFavorites(codes: newValue)
+        })
     }
 
     private func fetchFavorites(codes: [CoinData]) {

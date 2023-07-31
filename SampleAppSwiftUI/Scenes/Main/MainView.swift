@@ -10,7 +10,7 @@ import SwiftUI
 
 struct MainView: View {
 
-    @StateObject private var storageManager = StorageManager.shared
+    @StateObject private var storageManager = CoreDataManager.shared
     @EnvironmentObject private var router: Router
     var body: some View {
         TabView(selection: $router.selectedTab) {

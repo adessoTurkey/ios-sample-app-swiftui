@@ -44,7 +44,7 @@ struct CoinListView<ViewModel: ViewModelProtocol>: View {
                             } label: {
                                 Image(systemName: Images.favorites)
                             }
-                            .tint(StorageManager.shared.isCoinFavorite(coinInfo.code ?? "") ? .red : .green)
+                            .tint(CoreDataManager.shared.isCoinFavorite(coinInfo.code ?? "") ? .red : .green)
                         }
                         .accessibilityIdentifier("coinView")
                     }
@@ -64,7 +64,7 @@ struct CoinListView<ViewModel: ViewModelProtocol>: View {
     }
 
     func checkFavorite(coinData: CoinData) {
-        self.alertTitle = StorageManager.shared.manageFavorites(coinData: coinData)
+        self.alertTitle = CoreDataManager.shared.manageFavorites(coinData: coinData)
         showingAlert.toggle()
         favoriteChanged()
     }

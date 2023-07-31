@@ -32,7 +32,7 @@ struct FavoritesView: View {
         .onAppear(perform: viewModel.fetchFavorites)
         .onDisappear(perform: viewModel.disconnect)
         .onChange(of: searchTerm, perform: viewModel.filterResults(searchTerm:))
-        .onChange(of: StorageManager.shared.favoriteCoins, perform: fetchFavorites)
+        .onChange(of: CoreDataManager.shared.getCoins(), perform: fetchFavorites)
     }
 
     private func fetchFavorites(codes: [CoinData]) {

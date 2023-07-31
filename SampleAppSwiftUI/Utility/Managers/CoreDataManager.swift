@@ -12,9 +12,10 @@ import CoreData
 final class CoreDataManager: ObservableObject {
     static let shared = CoreDataManager()
     let container: NSPersistentContainer
+    var list = [CoinDataCD]()
 
     init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: "CoinDataCD")
+        container = NSPersistentContainer(name: "CoinDataModel")
 
         if inMemory {
             container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
@@ -25,6 +26,7 @@ final class CoreDataManager: ObservableObject {
                 fatalError("Error: \(error.localizedDescription)")
             }
         }
+        fetchRaw()
     }
 
     func save() {
@@ -38,42 +40,50 @@ final class CoreDataManager: ObservableObject {
             }
         }
     }
-//
-//    func toggleFavoriteCoin(code: CoinCode) {
-//
-//        if favoriteCoins.isEmpty {
-//            addFavoriteCoin(code: code)
-//        } else {
-//            if isCoinFavorite(code: code) {
-//                removeFavoriteCoin(code: code)
-//            } else {
-//                addFavoriteCoin(code: code)
-//            }
-//        }
-//    }
-//
+
+    func toggleFavoriteCoin(coinData: CoinData) {
+
+        if list.isEmpty {
+            addFavoriteCoin(coin: coinData)
+        } else {
+            if isCoinFavorite(coinData.coinInfo?.code ?? "") {
+                removeFavoriteCoin(code: coinData.coinInfo?.code ?? "")
+            } else {
+                addFavoriteCoin(coin: coinData)
+            }
+        }
+    }
+
+    func isCoinFavorite(_ coinCode: CoinCode) -> Bool {
+        list.contains { coinData in
+            if let code = coinData.code {
+                return code == coinCode
+            }
+            return false
+        }
+    }
+
     func addFavoriteCoin(coin: CoinData) {
-        DispatchQueue.main.async {
-            let coinCD = CoinDataCD()
-            coinCD.title = coin.coinInfo?.title
-            coinCD.code = coin.coinInfo?.code
-            coinCD.price = coin.detail?.usd?.price ?? 0
-            coinCD.price = coin.detail?.usd?.changeAmount ?? 0
-            coinCD.price = coin.detail?.usd?.changePercentage ?? 0
-            CoreDataManager().save()
-        }
+        let context = container.viewContext
+        let coinCD = CoinDataCD(context: context)
+        coinCD.title = coin.coinInfo?.title
+        coinCD.code = coin.coinInfo?.code
+        coinCD.price = coin.detail?.usd?.price ?? 0
+        coinCD.changeAmount = coin.detail?.usd?.changeAmount ?? 0
+        coinCD.changePercentage = coin.detail?.usd?.changePercentage ?? 0
+        list.append(coinCD)
+        self.save()
     }
-    
-    func getCoins() -> [CoinData] {
+
+    func fetchRaw() {
         let fetchRequest: NSFetchRequest<CoinDataCD> = CoinDataCD.fetchRequest()
-        
-        do {
-            return try convert(from: container.viewContext.fetch(fetchRequest))
-        } catch {
-            return []
-        }
+        list = (try? container.viewContext.fetch(fetchRequest)) ?? []
     }
-    
+
+    func getCoins() -> [CoinData] {
+        convert(from: list)
+    }
+
     func convert(from: [CoinDataCD]) -> [CoinData] {
         var list = [CoinData]()
         for coin in from {
@@ -84,10 +94,21 @@ final class CoreDataManager: ObservableObject {
         }
         return list
     }
-//
-//    private func removeFavoriteCoin(code: CoinCode) {
-//        DispatchQueue.main.async {
-//            self.favoriteCoins.removeAll(where: { $0 == code })
-//        }
-//    }
+
+    private func removeFavoriteCoin(code: CoinCode) {
+        let context = container.viewContext
+        guard let coin = list.first(where: { $0.code == code }) else {
+            return
+        }
+        list.removeAll { $0.code == code }
+        context.delete(coin)
+        save()
+    }
+
+    @discardableResult
+    func manageFavorites(coinData: CoinData) -> String {
+        let output = isCoinFavorite(coinData.coinInfo?.code ?? "") ? "Removed from Favorites" : "Added to Favorites"
+        toggleFavoriteCoin(coinData: coinData)
+        return output
+    }
 }

@@ -10,5 +10,6 @@ import Foundation
 enum Spacings {
     static let `default`: CGFloat = 8
     static let home: CGFloat = 10
+    static let favorites: CGFloat = 10
     static let settings: CGFloat = 8
 }

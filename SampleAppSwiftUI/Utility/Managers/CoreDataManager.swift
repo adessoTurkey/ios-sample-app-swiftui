@@ -68,15 +68,15 @@ final class CoreDataManager: ObservableObject {
         let fetchRequest: NSFetchRequest<CoinDataCD> = CoinDataCD.fetchRequest()
         
         do {
-            return try convert(data: container.viewContext.fetch(fetchRequest))
+            return try convert(from: container.viewContext.fetch(fetchRequest))
         } catch {
             return []
         }
     }
     
-    func convert(data: [CoinDataCD]) -> [CoinData] {
+    func convert(from: [CoinDataCD]) -> [CoinData] {
         var list = [CoinData]()
-        for coin in data {
+        for coin in from {
             list.append(CoinData(coinInfo: CoinMarketCapsCoinInfo(code: coin.code, title: coin.title),
                                  detail: CoinRaw(usd: RawUsd(price: coin.price,
                                                              changeAmount: coin.changeAmount,

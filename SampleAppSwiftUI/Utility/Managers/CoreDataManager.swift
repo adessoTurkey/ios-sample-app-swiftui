@@ -14,13 +14,8 @@ final class CoreDataManager: ObservableObject {
     let container: NSPersistentContainer
     var list = [CoinDataCD]()
 
-    init(inMemory: Bool = false) {
+    private init() {
         container = NSPersistentContainer(name: "CoinDataModel")
-
-        if inMemory {
-            container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
-        }
-
         container.loadPersistentStores { _, error in
             if let error = error {
                 fatalError("Error: \(error.localizedDescription)")
@@ -29,29 +24,24 @@ final class CoreDataManager: ObservableObject {
         fetchRaw()
     }
 
-    func save() {
-        let context = container.viewContext
-
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                print("Core Data save Erorr")
-            }
-        }
+    deinit {
+        self.save()
     }
 
-    func toggleFavoriteCoin(coinData: CoinData) {
+    private func fetchRaw() {
+        let fetchRequest: NSFetchRequest<CoinDataCD> = CoinDataCD.fetchRequest()
+        list = (try? container.viewContext.fetch(fetchRequest)) ?? []
+    }
 
-        if list.isEmpty {
-            addFavoriteCoin(coin: coinData)
-        } else {
-            if isCoinFavorite(coinData.coinInfo?.code ?? "") {
-                removeFavoriteCoin(code: coinData.coinInfo?.code ?? "")
-            } else {
-                addFavoriteCoin(coin: coinData)
-            }
-        }
+    func getCoins() -> [CoinData] {
+        convert(from: list)
+    }
+
+    @discardableResult
+    func manageFavorites(coinData: CoinData) -> String {
+        let output = isCoinFavorite(coinData.coinInfo?.code ?? "") ? "Removed from Favorites" : "Added to Favorites"
+        toggleFavoriteCoin(coinData: coinData)
+        return output
     }
 
     func isCoinFavorite(_ coinCode: CoinCode) -> Bool {
@@ -63,7 +53,19 @@ final class CoreDataManager: ObservableObject {
         }
     }
 
-    func addFavoriteCoin(coin: CoinData) {
+    private func toggleFavoriteCoin(coinData: CoinData) {
+        if list.isEmpty {
+            addFavoriteCoin(coin: coinData)
+        } else {
+            if isCoinFavorite(coinData.coinInfo?.code ?? "") {
+                removeFavoriteCoin(code: coinData.coinInfo?.code ?? "")
+            } else {
+                addFavoriteCoin(coin: coinData)
+            }
+        }
+    }
+
+    private func addFavoriteCoin(coin: CoinData) {
         let context = container.viewContext
         let coinCD = CoinDataCD(context: context)
         coinCD.title = coin.coinInfo?.title
@@ -73,26 +75,6 @@ final class CoreDataManager: ObservableObject {
         coinCD.changePercentage = coin.detail?.usd?.changePercentage ?? 0
         list.append(coinCD)
         self.save()
-    }
-
-    func fetchRaw() {
-        let fetchRequest: NSFetchRequest<CoinDataCD> = CoinDataCD.fetchRequest()
-        list = (try? container.viewContext.fetch(fetchRequest)) ?? []
-    }
-
-    func getCoins() -> [CoinData] {
-        convert(from: list)
-    }
-
-    func convert(from: [CoinDataCD]) -> [CoinData] {
-        var list = [CoinData]()
-        for coin in from {
-            list.append(CoinData(coinInfo: CoinMarketCapsCoinInfo(code: coin.code, title: coin.title),
-                                 detail: CoinRaw(usd: RawUsd(price: coin.price,
-                                                             changeAmount: coin.changeAmount,
-                                                             changePercentage: coin.changePercentage))))
-        }
-        return list
     }
 
     private func removeFavoriteCoin(code: CoinCode) {
@@ -105,10 +87,25 @@ final class CoreDataManager: ObservableObject {
         save()
     }
 
-    @discardableResult
-    func manageFavorites(coinData: CoinData) -> String {
-        let output = isCoinFavorite(coinData.coinInfo?.code ?? "") ? "Removed from Favorites" : "Added to Favorites"
-        toggleFavoriteCoin(coinData: coinData)
-        return output
+    private func save() {
+        let context = container.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                print("Core Data save Erorr")
+            }
+        }
+    }
+
+    private func convert(from: [CoinDataCD]) -> [CoinData] {
+        var list = [CoinData]()
+        for coin in from {
+            list.append(CoinData(coinInfo: CoinMarketCapsCoinInfo(code: coin.code, title: coin.title),
+                                 detail: CoinRaw(usd: RawUsd(price: coin.price,
+                                                             changeAmount: coin.changeAmount,
+                                                             changePercentage: coin.changePercentage))))
+        }
+        return list
     }
 }

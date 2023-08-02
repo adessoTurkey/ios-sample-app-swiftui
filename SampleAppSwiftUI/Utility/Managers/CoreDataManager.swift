@@ -66,6 +66,9 @@ final class CoreDataManager: ObservableObject {
     }
 
     private func addFavoriteCoin(coin: CoinData) {
+        if isCoinFavorite(coin.coinInfo?.code ?? "") {
+            return
+        }
         let context = container.viewContext
         let coinCD = CoinDataCD(context: context)
         coinCD.title = coin.coinInfo?.title

@@ -32,12 +32,12 @@ struct FavoritesView: View {
         .onAppear(perform: viewModel.fetchFavorites)
         .onDisappear(perform: viewModel.disconnect)
         .onChange(of: searchTerm, perform: viewModel.filterResults(searchTerm:))
-        .onChange(of: CoreDataManager.shared.getCoins(), perform: fetchFavorites)
+//        .onChange(of: CoreDataManager.shared.getCoins(), perform: fetchFavorites)
     }
 
-    private func fetchFavorites(codes: [CoinData]) {
-        viewModel.fetchFavorites()
-    }
+//    private func fetchFavorites(codes: [CoinData]) {
+//        viewModel.fetchFavorites()
+//    }
 
     @ToolbarContentBuilder
     func createTopBar() -> some ToolbarContent {

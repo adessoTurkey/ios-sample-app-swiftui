@@ -12,7 +12,7 @@ import CoreData
 final class CoreDataManager: ObservableObject {
     static let shared = CoreDataManager()
     let container: NSPersistentContainer
-    var list = [CoinDataCD]()
+    @Published var list = [CoinDataCD]()
 
     private init() {
         container = NSPersistentContainer(name: "CoinDataModel")
@@ -46,7 +46,7 @@ final class CoreDataManager: ObservableObject {
 
     func isCoinFavorite(_ coinCode: CoinCode) -> Bool {
         list.contains { coinData in
-            if let code = coinData.code {
+            if let code = coinData.coinData?.coinInfo?.code {
                 return code == coinCode
             }
             return false
@@ -71,21 +71,17 @@ final class CoreDataManager: ObservableObject {
         }
         let context = container.viewContext
         let coinCD = CoinDataCD(context: context)
-        coinCD.title = coin.coinInfo?.title
-        coinCD.code = coin.coinInfo?.code
-        coinCD.price = coin.detail?.usd?.price ?? 0
-        coinCD.changeAmount = coin.detail?.usd?.changeAmount ?? 0
-        coinCD.changePercentage = coin.detail?.usd?.changePercentage ?? 0
+        coinCD.coinData = coin
         list.append(coinCD)
         self.save()
     }
 
     private func removeFavoriteCoin(code: CoinCode) {
         let context = container.viewContext
-        guard let coin = list.first(where: { $0.code == code }) else {
+        guard let coin = list.first(where: { $0.coinData?.coinInfo?.code == code }) else {
             return
         }
-        list.removeAll { $0.code == code }
+        list.removeAll { $0.coinData?.coinInfo?.code == code }
         context.delete(coin)
         save()
     }
@@ -103,11 +99,10 @@ final class CoreDataManager: ObservableObject {
 
     private func convert(from: [CoinDataCD]) -> [CoinData] {
         var list = [CoinData]()
-        for coin in from {
-            list.append(CoinData(coinInfo: CoinMarketCapsCoinInfo(code: coin.code, title: coin.title),
-                                 detail: CoinRaw(usd: RawUsd(price: coin.price,
-                                                             changeAmount: coin.changeAmount,
-                                                             changePercentage: coin.changePercentage))))
+        for data in from {
+            if let coin = data.coinData {
+                list.append(coin)
+            }
         }
         return list
     }

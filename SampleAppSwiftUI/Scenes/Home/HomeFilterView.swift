@@ -8,18 +8,30 @@
 import SwiftUI
 
 struct HomeFilterView: View {
-    var filterTitle: String
+    @ObservedObject var viewModel: HomeViewModel
+
     var body: some View {
         HStack {
-            Text(filterTitle)
+            Text(viewModel.selectedSortOption.rawValue)
             Spacer()
-            Image(systemName: Images.filter)
+
+            Menu {
+                ForEach(HomeViewModel.SortOptions.allCases, id: \.rawValue) { sortOption in
+                    Button {
+                        viewModel.selectedSortOption = sortOption
+                    } label: {
+                        Text(sortOption.rawValue)
+                    }
+                }
+            } label: {
+                Image(systemName: Images.filter)
+            }
         }
     }
 }
 
 struct HomeFilterView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeFilterView(filterTitle: "")
+        HomeFilterView(viewModel: HomeViewModel())
     }
 }

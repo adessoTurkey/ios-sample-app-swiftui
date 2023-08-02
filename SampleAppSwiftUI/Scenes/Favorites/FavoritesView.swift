@@ -14,10 +14,10 @@ struct FavoritesView: View {
     @EnvironmentObject private var router: Router
     var body: some View {
         NavigationStack(path: $router.favoritesNavigationPath) {
-            VStack {
+            VStack(spacing: Spacings.favorites) {
                 SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.shortTop)
                 Divider()
-                CoinListView(filteredCoins: $viewModel.filteredCoins, favoriteChanged: viewModel.fetchFavorites)
+                CoinListView(viewModel: viewModel, filteredCoins: $viewModel.filteredCoins, favoriteChanged: viewModel.fetchFavorites)
             }
             .navigationDestination(for: Screen.self) { screen in
                 if screen.type == .detail, let data = screen.data as? CoinData {
@@ -36,7 +36,7 @@ struct FavoritesView: View {
         .onChange(of: StorageManager.shared.favoriteCoins, perform: fetchFavorites)
     }
 
-    private func fetchFavorites(codes: [CoinCode]) {
+    private func fetchFavorites(codes: [CoinData]) {
         viewModel.fetchFavorites()
     }
 

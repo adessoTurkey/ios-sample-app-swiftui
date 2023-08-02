@@ -20,13 +20,12 @@ struct HomeView: View {
                 SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.largeTop)
                 HomeFilterView(filterTitle: viewModel.filterTitle)
                     .padding(.bottom, Paddings.filterBottom)
-                CoinListView(filteredCoins: $viewModel.filteredCoins) {
+                CoinListView(viewModel: viewModel, filteredCoins: $viewModel.filteredCoins) {
                     Task {
                         await viewModel.fillModels()
                     }
                 }
-                .padding(.horizontal, Paddings.side)
-            }
+            }.padding(.horizontal, Paddings.side)
             .ignoresSafeArea(.all, edges: .top)
             .navigationDestination(for: Screen.self) { screen in
                 if screen.type == .detail, let data = screen.data as? CoinData {

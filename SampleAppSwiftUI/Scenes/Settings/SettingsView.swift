@@ -11,7 +11,8 @@ struct SettingsView: View {
 
     @State private var isDarkModeOn = false
     @State private var selectedParity: Parity = .USD
-    @EnvironmentObject private var router: Router
+    @Binding var router: Router
+
     var body: some View {
         NavigationStack(path: $router.settingsNavigationPath) {
             VStack(alignment: .leading, spacing: Spacings.settings) {
@@ -32,7 +33,7 @@ extension SettingsView {
         VStack {
             HStack {
                 Text("Settings")
-                    .settingsTextStyle(fontType: .bold, fontSize: .title2, foregroundColor: .settingsViewTitleColor)
+                    .settingsTextStyle(fontType: .bold, fontSize: .title2, foregroundColor: .settingsViewTitle)
                 Spacer()
             }
         }
@@ -42,7 +43,7 @@ extension SettingsView {
     private var darkButton: some View {
         VStack {
             Toggle("Dark Mode:", isOn: $isDarkModeOn)
-                .settingsTextStyle(fontSize: .body, foregroundColor: .settingsLineTitleColor)
+                .settingsTextStyle(fontSize: .body, foregroundColor: .settingsLineTitle)
                 .settingsLineStyle(height: Dimensions.lineHeight)
         }
         .preferredColorScheme(isDarkModeOn ? .dark : .light)
@@ -52,7 +53,7 @@ extension SettingsView {
         VStack(spacing: 0) {
             HStack {
                 Text("Currency")
-                    .settingsTextStyle(fontSize: .body, foregroundColor: .settingsLineTitleColor)
+                    .settingsTextStyle(fontSize: .body, foregroundColor: .settingsLineTitle)
                 Spacer()
                 Picker("Parities", selection: $selectedParity) {
                     ForEach(Parity.allCases) { parity in
@@ -60,14 +61,14 @@ extension SettingsView {
                             .accessibilityIdentifier("settingsViewParitySelectionPickerCell")
                     }
                 }
-                .tint(.settingsParitySetColor)
+                .tint(Color(.settingsParitySet))
                 .accessibilityIdentifier("settingsViewParitySelectionPicker")
             }
             .settingsLineStyle(height: Dimensions.lineHeight)
             .padding(.bottom, Spacings.home)
 
-            Text("When you select a new base currency, all prices in the app will be displayed in that currency.")
-                .settingsTextStyle(fontType: .regular, fontSize: .caption2, foregroundColor: .settingsCurrencyExpColor)
+            Text("baseCoinChangeInfo")
+                .settingsTextStyle(fontType: .regular, fontSize: .caption2, foregroundColor: .settingsCurrencyExp)
         }
     }
 
@@ -76,12 +77,13 @@ extension SettingsView {
             print("Make an action")
         } label: {
             Text("Remove All Data")
-                .settingsTextStyle(fontType: .bold, fontSize: .body, foregroundColor: .white)
+                .settingsTextStyle(fontType: .bold, fontSize: .body)
+                .foregroundStyle(.white)
         }
         .settingsButtonStyle()
     }
 }
 
 #Preview {
-    SettingsView()
+    SettingsView(router: .constant(.init()))
 }

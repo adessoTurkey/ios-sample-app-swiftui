@@ -8,15 +8,17 @@
 import Foundation
 import SwiftUI
 import Combine
+import Observation
 
-class HomeViewModel: ObservableObject {
-    @Published var coinInfo: ExcangeRatesResponseModel?
-    @Published var coinList: [CoinData] = []
-    @Published var filteredCoins: [CoinData] = []
-    @Published var filterTitle = "Most Popular"
+@Observable
+class HomeViewModel {
+    var coinInfo: ExcangeRatesResponseModel?
+    var coinList: [CoinData] = []
+    var filteredCoins: [CoinData] = []
+    var filterTitle = "Most Popular"
 
     let listPageLimit = 10
-    @State var isLoading: Bool = false
+    var isLoading: Bool = false
 
     func fillModels(demo: Bool = false) async {
         if demo {

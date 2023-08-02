@@ -1,15 +1,6 @@
 input_dir: SampleAppSwiftUI/Resources
 output_dir: SampleAppSwiftUI/Resources/Constants/Generated
 
-strings:
-    inputs:
-        - en.lproj
-    outputs:
-        templateName: structured-swift5
-        params:
-            publicAccess: true
-            enumName: Strings
-        output: Strings+Generated.swift
 xcassets:
     inputs:
         - Assets.xcassets

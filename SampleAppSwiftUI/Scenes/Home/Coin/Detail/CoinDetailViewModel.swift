@@ -6,18 +6,20 @@
 //
 
 import Foundation
+import Observation
 
-class CoinDetailViewModel: ObservableObject {
+@Observable
+class CoinDetailViewModel {
     let coinData: CoinData
-    @Published private(set) var isFavorite: Bool = false
-    @Published var chartHistoryRangeSelection: CoinChartHistoryRange = .sixMonth {
+    private(set) var isFavorite: Bool = false
+    var chartHistoryRangeSelection: CoinChartHistoryRange = .sixMonth {
         didSet {
             fetchCoinPriceHistory(forSelectedRange: chartHistoryRangeSelection)
         }
     }
-    @Published private(set) var coinPriceHistoryChartDataModel: CoinPriceHistoryChartDataModel?
-    @Published private(set) var isLoading: Bool = false
-    @Published var priceChartSelectedXDateText: String = ""
+    private(set) var coinPriceHistoryChartDataModel: CoinPriceHistoryChartDataModel?
+    private(set) var isLoading: Bool = false
+    var priceChartSelectedXDateText: String = ""
 
     var rangeButtonsOpacity: Double {
         priceChartSelectedXDateText.isEmpty ? 1.0 : 0.0

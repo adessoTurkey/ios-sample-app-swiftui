@@ -12,7 +12,7 @@ struct SettingButtonModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .frame(maxWidth: .infinity, minHeight: Dimensions.settingsButonHeight)
-            .background(Color.settingsButtonColor)
+            .background(Color(.settingsButton))
             .cornerRadius(Dimensions.CornerRadius.settingsButton)
             .padding(.bottom, Paddings.Settings.bottom)
     }

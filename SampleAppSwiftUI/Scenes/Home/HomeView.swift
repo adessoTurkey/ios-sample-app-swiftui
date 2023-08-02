@@ -10,9 +10,10 @@ import SwiftUI
 
 struct HomeView: View {
 
-    @StateObject private var viewModel = HomeViewModel()
+    @State private var viewModel = HomeViewModel()
     @State private var searchTerm = ""
-    @EnvironmentObject private var router: Router
+    @Binding var router: Router
+
     var body: some View {
         NavigationStack(path: $router.homeNavigationPath) {
             VStack(spacing: Spacings.home) {
@@ -32,7 +33,7 @@ struct HomeView: View {
                 }
             }
         }
-        .background(Color.lightGray)
+        .background(Color(.lightestGray))
         .ignoresSafeArea(.all, edges: [.top, .trailing, .leading])
         .onAppear {
             Task {
@@ -46,5 +47,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView(router: .constant(.init()))
 }

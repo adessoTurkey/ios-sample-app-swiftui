@@ -26,6 +26,9 @@ packages:
   swift-log:
     url: https://github.com/apple/swift-log.git
     majorVersion: 1.5.2
+  swiftui-preview-snapshots:
+    url: https://github.com/doordash-oss/swiftui-preview-snapshots
+    majorVersion: 1.0.0
 
 targets:
   SampleAppSwiftUI:
@@ -36,6 +39,8 @@ targets:
       - package: Pulse
         product: Pulse
         product: PulseUI
+      - package: swiftui-preview-snapshots
+        product: PreviewSnapshots
     configFiles:
         Development: SampleAppSwiftUI/Configs/Development.xcconfig
         Production: SampleAppSwiftUI/Configs/Production.xcconfig
@@ -69,6 +74,10 @@ targets:
     sources:
       - path: SampleAppSwiftUITests
   SampleAppSwiftUIUITests:
+    dependencies:
+      - target: SampleAppSwiftUIUITests
+      - package: swiftui-preview-snapshots
+        product: PreviewSnapshotsTests
     type: bundle.ui-testing
     platform: iOS
     sources:

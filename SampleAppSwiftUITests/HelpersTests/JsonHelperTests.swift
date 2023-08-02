@@ -7,6 +7,7 @@
 
 @testable import SampleAppSwiftUI
 import XCTest
+import PreviewSnapshotsTesting
 
 class JsonHelperTests: XCTestCase {
     // MARK: - Tests
@@ -94,5 +95,10 @@ class JsonHelperTests: XCTestCase {
         let fileManager = FileManager.default
         let filePath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(fileName + ".json")
         XCTAssertFalse(fileManager.fileExists(atPath: filePath.path))
+    }
+
+    func test_test() throws {
+        CoinView_Previews.snapshots
+                            .assertSnapshots(as: .image(layout: .sizeThatFits))
     }
 }

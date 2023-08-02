@@ -5,6 +5,7 @@
 //  Created by Abay, Batuhan on 30.05.2023.
 //
 
+import PreviewSnapshots
 import SwiftUI
 
 struct CoinChartHistoryRangeButtons: View {
@@ -36,6 +37,20 @@ struct CoinChartHistoryRangeButtons: View {
 
 struct CoinChartHistoryRangeButtons_Previews: PreviewProvider {
     static var previews: some View {
-        CoinChartHistoryRangeButtons(selection: .constant(.oneMonth))
+        snapshots.previews
+    }
+
+    static var snapshots: PreviewSnapshots<CoinChartHistoryRange> {
+        .init(configurations: [
+            .init(name: "One day", state: .oneDay),
+            .init(name: "One week", state: .oneWeek),
+            .init(name: "One month", state: .oneMonth),
+            .init(name: "Three months", state: .threeMonth),
+            .init(name: "Six months", state: .sixMonth),
+            .init(name: "One year", state: .oneYear),
+            .init(name: "All dates", state: .all)
+        ]) { state in
+            CoinChartHistoryRangeButtons(selection: .constant(state))
+        }
     }
 }

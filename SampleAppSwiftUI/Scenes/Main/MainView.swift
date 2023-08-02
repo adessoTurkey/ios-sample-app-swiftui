@@ -6,10 +6,10 @@
 //  Copyright © 2022 Adesso Turkey. All rights reserved.
 //
 
+import PreviewSnapshots
 import SwiftUI
 
 struct MainView: View {
-
     @StateObject private var storageManager = StorageManager.shared
     @EnvironmentObject private var router: Router
     var body: some View {
@@ -39,7 +39,17 @@ struct MainView: View {
 }
 
 struct MainView_Previews: PreviewProvider {
+    private static let router = Router()
     static var previews: some View {
-        MainView()
+        snapshots.previews
+    }
+
+    static var snapshots: PreviewSnapshots<Void?> {
+        .init(configurations: [
+            .init(name: "Main View", state: .none)
+        ]) { _ in
+            MainView()
+                .environmentObject(router)
+        }
     }
 }

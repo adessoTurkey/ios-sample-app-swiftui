@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PreviewSnapshots
 
 struct CoinListView<ViewModel: ViewModelProtocol>: View {
     @ObservedObject var viewModel: ViewModel
@@ -76,8 +77,22 @@ struct CoinListView<ViewModel: ViewModelProtocol>: View {
 
 struct CoinListView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            CoinListView(viewModel: HomeViewModel(), filteredCoins: .constant([.demo, .demo, .demo]), favoriteChanged: {})
-        }
+        snapshots.previews
+    }
+
+    static var snapshots: PreviewSnapshots<[CoinData]> {
+        .init(configurations: [
+            .init(name: "One coin", state: [.demo]),
+            .init(name: "Two coins", state: [.demo, CoinData.demoCoin(from: "DOGE")]),
+            .init(name: "Three coins", state: [.demo,
+                                               CoinData.demoCoin(from: "DOGE"),
+                                               CoinData.demoCoin(from: "ETH")]),
+            .init(name: "Four coins", state: [.demo,
+                                              CoinData.demoCoin(from: "DOGE"),
+                                              CoinData.demoCoin(from: "ETH"),
+                                              CoinData.demoCoin(from: "FTM")])
+        ], configure: { state in
+            CoinListView(viewModel: HomeViewModel(), filteredCoins: .constant(state), favoriteChanged: {})
+        })
     }
 }

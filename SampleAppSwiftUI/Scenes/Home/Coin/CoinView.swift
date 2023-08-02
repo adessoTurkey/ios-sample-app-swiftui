@@ -5,6 +5,7 @@
 //  Created by Sucu, Ege on 21.03.2023.
 //
 
+import PreviewSnapshots
 import SwiftUI
 
 struct CoinView: View {
@@ -79,15 +80,16 @@ struct CoinView: View {
 
 struct CoinView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            CoinView(coinInfo: .demo)
-            CoinView(coinInfo: .demo)
-                .preferredColorScheme(.dark)
-        }
-        .previewLayout(.sizeThatFits)
-        .frame(height: Dimensions.coinCellSize)
-        .padding(.horizontal, Paddings.side)
-        .padding(.vertical)
+        snapshots.previews
+    }
 
+    static var snapshots: PreviewSnapshots<CoinData> {
+        PreviewSnapshots(configurations: [
+            .init(name: "BTC", state: .demo),
+            .init(name: "DOGE", state: CoinData.demoCoin(from: "DOGE")),
+            .init(name: "ETH", state: CoinData.demoCoin(from: "ETH"))
+        ]) { state in
+            CoinView(coinInfo: state)
+        }
     }
 }

@@ -39,6 +39,13 @@ struct CoinData: Codable, Hashable, Identifiable {
                                detail: CoinRaw(usd: RawUsd(price: 29467.560,
                                                            changeAmount: 28.015,
                                                            changePercentage: 29.74)))
+
+    static func demoCoin(from name: String) -> CoinData {
+        CoinData(coinInfo: CoinMarketCapsCoinInfo(code: name, title: "Demo"),
+                                   detail: CoinRaw(usd: RawUsd(price: 29467.560,
+                                                               changeAmount: 28.015,
+                                                               changePercentage: 29.74)))
+    }
 }
 
 // MARK: - CoinInfo

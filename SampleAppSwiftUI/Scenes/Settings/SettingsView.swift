@@ -5,6 +5,7 @@
 //  Created by Cakir, Faik on 18.03.2023.
 //
 
+import PreviewSnapshots
 import SwiftUI
 
 struct SettingsView: View {
@@ -83,7 +84,18 @@ extension SettingsView {
 }
 
 struct SettingsView_Previews: PreviewProvider {
+    static private let router = Router()
+
     static var previews: some View {
-        SettingsView()
+        snapshots.previews
+    }
+
+    static var snapshots: PreviewSnapshots<Void?> {
+        .init(configurations: [
+            .init(name: "Settings view", state: nil)
+        ]) { _ in
+            SettingsView()
+                .environmentObject(router)
+        }
     }
 }

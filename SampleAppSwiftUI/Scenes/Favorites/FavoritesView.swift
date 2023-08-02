@@ -5,6 +5,7 @@
 //  Created by Sucu, Ege on 16.03.2023.
 //
 
+import PreviewSnapshots
 import SwiftUI
 
 struct FavoritesView: View {
@@ -48,7 +49,18 @@ struct FavoritesView: View {
 }
 
 struct FavoritesView_Previews: PreviewProvider {
+    static private let router = Router()
+
     static var previews: some View {
-        FavoritesView()
+        snapshot.previews
+    }
+
+    static var snapshot: PreviewSnapshots<Void?> {
+        .init(configurations: [
+            .init(name: "Favorites  View", state: nil)
+        ], configure: { _ in
+            FavoritesView()
+                .environmentObject(router)
+        })
     }
 }

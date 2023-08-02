@@ -5,8 +5,9 @@
 //  Created by Abay, Batuhan on 31.05.2023.
 //
 
-import SwiftUI
 import Charts
+import PreviewSnapshots
+import SwiftUI
 
 struct CoinPriceHistoryChartView: View {
     @StateObject private var viewModel: CoinPriceHistoryChartViewModel
@@ -140,29 +141,18 @@ struct CoinPriceHistoryChartView: View {
 
 struct CoinPriceHistoryChartView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            Group {
-                ForEach(CoinChartHistoryRange.allCases) { item in
-                    CoinPriceHistoryChartView(
-                        selectedRange: item,
-                        dataModel: .demo,
-                        selectedXDateText: .constant("")
-                    )
-                    .previewDisplayName(item.rawValue)
-                }
-            }
+        snapshots.previews
+    }
 
-            Group {
-                ForEach(CoinChartHistoryRange.allCases) { item in
-                    CoinPriceHistoryChartView(
-                        selectedRange: item,
-                        dataModel: .demo,
-                        selectedXDateText: .constant("")
-                    )
-                    .previewDisplayName(item.rawValue + "DARK")
-                }
-            }
-            .preferredColorScheme(.dark)
+    static var snapshots: PreviewSnapshots<CoinChartHistoryRange> {
+        let charts = CoinChartHistoryRange.allCases.map { PreviewSnapshots.Configuration(name: $0.rawValue, state: $0) }
+        return .init(configurations: charts) { state in
+            CoinPriceHistoryChartView(
+                selectedRange: state,
+                dataModel: .demo,
+                selectedXDateText: .constant("")
+            )
+            .previewDisplayName(state.rawValue)
         }
     }
 }

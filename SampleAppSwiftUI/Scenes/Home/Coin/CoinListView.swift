@@ -23,6 +23,7 @@ struct CoinListView<ViewModel: ViewModelProtocol>: View {
                     .bold()
                 Spacer()
             }
+            .alert(isPresented: $showingAlert, content: configureAlert)
         } else {
             List {
                 ForEach(filteredCoins) { coin in

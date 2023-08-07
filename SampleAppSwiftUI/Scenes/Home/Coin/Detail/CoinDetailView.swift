@@ -112,10 +112,6 @@ struct CoinDetailView: View {
                             .font(.system(size: 18))
                             .padding()
                             .foregroundColor(Color.searchIcon)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 25)
-                                    .stroke(Color.lightGray, lineWidth: 2)
-                            )
                     }
                 }.background(Color.lightGray)
                     .cornerRadius(25)

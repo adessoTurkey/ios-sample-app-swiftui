@@ -1,6 +1,4 @@
 appId: com.adesso.SampleAppSwiftUI.development
-onFlowStart: 
-  - maestro cloud --ios-version 16 SampleAppSwiftUI.app myflows/
 ---
 - runFlow: ../SampleAppSwiftUIUITests/Scenes/Home/homeScreenUITests.yaml
 - runFlow: ../SampleAppSwiftUIUITests/Scenes/Favorites/favoriteScreenUITests.yaml

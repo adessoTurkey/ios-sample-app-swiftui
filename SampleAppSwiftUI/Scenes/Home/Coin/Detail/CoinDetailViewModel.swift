@@ -27,7 +27,9 @@ class CoinDetailViewModel: ObservableObject {
     private let coinPriceHistoryUseCase: CoinPriceHistoryUseCaseProtocol
     private let coinNewsUseCase: CoinNewsUseCaseProtocol
 
-    init(coinData: CoinData, coinPriceHistoryUseCase: CoinPriceHistoryUseCaseProtocol = CoinPriceHistoryUseCase(), coinNewsUseCase: CoinNewsUseCaseProtocol = CoinNewsUseCase()) {
+    init(coinData: CoinData,
+         coinPriceHistoryUseCase: CoinPriceHistoryUseCaseProtocol = CoinPriceHistoryUseCase(),
+         coinNewsUseCase: CoinNewsUseCaseProtocol = CoinNewsUseCase()) {
         self.coinData = coinData
         self.coinPriceHistoryUseCase = coinPriceHistoryUseCase
         self.coinNewsUseCase = coinNewsUseCase
@@ -105,7 +107,6 @@ class CoinDetailViewModel: ObservableObject {
             guard let response = response, let coinNewData = response.data else { return }
             DispatchQueue.main.async {
                 self.coinNewsDataModel = coinNewData
-                print(coinNewData)
             }
         }
     }

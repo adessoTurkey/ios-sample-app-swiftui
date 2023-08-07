@@ -11,4 +11,5 @@ enum Numbers {
     static let absoluteZero: Double = 0.0
     static let coinTitleCharacterLimit = 20
     static let coinTitleLineLimit = 1
+    static let newsCharCount = 60
 }

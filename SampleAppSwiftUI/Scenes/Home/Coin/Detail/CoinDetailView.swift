@@ -70,7 +70,7 @@ struct CoinDetailView: View {
                             }
                         }
                     }
-                    .frame(minHeight: 250)
+                    .frame(minHeight: Constants.CoinDetail.chartHeight)
                     .cornerRadius(Dimensions.CornerRadius.default)
                 }
                 .padding(.horizontal, Paddings.side)
@@ -93,7 +93,7 @@ struct CoinDetailView: View {
                                                 .clipShape(Circle())
                                                 .frame(width: Dimensions.imageWidth, height: Dimensions.imageHeight)
                                                 Text(model.title)
-                                                    .limitedCharacterCount(60, model.title, "...")
+                                                    .limitedCharacterCount(Constants.CoinNews.newsCharCount, model.title, "...")
                                             }
                                         }
                                     }
@@ -108,7 +108,7 @@ struct CoinDetailView: View {
                 } label: {
                     NavigationLink(destination: CoinNewsListView(coinData: viewModel.coinData)) {
                         Text("View More")
-                            .frame(width: UIScreen.main.bounds.size.width - 70)
+                            .frame(width: UIScreen.main.bounds.size.width - Constants.CoinNews.coinListFrameSize)
                             .font(.system(size: 18))
                             .padding()
                             .foregroundColor(Color.searchIcon)

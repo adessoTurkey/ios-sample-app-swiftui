@@ -9,6 +9,7 @@ import Foundation
 
 protocol ViewModelProtocol: ObservableObject {
     var isLoading: Bool { get set }
+    var selectedSortOption: SortOptions { get set }
 
     func checkLastItem(_ item: CoinData)
 }

@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct HomeFilterView: View {
-    @ObservedObject var viewModel: HomeViewModel
+struct FilterView<ViewModel: ViewModelProtocol>: View {
+    @ObservedObject var viewModel: ViewModel
 
     var body: some View {
         HStack {
@@ -16,7 +16,7 @@ struct HomeFilterView: View {
             Spacer()
 
             Menu {
-                ForEach(HomeViewModel.SortOptions.allCases, id: \.rawValue) { sortOption in
+                ForEach(SortOptions.allCases, id: \.rawValue) { sortOption in
                     Button {
                         viewModel.selectedSortOption = sortOption
                     } label: {
@@ -32,6 +32,6 @@ struct HomeFilterView: View {
 
 struct HomeFilterView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeFilterView(viewModel: HomeViewModel())
+        FilterView(viewModel: HomeViewModel())
     }
 }

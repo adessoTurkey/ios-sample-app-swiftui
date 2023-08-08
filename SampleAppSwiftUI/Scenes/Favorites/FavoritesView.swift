@@ -15,6 +15,8 @@ struct FavoritesView: View {
         NavigationStack(path: $router.favoritesNavigationPath) {
             VStack(spacing: Spacings.favorites) {
                 SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.shortTop)
+                FilterView(viewModel: viewModel)
+                    .padding(.bottom, Paddings.filterBottom)
                 Divider()
                 CoinListView(viewModel: viewModel, filteredCoins: $viewModel.filteredCoins, favoriteChanged: viewModel.fetchFavorites)
             }
@@ -33,6 +35,7 @@ struct FavoritesView: View {
         .onDisappear(perform: viewModel.disconnect)
         .onChange(of: searchTerm, perform: viewModel.filterResults(searchTerm:))
         .onChange(of: StorageManager.shared.favoriteCoins, perform: fetchFavorites)
+        .onChange(of: viewModel.selectedSortOption, perform: viewModel.sortOptions(sort:))
     }
 
     private func fetchFavorites(codes: [CoinData]) {

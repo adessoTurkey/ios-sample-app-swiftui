@@ -35,6 +35,7 @@ class HomeViewModel: ObservableObject {
             if let data = dataSource.data {
                 self.coinList.append(contentsOf: data)
                 self.filteredCoins.append(contentsOf: data)
+                self.sortOptions(sort: self.selectedSortOption)
                 self.isLoading = false
             }
         }
@@ -90,14 +91,6 @@ class HomeViewModel: ObservableObject {
                     $0.coinInfo?.title ?? "" > $1.coinInfo?.title ?? ""
             }
         }
-    }
-
-    enum SortOptions: String, CaseIterable {
-        case mostPopular = "Most Popular"
-        case price = "Price"
-        case priceReversed = "Price Reversed"
-        case name = "Name"
-        case nameReversed = "Name Reversed"
     }
 }
 

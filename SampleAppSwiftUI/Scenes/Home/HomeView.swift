@@ -17,7 +17,7 @@ struct HomeView: View {
         NavigationStack(path: $router.homeNavigationPath) {
             VStack(spacing: Spacings.home) {
                 SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.largeTop)
-                HomeFilterView(viewModel: viewModel)
+                FilterView(viewModel: viewModel)
                     .padding(.bottom, Paddings.filterBottom)
                 CoinListView(viewModel: viewModel, filteredCoins: $viewModel.filteredCoins) {
                     Task {
@@ -41,7 +41,6 @@ struct HomeView: View {
         }
         .onChange(of: searchTerm, perform: viewModel.filterResults(searchTerm:))
         .onChange(of: viewModel.selectedSortOption, perform: viewModel.sortOptions(sort:))
-
     }
 }
 

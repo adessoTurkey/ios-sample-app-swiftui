@@ -21,6 +21,7 @@ class FavoritesViewModel: ObservableObject {
 
     @Published var coinInfo: CoinData?
     @Published var filterTitle = "Most Popular"
+    @Published var selectedSortOption: SortOptions = .mostPopular
 
     let listPageLimit = 10
     @State var isLoading: Bool = false
@@ -127,6 +128,31 @@ class FavoritesViewModel: ObservableObject {
                     return false
                 }
             })
+        }
+    }
+
+    func sortOptions(sort: SortOptions) {
+        switch sort {
+            case .mostPopular:
+                filteredCoins = coins
+            case .price:
+                filteredCoins = filteredCoins.sorted {
+                    $0.detail?.usd?.price ?? 0 < $1.detail?.usd?.price ?? 0
+                }
+
+            case .priceReversed:
+                filteredCoins = filteredCoins.sorted {
+                    $0.detail?.usd?.price ?? 0 > $1.detail?.usd?.price ?? 0
+                }
+
+            case .name:
+                filteredCoins = filteredCoins.sorted {
+                    $0.coinInfo?.title ?? "" < $1.coinInfo?.title ?? ""
+                }
+            case .nameReversed:
+                filteredCoins = filteredCoins.sorted {
+                    $0.coinInfo?.title ?? "" > $1.coinInfo?.title ?? ""
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 class FavoritesViewModel: ObservableObject {
-    @Published var coins: [CoinData] = []
+    @Published var coinList: [CoinData] = []
     @Published var filteredCoins: [CoinData] = []
 
     private var webSocketService: any WebSocketServiceProtocol
@@ -20,7 +20,7 @@ class FavoritesViewModel: ObservableObject {
     private let checkWebSocket = true
 
     @Published var coinInfo: CoinData?
-    @Published var filterTitle = "Most Popular"
+    @Published var filterTitle = SortOptions.mostPopular.rawValue
     @Published var selectedSortOption: SortOptions = .mostPopular
 
     let listPageLimit = 10
@@ -49,8 +49,9 @@ class FavoritesViewModel: ObservableObject {
     }
 
     private func getFavoriteCoinList() {
-        coins = StorageManager.shared.favoriteCoins
-        filteredCoins = coins
+        coinList = StorageManager.shared.favoriteCoins
+        filteredCoins = coinList
+        self.sortOptions(sort: self.selectedSortOption)
     }
 
     func disconnect() {
@@ -110,7 +111,7 @@ class FavoritesViewModel: ObservableObject {
 
     func filterResults(searchTerm: String = "") {
         if !searchTerm.isEmpty {
-            filteredCoins = coins.filter { coin in
+            filteredCoins = coinList.filter { coin in
                 if let coinCode = coin.coinInfo?.code {
                     return coin.coinInfo?.title?.lowercased().contains(searchTerm.lowercased()) ?? true ||
                     coin.coinInfo?.code?.lowercased().contains(searchTerm.lowercased())  ?? true &&
@@ -120,7 +121,7 @@ class FavoritesViewModel: ObservableObject {
                 }
             }
         } else {
-            filteredCoins = coins.filter({ coin in
+            filteredCoins = coinList.filter({ coin in
                 if let coinInfo = coin.coinInfo,
                    let coinCode = coinInfo.code {
                     return StorageManager.shared.isCoinFavorite(coinCode)
@@ -128,31 +129,6 @@ class FavoritesViewModel: ObservableObject {
                     return false
                 }
             })
-        }
-    }
-
-    func sortOptions(sort: SortOptions) {
-        switch sort {
-            case .mostPopular:
-                filteredCoins = coins
-            case .price:
-                filteredCoins = filteredCoins.sorted {
-                    $0.detail?.usd?.price ?? 0 < $1.detail?.usd?.price ?? 0
-                }
-
-            case .priceReversed:
-                filteredCoins = filteredCoins.sorted {
-                    $0.detail?.usd?.price ?? 0 > $1.detail?.usd?.price ?? 0
-                }
-
-            case .name:
-                filteredCoins = filteredCoins.sorted {
-                    $0.coinInfo?.title ?? "" < $1.coinInfo?.title ?? ""
-                }
-            case .nameReversed:
-                filteredCoins = filteredCoins.sorted {
-                    $0.coinInfo?.title ?? "" > $1.coinInfo?.title ?? ""
-            }
         }
     }
 }

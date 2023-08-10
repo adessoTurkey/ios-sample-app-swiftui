@@ -22,6 +22,8 @@ public enum Strings {
   ///   Created by Selim Gungorer on 14.09.2022.
   ///   Copyright © 2022 Adesso Turkey. All rights reserved.
   public static let helloWorld = Strings.tr("Localizable", "Hello, World!", fallback: "Hello")
+  /// Home
+  public static let home = Strings.tr("Localizable", "Home", fallback: "Home")
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces

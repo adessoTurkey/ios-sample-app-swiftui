@@ -34,12 +34,15 @@ struct HomeView: View {
         }
         .background(Color.lightGray)
         .ignoresSafeArea(.all, edges: [.top, .trailing, .leading])
-        .onAppear {
+        .onFirstAppear {
             Task {
                 await viewModel.fillModels()
             }
         }
-        .onChange(of: searchTerm, perform: viewModel.filterResults(searchTerm:))
+        .onChange(of: searchTerm) { searchTerm in
+            viewModel.filterResults(searchTerm: searchTerm)
+            viewModel.sortOptions(sort: viewModel.selectedSortOption)
+        }
         .onChange(of: viewModel.selectedSortOption, perform: viewModel.sortOptions(sort:))
     }
 }

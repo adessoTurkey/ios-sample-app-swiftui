@@ -33,7 +33,10 @@ struct FavoritesView: View {
         .background(Color.lightGray)
         .onAppear(perform: viewModel.fetchFavorites)
         .onDisappear(perform: viewModel.disconnect)
-        .onChange(of: searchTerm, perform: viewModel.filterResults(searchTerm:))
+        .onChange(of: searchTerm) { searchTerm in
+            viewModel.filterResults(searchTerm: searchTerm)
+            viewModel.sortOptions(sort: viewModel.selectedSortOption)
+        }
         .onChange(of: StorageManager.shared.favoriteCoins, perform: fetchFavorites)
         .onChange(of: viewModel.selectedSortOption, perform: viewModel.sortOptions(sort:))
     }

@@ -10,20 +10,20 @@ import SwiftUI
 import Combine
 
 class FavoritesViewModel: ObservableObject {
-    @Published var coinList: [CoinData] = []
-    @Published var filteredCoins: [CoinData] = []
+
+    private let checkWebSocket = true
 
     private var webSocketService: any WebSocketServiceProtocol
     private var cancellable = Set<AnyCancellable>()
     private var reconnectionCount: Int = 0
     private var maxReconnectionCount: Int = 3
-    private let checkWebSocket = true
 
+    @Published var coinList: [CoinData] = []
+    @Published var filteredCoins: [CoinData] = []
     @Published var coinInfo: CoinData?
     @Published var filterTitle = SortOptions.mostPopular.rawValue
     @Published var selectedSortOption: SortOptions = .mostPopular
 
-    let listPageLimit = 10
     @State var isLoading: Bool = false
 
     init(webSocketService: any WebSocketServiceProtocol = WebSocketService.shared) {

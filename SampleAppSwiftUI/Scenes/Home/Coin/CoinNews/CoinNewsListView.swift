@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CoinNewsListView: View {
     @StateObject private var viewModel: CoinDetailViewModel
-
+    
     init(coinData: CoinData) {
         _viewModel = StateObject(wrappedValue: CoinDetailViewModel(coinData: coinData))
     }
@@ -40,7 +40,7 @@ struct CoinNewsListView: View {
                         .listStyle(.inset)
                     }
                 }.frame(height: UIScreen.main.bounds.height)
-                .navigationTitle("News")
+                    .navigationTitle(Strings.news)
                     .navigationBarTitleDisplayMode(.inline)
                     .navigationViewStyle(.automatic)
             }

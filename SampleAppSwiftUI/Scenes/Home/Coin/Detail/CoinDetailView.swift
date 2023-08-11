@@ -8,6 +8,13 @@
 import SwiftUI
 
 struct CoinDetailView: View {
+    
+    private enum CoinDetailView {
+        static let viewMoreButton: CGFloat = 25
+        static let coinListFrameSize: CGFloat = 70
+        static let chartHeight: CGFloat = 250
+    }
+    
     @StateObject private var viewModel: CoinDetailViewModel
 
     init(coinData: CoinData) {
@@ -70,7 +77,7 @@ struct CoinDetailView: View {
                             }
                         }
                     }
-                    .frame(minHeight: Dimensions.chartHeight)
+                    .frame(minHeight: CoinDetailView.chartHeight)
                     .cornerRadius(Dimensions.CornerRadius.default)
                 }
                 .padding(.horizontal, Paddings.side)
@@ -78,7 +85,7 @@ struct CoinDetailView: View {
                     VStack {
                         if let newsModel = viewModel.coinNewsDataModel {
                             List {
-                                Section("News") {
+                                Section(Strings.news) {
                                     ForEach(newsModel.prefix(5)) { model in
                                         NavigationLink(destination: WebView(url: URL(string: model.url))) {
                                             HStack {
@@ -108,13 +115,13 @@ struct CoinDetailView: View {
                 } label: {
                     NavigationLink(destination: CoinNewsListView(coinData: viewModel.coinData)) {
                         Text("View More")
-                            .frame(width: UIScreen.main.bounds.size.width - Dimensions.coinListFrameSize)
+                            .frame(width: UIScreen.main.bounds.size.width - CoinDetailView.coinListFrameSize)
                             .font(.system(size: 18))
                             .padding()
                             .foregroundColor(Color.searchIcon)
                     }
                 }.background(Color.lightGray)
-                    .cornerRadius(Dimensions.CornerRadius.viewMoreButton)
+                    .cornerRadius(CoinDetailView.viewMoreButton)
                 Spacer()
             }
             .navigationTitle(Text(verbatim: viewModel.coinData.coinInfo?.title ?? ""))

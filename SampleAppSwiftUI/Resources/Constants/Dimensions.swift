@@ -11,7 +11,6 @@ enum Dimensions {
     enum CornerRadius {
         static let `default`: CGFloat = 18
         static let settingsButton: CGFloat = 8
-        static let viewMoreButton: CGFloat = 25
     }
     
     enum WebView {
@@ -29,6 +28,4 @@ enum Dimensions {
     static let coinCellSize: CGFloat = 72
     static let lineHeight: CGFloat = 44
     static let settingsButonHeight: CGFloat = 50
-    static let coinListFrameSize: CGFloat = 70
-    static let chartHeight: CGFloat = 250
 }

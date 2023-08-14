@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct CoinDetailView: View {
-    
+
     private enum CoinDetailView {
         static let viewMoreButton: CGFloat = 25
         static let coinListFrameSize: CGFloat = 70
         static let chartHeight: CGFloat = 250
     }
-    
+
     @StateObject private var viewModel: CoinDetailViewModel
 
     init(coinData: CoinData) {

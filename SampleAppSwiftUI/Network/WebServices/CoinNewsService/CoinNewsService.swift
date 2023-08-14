@@ -13,13 +13,13 @@ protocol CoinNewsServiceProtocol {
 
 final class CoinNewsService: CoinNewsServiceProtocol, BaseServiceProtocol {
     typealias Endpoint = CoinNewsServiceEndpoint
-    
+
     var networkLoader: NetworkLoaderProtocol
-    
+
     init(networkLoader: NetworkLoaderProtocol = NetworkLoaderProvider.shared.networkLoader) {
         self.networkLoader = networkLoader
     }
-    
+
     func coinNewsRequest(coinCode: String) async throws -> CoinNewsResponse {
         let urlString = build(endpoint: .coinNews(coinCode: coinCode))
         return try await request(with: RequestObject(url: urlString), responseModel: CoinNewsResponse.self)

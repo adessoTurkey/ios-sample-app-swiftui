@@ -9,10 +9,11 @@ import SwiftUI
 
 struct CoinNewsListView: View {
     @StateObject private var viewModel: CoinDetailViewModel
-    
+
     init(coinData: CoinData) {
         _viewModel = StateObject(wrappedValue: CoinDetailViewModel(coinData: coinData))
     }
+
     var body: some View {
         VStack {
             ScrollView {

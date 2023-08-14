@@ -12,7 +12,7 @@ enum Dimensions {
         static let `default`: CGFloat = 18
         static let settingsButton: CGFloat = 8
     }
-    
+
     enum WebView {
         static let zero: CGFloat = 0
         static let two: CGFloat = 2

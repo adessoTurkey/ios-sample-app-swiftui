@@ -10,19 +10,20 @@ import SwiftUI
 import Combine
 
 class FavoritesViewModel: ObservableObject {
-    @Published var coins: [CoinData] = []
-    @Published var filteredCoins: [CoinData] = []
+
+    private let checkWebSocket = true
 
     private var webSocketService: any WebSocketServiceProtocol
     private var cancellable = Set<AnyCancellable>()
     private var reconnectionCount: Int = 0
     private var maxReconnectionCount: Int = 3
-    private let checkWebSocket = true
 
+    @Published var coinList: [CoinData] = []
+    @Published var filteredCoins: [CoinData] = []
     @Published var coinInfo: CoinData?
-    @Published var filterTitle = "Most Popular"
+    @Published var filterTitle = SortOptions.mostPopular.rawValue
+    @Published var selectedSortOption: SortOptions = .mostPopular
 
-    let listPageLimit = 10
     @State var isLoading: Bool = false
 
     init(webSocketService: any WebSocketServiceProtocol = WebSocketService.shared) {
@@ -48,8 +49,9 @@ class FavoritesViewModel: ObservableObject {
     }
 
     private func getFavoriteCoinList() {
-        coins = StorageManager.shared.favoriteCoins
-        filteredCoins = coins
+        coinList = StorageManager.shared.favoriteCoins
+        filteredCoins = coinList
+        self.sortOptions(sort: self.selectedSortOption)
     }
 
     func disconnect() {
@@ -109,7 +111,7 @@ class FavoritesViewModel: ObservableObject {
 
     func filterResults(searchTerm: String = "") {
         if !searchTerm.isEmpty {
-            filteredCoins = coins.filter { coin in
+            filteredCoins = coinList.filter { coin in
                 if let coinCode = coin.coinInfo?.code {
                     return coin.coinInfo?.title?.lowercased().contains(searchTerm.lowercased()) ?? true ||
                     coin.coinInfo?.code?.lowercased().contains(searchTerm.lowercased())  ?? true &&
@@ -119,7 +121,7 @@ class FavoritesViewModel: ObservableObject {
                 }
             }
         } else {
-            filteredCoins = coins.filter({ coin in
+            filteredCoins = coinList.filter({ coin in
                 if let coinInfo = coin.coinInfo,
                    let coinCode = coinInfo.code {
                     return StorageManager.shared.isCoinFavorite(coinCode)

@@ -16,6 +16,7 @@ class CoinDetailViewModel: ObservableObject {
         }
     }
     @Published private(set) var coinPriceHistoryChartDataModel: CoinPriceHistoryChartDataModel?
+    @Published private(set) var coinNewsDataModel: [CoinNewData]?
     @Published private(set) var isLoading: Bool = false
     @Published var priceChartSelectedXDateText: String = ""
 
@@ -24,15 +25,20 @@ class CoinDetailViewModel: ObservableObject {
     }
 
     private let coinPriceHistoryUseCase: CoinPriceHistoryUseCaseProtocol
+    private let coinNewsUseCase: CoinNewsUseCaseProtocol
 
-    init(coinData: CoinData, coinPriceHistoryUseCase: CoinPriceHistoryUseCaseProtocol = CoinPriceHistoryUseCase()) {
+    init(coinData: CoinData,
+         coinPriceHistoryUseCase: CoinPriceHistoryUseCaseProtocol = CoinPriceHistoryUseCase(),
+         coinNewsUseCase: CoinNewsUseCaseProtocol = CoinNewsUseCase()) {
         self.coinData = coinData
         self.coinPriceHistoryUseCase = coinPriceHistoryUseCase
+        self.coinNewsUseCase = coinNewsUseCase
     }
 
     func onAppear() {
         checkIsCoinFavorite()
         fetchCoinPriceHistory(forSelectedRange: chartHistoryRangeSelection)
+        fetchCoinNews()
     }
 
     func getIconURL() -> URL? {
@@ -87,6 +93,20 @@ class CoinDetailViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.isLoading = false
                 self.coinPriceHistoryChartDataModel = CoinPriceHistoryChartDataModel(from: priceHistoryData)
+            }
+        }
+    }
+
+    func fetchCoinNews() {
+        guard let coinCode = coinData.coinInfo?.code else { return }
+
+        Task {
+            var response: CoinNewsResponse?
+            response = try? await coinNewsUseCase.getCoinNews(coinCode: coinCode)
+
+            guard let response = response, let coinNewData = response.data else { return }
+            DispatchQueue.main.async {
+                self.coinNewsDataModel = coinNewData
             }
         }
     }

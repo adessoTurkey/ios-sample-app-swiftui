@@ -35,4 +35,3 @@ jobs:
           api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
           app-file: build/SampleAppSwiftUI.app
           ios-version: 16
-          workspace: ./SampleAppSwiftUIUITests

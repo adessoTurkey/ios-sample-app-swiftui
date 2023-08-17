@@ -13,8 +13,8 @@ class HomeViewModel: ObservableObject {
     @Published var coinInfo: ExcangeRatesResponseModel?
     @Published var coinList: [CoinData] = []
     @Published var filteredCoins: [CoinData] = []
-    @Published var filterTitle = SortOptions.mostPopular.rawValue
-    @Published var selectedSortOption: SortOptions = .mostPopular
+    @Published var filterTitle = SortOptions.defaultList.rawValue
+    @Published var selectedSortOption: SortOptions = .defaultList
 
     let listPageLimit = 10
     @State var isLoading: Bool = false

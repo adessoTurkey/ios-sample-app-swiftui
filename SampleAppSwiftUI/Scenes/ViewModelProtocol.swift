@@ -20,8 +20,8 @@ extension ViewModelProtocol {
     func checkLastItem(_ item: CoinData) {}
     func sortOptions(sort: SortOptions) {
         switch sort {
-            case .mostPopular:
-                filteredCoins = coinList
+            case .defaultList:
+                filteredCoins = filteredCoins.count < coinList.count ? filteredCoins : coinList
             case .price:
                 filteredCoins = filteredCoins.sorted {
                     $0.detail?.usd?.price ?? 0 < $1.detail?.usd?.price ?? 0

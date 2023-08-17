@@ -9,8 +9,8 @@ import Foundation
 
 public enum SortOptions: String, CaseIterable {
     case mostPopular = "Most Popular"
-    case price = "Price"
-    case priceReversed = "Price Reversed"
-    case name = "Name"
-    case nameReversed = "Name Reversed"
+    case price = "Price (Low- High)"
+    case priceReversed = "Price (High-Low)"
+    case name = "Name (A-Z)"
+    case nameReversed = "Name (Z-A)"
 }

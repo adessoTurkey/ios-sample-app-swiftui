@@ -13,6 +13,14 @@ enum Dimensions {
         static let settingsButton: CGFloat = 8
     }
 
+    enum WebView {
+        static let zero: CGFloat = 0
+        static let two: CGFloat = 2
+        static let eight: CGFloat = 8
+        static let thirty: CGFloat = 30
+        static let sixty: CGFloat = 60
+    }
+
     static let imageWidth: CGFloat = 40
     static let imageHeight: CGFloat = 40
     static let searchBarHeight: CGFloat = 56

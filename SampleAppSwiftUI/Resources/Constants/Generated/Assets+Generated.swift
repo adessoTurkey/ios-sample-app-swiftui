@@ -49,6 +49,7 @@ internal enum Resources {
     internal static let binance = ImageAsset(name: "binance")
     internal static let btc = ImageAsset(name: "btc")
     internal static let defaultCoin = ImageAsset(name: "default-coin")
+    internal static let worldNews = ImageAsset(name: "world-news")
   }
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

@@ -21,8 +21,8 @@ class FavoritesViewModel: ObservableObject {
     @Published var coinList: [CoinData] = []
     @Published var filteredCoins: [CoinData] = []
     @Published var coinInfo: CoinData?
-    @Published var filterTitle = SortOptions.mostPopular.rawValue
-    @Published var selectedSortOption: SortOptions = .mostPopular
+    @Published var filterTitle = SortOptions.defaultList.rawValue
+    @Published var selectedSortOption: SortOptions = .defaultList
 
     @State var isLoading: Bool = false
 

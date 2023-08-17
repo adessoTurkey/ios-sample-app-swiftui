@@ -8,7 +8,7 @@
 import Foundation
 
 public enum SortOptions: String, CaseIterable {
-    case mostPopular = "Most Popular"
+    case defaultList = "Default"
     case price = "Price (Low- High)"
     case priceReversed = "Price (High-Low)"
     case name = "Name (A-Z)"

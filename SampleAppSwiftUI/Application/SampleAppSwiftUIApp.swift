@@ -17,6 +17,7 @@ struct SampleAppSwiftUIApp: App {
     @StateObject private var router: Router = Router()
 
     init() {
+        UITabBar.appearance().scrollEdgeAppearance = UITabBarAppearance.init(idiom: .unspecified)
         loggingService = LoggingService()
     }
 

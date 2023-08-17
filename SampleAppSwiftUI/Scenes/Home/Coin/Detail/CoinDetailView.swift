@@ -8,6 +8,13 @@
 import SwiftUI
 
 struct CoinDetailView: View {
+
+    private enum CoinDetailView {
+        static let viewMoreButton: CGFloat = 25
+        static let coinListFrameSize: CGFloat = 70
+        static let chartHeight: CGFloat = 250
+    }
+
     @StateObject private var viewModel: CoinDetailViewModel
 
     init(coinData: CoinData) {
@@ -70,11 +77,52 @@ struct CoinDetailView: View {
                             }
                         }
                     }
-                    .frame(minHeight: 300)
+                    .frame(minHeight: CoinDetailView.chartHeight)
                     .cornerRadius(Dimensions.CornerRadius.default)
                 }
                 .padding(.horizontal, Paddings.side)
-                .padding(.vertical, Paddings.CoinDetailView.top)
+                NavigationView {
+                    VStack {
+                        if let newsModel = viewModel.coinNewsDataModel {
+                            List {
+                                Section(Strings.news) {
+                                    ForEach(newsModel.prefix(5)) { model in
+                                        NavigationLink(destination: WebView(url: URL(string: model.url))) {
+                                            HStack {
+                                                AsyncImage(url: URL(string: model.imageurl)) { phase in
+                                                    if let image = phase.image {
+                                                        image.resizable()
+                                                    } else {
+                                                        Resources.Images.worldNews.swiftUIImage.resizable()
+                                                    }
+                                                }
+                                                .scaledToFit()
+                                                .clipShape(Circle())
+                                                .frame(width: Dimensions.imageWidth, height: Dimensions.imageHeight)
+                                                Text(model.title)
+                                                    .limitedCharacterCount(Numbers.newsCharCount, model.title, "...")
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            .scrollDisabled(true)
+                            .listStyle(.inset)
+                        }
+                    }
+                }
+                Button {
+                } label: {
+                    NavigationLink(destination: CoinNewsListView(coinData: viewModel.coinData)) {
+                        Text("View More")
+                            .frame(width: UIScreen.main.bounds.size.width - CoinDetailView.coinListFrameSize)
+                            .font(.system(size: 18))
+                            .padding()
+                            .foregroundColor(Color.searchIcon)
+                    }
+                }.background(Color.lightGray)
+                    .cornerRadius(CoinDetailView.viewMoreButton)
+                Spacer()
             }
             .navigationTitle(Text(verbatim: viewModel.coinData.coinInfo?.title ?? ""))
             .navigationBarTitleDisplayMode(.inline)
@@ -101,7 +149,6 @@ struct CoinDetailView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             CoinDetailView(coinData: CoinData.demo)
-
             NavigationView {
                 CoinDetailView(coinData: CoinData.demo)
             }

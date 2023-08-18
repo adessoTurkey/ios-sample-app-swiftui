@@ -130,7 +130,7 @@ struct CoinDetailView: View {
                             .padding()
                             .foregroundColor(Color(.searchIcon))
                     }
-                }.background(Color.lightestGray)
+                }.background(Color(.lightestGray))
                     .cornerRadius(CoinDetailView.viewMoreButton)
                 Spacer()
             }

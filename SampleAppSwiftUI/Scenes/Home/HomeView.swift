@@ -17,16 +17,18 @@ struct HomeView: View {
     var body: some View {
         NavigationStack(path: $router.homeNavigationPath) {
             VStack(spacing: Spacings.home) {
-                SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.largeTop)
-                HomeFilterView(filterTitle: viewModel.filterTitle)
+                SearchBarView(searchText: $searchTerm, topPadding: Paddings.SearchBar.shortTop)
+                FilterView(viewModel: viewModel)
                     .padding(.bottom, Paddings.filterBottom)
+                Divider()
                 CoinListView(viewModel: viewModel, filteredCoins: $viewModel.filteredCoins) {
                     Task {
                         await viewModel.fillModels()
                     }
                 }
             }.padding(.horizontal, Paddings.side)
-            .ignoresSafeArea(.all, edges: .top)
+            .navigationTitle(Text(Strings.home))
+            .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: Screen.self) { screen in
                 if screen.type == .detail, let data = screen.data as? CoinData {
                     CoinDetailView(coinData: data)
@@ -42,7 +44,9 @@ struct HomeView: View {
         }
         .onChange(of: searchTerm, { _, newValue in
             viewModel.filterResults(searchTerm: newValue)
+            viewModel.sortOptions(sort: viewModel.selectedSortOption)
         })
+        .onChange(of: viewModel.selectedSortOption, perform: viewModel.sortOptions(sort:))
     }
 }
 

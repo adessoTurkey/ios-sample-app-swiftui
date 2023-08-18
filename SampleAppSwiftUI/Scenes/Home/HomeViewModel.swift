@@ -16,6 +16,7 @@ class HomeViewModel {
     var coinList: [CoinData] = []
     var filteredCoins: [CoinData] = []
     var filterTitle = "Most Popular"
+    @Published var filterTitle = SortOptions.defaultList.rawValue
 
     let listPageLimit = 10
     var isLoading: Bool = false
@@ -36,19 +37,10 @@ class HomeViewModel {
             if let data = dataSource.data {
                 self.coinList.append(contentsOf: data)
                 self.filteredCoins.append(contentsOf: data)
+                self.sortOptions(sort: self.selectedSortOption)
                 self.isLoading = false
             }
         }
-    }
-
-    private func fetchDemoModel() {
-        guard let coinList = JsonHelper.make([CoinData].self, .coinList) else { return }
-        self.fillDemoData(coinList: coinList)
-    }
-
-    private func fillDemoData(coinList: [CoinData]) {
-        self.coinList = coinList
-        self.filteredCoins = coinList
     }
 
     func filterResults(searchTerm: String) {
@@ -88,5 +80,18 @@ extension HomeViewModel: ViewModelProtocol {
 
     func getCurrentPage() -> Int {
         (coinList.count / listPageLimit) + 1
+    }
+}
+
+// MARK: Demo Mode
+extension HomeViewModel {
+    private func fetchDemoModel() {
+        guard let coinList = JsonHelper.make([CoinData].self, .coinList) else { return }
+        self.fillDemoData(coinList: coinList)
+    }
+
+    private func fillDemoData(coinList: [CoinData]) {
+        self.coinList = coinList
+        self.filteredCoins = coinList
     }
 }

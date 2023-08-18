@@ -3,4 +3,6 @@ appId: com.adesso.SampleAppSwiftUI.development
 - launchApp
 - tapOn:
     id: "coinView"
-- assertVisible: "Merhaba"
+- assertVisible: "1D"
+- assertVisible: "1W"
+- assertVisible: "6M"

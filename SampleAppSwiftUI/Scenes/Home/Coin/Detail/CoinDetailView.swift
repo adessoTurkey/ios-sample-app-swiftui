@@ -128,7 +128,7 @@ struct CoinDetailView: View {
                             .frame(width: UIScreen.main.bounds.size.width - CoinDetailView.coinListFrameSize)
                             .font(.system(size: 18))
                             .padding()
-                            .foregroundColor(Color.searchIcon)
+                            .foregroundColor(Color(.searchIcon))
                     }
                 }.background(Color.lightestGray)
                     .cornerRadius(CoinDetailView.viewMoreButton)

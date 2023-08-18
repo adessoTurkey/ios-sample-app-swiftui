@@ -10,17 +10,15 @@ import SwiftUI
 struct FilterView<ViewModel: ViewModelProtocol>: View {
     var viewModel: ViewModel
 
-    @State private var selectedSort: SortOptions = .defaultList
-
     var body: some View {
         HStack {
-            Text(selectedSort.rawValue)
+            Text(viewModel.selectedSortOption.rawValue)
             Spacer()
 
             Menu {
                 ForEach(SortOptions.allCases, id: \.rawValue) { sortOption in
                     Button {
-                        selectedSort = sortOption
+                        viewModel.selectedSortOption = sortOption
                     } label: {
                         Text(sortOption.rawValue)
                     }

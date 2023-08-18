@@ -7,16 +7,18 @@
 
 import Foundation
 
-protocol ViewModelProtocol: AnyObject {
+protocol ViewModelProtocol: ObservableObject {
     var isLoading: Bool { get set }
     var filteredCoins: [CoinData] { get set }
     var coinList: [CoinData] { get }
+    var selectedSortOption: SortOptions { get set }
 
     func checkLastItem(_ item: CoinData)
 }
 
 extension ViewModelProtocol {
     func checkLastItem(_ item: CoinData) {}
+
     func sortOptions(sort: SortOptions) {
         switch sort {
             case .defaultList:

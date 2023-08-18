@@ -19,6 +19,7 @@ class HomeViewModel {
 
     let listPageLimit = 10
     var isLoading: Bool = false
+    var selectedSortOption: SortOptions = .defaultList
 
     func fillModels(demo: Bool = false) async {
         if demo {
@@ -61,14 +62,6 @@ class HomeViewModel {
 }
 
 extension HomeViewModel: ViewModelProtocol {
-    var selectedSortOption: SortOptions {
-        get {
-            .defaultList
-        }
-        set {
-            self.selectedSortOption = newValue
-        }
-    }
 
     func checkLastItem(_ item: CoinData) {
         guard !isLoading else { return }

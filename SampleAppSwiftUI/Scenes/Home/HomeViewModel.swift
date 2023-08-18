@@ -15,8 +15,7 @@ class HomeViewModel {
     var coinInfo: ExcangeRatesResponseModel?
     var coinList: [CoinData] = []
     var filteredCoins: [CoinData] = []
-    var filterTitle = "Most Popular"
-    @Published var filterTitle = SortOptions.defaultList.rawValue
+    var filterTitle = SortOptions.defaultList.rawValue
 
     let listPageLimit = 10
     var isLoading: Bool = false
@@ -62,6 +61,15 @@ class HomeViewModel {
 }
 
 extension HomeViewModel: ViewModelProtocol {
+    var selectedSortOption: SortOptions {
+        get {
+            .defaultList
+        }
+        set {
+            self.selectedSortOption = newValue
+        }
+    }
+
     func checkLastItem(_ item: CoinData) {
         guard !isLoading else { return }
 

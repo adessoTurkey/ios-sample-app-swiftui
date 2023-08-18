@@ -87,6 +87,29 @@
         }
       }
     },
+    "News" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nachricht"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "News"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haberler"
+          }
+        }
+      }
+    },
     "No Coins found." : {
 
     },
@@ -97,6 +120,9 @@
 
     },
     "Settings" : {
+
+    },
+    "View More" : {
 
     }
   },

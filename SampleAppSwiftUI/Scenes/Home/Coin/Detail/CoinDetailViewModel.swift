@@ -19,8 +19,8 @@ class CoinDetailViewModel {
     }
     private(set) var coinPriceHistoryChartDataModel: CoinPriceHistoryChartDataModel?
     private(set) var isLoading: Bool = false
+    var coinNewsDataModel: [CoinNewData]?
     var priceChartSelectedXDateText: String = ""
-    @Published private(set) var isLoading: Bool = false
 
     var rangeButtonsOpacity: Double {
         priceChartSelectedXDateText.isEmpty ? 1.0 : 0.0

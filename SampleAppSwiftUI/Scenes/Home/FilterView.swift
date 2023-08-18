@@ -8,17 +8,19 @@
 import SwiftUI
 
 struct FilterView<ViewModel: ViewModelProtocol>: View {
-    @ObservedObject var viewModel: ViewModel
+    var viewModel: ViewModel
+
+    @State private var selectedSort: SortOptions = .defaultList
 
     var body: some View {
         HStack {
-            Text(viewModel.selectedSortOption.rawValue)
+            Text(selectedSort.rawValue)
             Spacer()
 
             Menu {
                 ForEach(SortOptions.allCases, id: \.rawValue) { sortOption in
                     Button {
-                        viewModel.selectedSortOption = sortOption
+                        selectedSort = sortOption
                     } label: {
                         Text(sortOption.rawValue)
                     }

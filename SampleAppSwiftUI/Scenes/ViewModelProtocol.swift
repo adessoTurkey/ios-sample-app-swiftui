@@ -7,11 +7,10 @@
 
 import Foundation
 
-protocol ViewModelProtocol {
+protocol ViewModelProtocol: AnyObject {
     var isLoading: Bool { get set }
     var filteredCoins: [CoinData] { get set }
     var coinList: [CoinData] { get }
-    var selectedSortOption: SortOptions { get set }
 
     func checkLastItem(_ item: CoinData)
 }

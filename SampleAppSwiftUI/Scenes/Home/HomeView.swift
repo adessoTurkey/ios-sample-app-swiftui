@@ -27,7 +27,7 @@ struct HomeView: View {
                     }
                 }
             }.padding(.horizontal, Paddings.side)
-            .navigationTitle(Text(Strings.home))
+            .navigationTitle("Home")
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: Screen.self) { screen in
                 if screen.type == .detail, let data = screen.data as? CoinData {
@@ -46,7 +46,9 @@ struct HomeView: View {
             viewModel.filterResults(searchTerm: newValue)
             viewModel.sortOptions(sort: viewModel.selectedSortOption)
         })
-        .onChange(of: viewModel.selectedSortOption, perform: viewModel.sortOptions(sort:))
+        .onChange(of: viewModel.selectedSortOption, { _, newValue in
+            viewModel.sortOptions(sort: newValue)
+        })
     }
 }
 

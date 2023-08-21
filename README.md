@@ -29,7 +29,7 @@ This is the iOS SwiftUI Sample App created by adesso Turkey. The project serves 
 ## Prerequisites
 
 - [Swift 5.9](https://developer.apple.com/support/xcode/)
-- [MacOS Monterey (12.5 or higher)](https://www.apple.com/by/macos/monterey/features/)
+- [MacOS Ventura (13.4 or higher)](https://www.apple.com/macos/ventura/features/)
 - [Xcode 15 or higher](https://developer.apple.com/documentation/xcode-release-notes/xcode-15-release-notes)
 - [Swiftlint][github/swiftlint]
 - [XcodeGen](https://github.com/yonaskolb/XcodeGen)

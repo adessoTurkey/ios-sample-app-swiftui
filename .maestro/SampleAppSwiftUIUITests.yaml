@@ -1,5 +1,5 @@
 appId: com.adesso.SampleAppSwiftUI.development
 ---
-- runFlow: ../Home/homeScreenUITests.yaml
-- runFlow: ../Favorites/favoriteScreenUITests.yaml
-- runFlow: ../Settings/settingsScreenUITests.yaml
+- runFlow: Home/homeScreenUITests.yaml
+- runFlow: Favorites/favoriteScreenUITests.yaml
+- runFlow: Settings/settingsScreenUITests.yaml

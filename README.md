@@ -1,4 +1,4 @@
-[![swift-version](https://img.shields.io/badge/swift-5.8-brightgreen.svg)](https://github.com/apple/swift)
+[![swift-version](https://img.shields.io/badge/swift-5.9-brightgreen.svg)](https://github.com/apple/swift)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/adessoTurkey/boilerplate-ios-swiftui/iOS%20Build%20Check%20Workflow/develop)
 
@@ -8,10 +8,11 @@ This is the iOS SwiftUI Sample App created by adesso Turkey. The project serves 
 
 ### Spesifications
 
-- Minimum target of iOS 16
+- Minimum target of iOS 17
 - Usage of Swift concurrency (async/await)
 - WebSocket implementation for real-time price change.
 - Up-to-date SWiftUI features (Navigation stack etc.)
+- Using the new String Catalog
 - Using only [SPM](https://www.swift.org/package-manager/) for package dependencies.
 - Able to favorite and save the coins using [AppStorage](https://developer.apple.com/documentation/swiftui/appstorage).
 
@@ -27,11 +28,10 @@ This is the iOS SwiftUI Sample App created by adesso Turkey. The project serves 
 
 ## Prerequisites
 
-- [Swift 5.8](https://developer.apple.com/support/xcode/)
+- [Swift 5.9](https://developer.apple.com/support/xcode/)
 - [MacOS Monterey (12.5 or higher)](https://www.apple.com/by/macos/monterey/features/)
-- [Xcode 14 or higher](https://developer.apple.com/documentation/xcode-release-notes/xcode-14-release-notes)
+- [Xcode 15 or higher](https://developer.apple.com/documentation/xcode-release-notes/xcode-15-release-notes)
 - [Swiftlint][github/swiftlint]
-- [SwiftGen](https://github.com/SwiftGen/SwiftGen)
 - [XcodeGen](https://github.com/yonaskolb/XcodeGen)
 
 ## Installation
@@ -103,7 +103,6 @@ Gitflow is a legacy Git workflow that was originally a disruptive and novel stra
 
 ## Useful Tools and Resources
 
-- [SwiftGen](https://github.com/SwiftGen/SwiftGen) - SwiftGen is a tool to automatically generate Swift code for resources of your projects (like images, localised strings, etc), to make them type-safe to use.
 - [XcodeGen](https://github.com/yonaskolb/XcodeGen) - XcodeGen is a command line tool written in Swift that generates your Xcode project using your folder structure and a project spec.
 - [SwiftLint][github/swiftlint] - A tool to enforce Swift style and conventions.
 - [TestFlight](https://help.apple.com/itunes-connect/developer/#/devdc42b26b8) - TestFlight beta testing lets you distribute beta builds of your app to testers and collect feedback.

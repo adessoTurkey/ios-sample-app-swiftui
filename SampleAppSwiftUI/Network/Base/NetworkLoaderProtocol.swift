@@ -40,7 +40,7 @@ extension NetworkLoaderProtocol {
         var request = URLRequest(url: url)
         request.httpMethod = requestObject.method.rawValue
         request.allHTTPHeaderFields = requestObject.headers
-        request.httpBody = requestObject.body
+        request.httpBody = requestObject.data?.encode()
 
         return request
     }

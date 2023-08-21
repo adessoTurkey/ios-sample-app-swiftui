@@ -13,18 +13,15 @@ struct RequestObject {
     let method: HTTPMethod
     var data: Encodable?
     var headers: [String: String]?
-    var body: Data?
 
     init(url: String,
          method: HTTPMethod = .get,
          data: Encodable? = nil,
-         headers: [String: String] = [:],
-         body: Data? = nil) {
+         headers: [String: String] = [:]) {
         self.url = url
         self.method = method
         self.data = data
         self.headers = headers
-        self.body = body
     }
 }
 

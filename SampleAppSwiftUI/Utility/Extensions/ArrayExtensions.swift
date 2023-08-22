@@ -25,4 +25,9 @@ extension Array: RawRepresentable where Element: Codable {
         }
         return result
     }
+    
+    public var isNotEmpty: Bool {
+            
+            return !self.isEmpty
+    }
 }

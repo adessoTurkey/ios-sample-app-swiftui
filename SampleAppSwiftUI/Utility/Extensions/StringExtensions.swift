@@ -24,9 +24,8 @@ extension String {
     static var empty: Self {
         ""
     }
-    
+
     public var isNotEmpty: Bool {
-            
-            return !self.isEmpty
+        !self.isEmpty
     }
 }

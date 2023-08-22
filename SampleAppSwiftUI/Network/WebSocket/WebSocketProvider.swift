@@ -15,7 +15,9 @@ class WebSocketProvider: NSObject {
     init? (endPoint: TargetEndpointProtocol = WebSocketEndpoint.baseCoinApi,
            session: URLSession = URLSession.shared ) {
         guard let url = URL(string: WebSocketEndpoint.baseCoinApi.path) else { return nil }
-        self.socket = WebSocketStream(url: url,
+        let query = URLQueryItem(name: "api_key", value: Configuration.coinApiKey)
+        let finalURL = url.appending(queryItems: [query])
+        self.socket = WebSocketStream(url: finalURL,
                                       session: session)
     }
 }

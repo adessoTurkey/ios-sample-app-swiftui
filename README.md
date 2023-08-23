@@ -42,11 +42,10 @@ Because XcodeGen is used in this project, there will be no `.xcodeproj` or `.xcw
 xcodegen generate
 ```
 
-Swiftlint and SwiftGen can also be installed via included scripts in the repository. Under the `{project_root}/scripts/installation` directory, simply run either or both of:
+Swiftlint can also be installed via included scripts in the repository. Under the `{project_root}/scripts/installation` directory, simply run either or both of:
 
 ```
 sh swiftlint.sh
-sh swiftgen.sh
 ```
 
 ## Branching Strategy

@@ -36,6 +36,7 @@ targets:
       - package: Pulse
         product: Pulse
         product: PulseUI
+      - target: CoinWidgetExtension
     configFiles:
         Development: SampleAppSwiftUI/Configs/Development.xcconfig
         Production: SampleAppSwiftUI/Configs/Production.xcconfig
@@ -73,3 +74,16 @@ targets:
     platform: iOS
     sources:
       - path: SampleAppSwiftUIUITests
+  CoinWidgetExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: CoinWidgetExtension
+    settings:
+        PRODUCT_BUNDLE_IDENTIFIER: com.adesso.SampleAppSwiftUI.development.CoinWidgetExtension
+        INFOPLIST_FILE: CoinWidgetExtension/Info.plist
+    dependencies:
+      - framework: SwiftUI.framework
+        implicit: true
+      - framework: WidgetKit.framework
+        implicit: true

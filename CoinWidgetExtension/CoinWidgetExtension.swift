@@ -24,7 +24,7 @@ struct Provider: TimelineProvider {
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
         for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
+            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate) ?? Date()
             let entry = SimpleEntry(date: entryDate)
             entries.append(entry)
         }
@@ -60,7 +60,8 @@ struct CoinWidgetExtension: Widget {
 
 struct CoinWidgetExtension_Previews: PreviewProvider {
     static var previews: some View {
-        CoinWidgetExtensionEntryView(entry: SimpleEntry(date: Date()))
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
+        VStack {
+            CoinWidgetExtensionEntryView(entry: SimpleEntry(date: Date()))
+        }.previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }

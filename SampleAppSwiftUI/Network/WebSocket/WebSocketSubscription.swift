@@ -42,7 +42,7 @@ class WebSocketSubscription<S: Subscriber>: Subscription where S.Input == URLSes
                 _ = subscriber.receive(message)
             }
         } catch {
-            debugPrint("Someting went wrong")
+            debugPrint("Something went wrong")
         }
     }
 }

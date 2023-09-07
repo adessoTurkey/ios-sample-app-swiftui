@@ -13,6 +13,6 @@ PRODUCT_BUNDLE_IDENTIFIER = com.adesso.SampleAppSwiftUI.development
 
 base_url = https:/$()/min-api.cryptocompare.com/data/
 
-webSocket_base_url = wss:/$()/streamer.cryptocompare.com/v2?api_key=%@
+webSocket_base_url = wss:/$()/streamer.cryptocompare.com/v2
 
 personal_api =

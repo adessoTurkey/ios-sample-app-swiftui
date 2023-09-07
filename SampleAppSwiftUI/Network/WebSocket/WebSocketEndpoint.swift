@@ -18,7 +18,7 @@ enum WebSocketEndpoint: TargetEndpointProtocol {
     var path: String {
         switch self {
             case .baseCoinApi:
-            return String(format: Constants.webSocketEndpoint, Constants.apiKey)
+            return Constants.webSocketEndpoint
         }
     }
 }

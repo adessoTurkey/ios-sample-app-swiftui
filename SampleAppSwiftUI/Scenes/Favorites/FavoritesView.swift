@@ -37,13 +37,13 @@ struct FavoritesView: View {
             viewModel.filterResults(searchTerm: searchTerm)
             viewModel.sortOptions(sort: viewModel.selectedSortOption)
         }
-        .onChange(of: StorageManager.shared.favoriteCoins, perform: fetchFavorites)
+//        .onChange(of: CoreDataManager.shared.getCoins(), perform: fetchFavorites)
         .onChange(of: viewModel.selectedSortOption, perform: viewModel.sortOptions(sort:))
     }
 
-    private func fetchFavorites(codes: [CoinData]) {
-        viewModel.fetchFavorites()
-    }
+//    private func fetchFavorites(codes: [CoinData]) {
+//        viewModel.fetchFavorites()
+//    }
 
     @ToolbarContentBuilder
     func createTopBar() -> some ToolbarContent {

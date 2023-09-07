@@ -51,7 +51,7 @@ class FavoritesViewModel: ObservableObject {
     }
 
     private func getFavoriteCoinList() {
-        coinList = StorageManager.shared.favoriteCoins
+        coinList = CoreDataManager.shared.getCoins()
         filteredCoins = coinList
         self.sortOptions(sort: self.selectedSortOption)
     }
@@ -117,7 +117,7 @@ class FavoritesViewModel: ObservableObject {
                 if let coinCode = coin.coinInfo?.code {
                     return coin.coinInfo?.title?.lowercased().contains(searchTerm.lowercased()) ?? true ||
                     coin.coinInfo?.code?.lowercased().contains(searchTerm.lowercased())  ?? true &&
-                    StorageManager.shared.isCoinFavorite(coinCode)
+                    CoreDataManager.shared.isCoinFavorite(coinCode)
                 } else {
                     return false
                 }
@@ -126,7 +126,7 @@ class FavoritesViewModel: ObservableObject {
             filteredCoins = coinList.filter({ coin in
                 if let coinInfo = coin.coinInfo,
                    let coinCode = coinInfo.code {
-                    return StorageManager.shared.isCoinFavorite(coinCode)
+                    return CoreDataManager.shared.isCoinFavorite(coinCode)
                 } else {
                     return false
                 }

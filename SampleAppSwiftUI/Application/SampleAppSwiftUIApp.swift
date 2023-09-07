@@ -13,12 +13,12 @@ struct SampleAppSwiftUIApp: App {
     @Environment(\.scenePhase) private var phase
         // Check out https://developer.apple.com/documentation/swiftui/scenephase for more information
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
-    private var loggingService: LoggingService
+//    private var loggingService: LoggingService
     @StateObject private var router: Router = Router()
 
     init() {
         UITabBar.appearance().scrollEdgeAppearance = UITabBarAppearance.init(idiom: .unspecified)
-        loggingService = LoggingService()
+//        loggingService = LoggingService()
     }
 
     var body: some Scene {

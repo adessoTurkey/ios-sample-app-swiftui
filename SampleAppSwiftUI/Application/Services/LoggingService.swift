@@ -6,21 +6,21 @@
 //  Copyright © 2020 Adesso Turkey. All rights reserved.
 //
 
-import UIKit
-
-class LoggingService {
-
-    init() {
-        LoggerManager.instance.setup(level: .debug)
-        logApplicationAndDeviceInfo()
-    }
-
-    private func logApplicationAndDeviceInfo() {
-        let version = UIApplication.appVersion
-        let build = UIApplication.appBuild
-        let deviceModel = UIDevice.modelName
-        let osVersion = UIDevice.osVersion
-
-        LoggerManager.instance.setInfo(version: version, build: build, deviceModel: deviceModel, osVersion: osVersion)
-    }
-}
+//import UIKit
+//
+//class LoggingService {
+//
+//    init() {
+//        LoggerManager.instance.setup(level: .debug)
+//        logApplicationAndDeviceInfo()
+//    }
+//
+//    private func logApplicationAndDeviceInfo() {
+//        let version = UIApplication.appVersion
+//        let build = UIApplication.appBuild
+//        let deviceModel = UIDevice.modelName
+//        let osVersion = UIDevice.osVersion
+//
+//        LoggerManager.instance.setInfo(version: version, build: build, deviceModel: deviceModel, osVersion: osVersion)
+//    }
+//}

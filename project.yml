@@ -8,7 +8,7 @@ configs:
 options:
   bundleIdPrefix: com.adesso
   deploymentTarget:
-    iOS: 16.0
+    iOS: 17.0
 
 attributes:
   BuildIndependentTargetsInParallel: YES

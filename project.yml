@@ -38,6 +38,7 @@ targets:
       - package: CocoaLumberjack
         product: CocoaLumberjack
         product: CocoaLumberjackSwift
+        product: CocoaLumberjackSwiftLogBackend
       - package: Pulse
         product: Pulse
         product: PulseUI
@@ -63,6 +64,7 @@ targets:
       - package: CocoaLumberjack
         product: CocoaLumberjack
         product: CocoaLumberjackSwift
+        product: CocoaLumberjackSwiftLogBackend
       - package: Pulse
         product: Pulse
         product: PulseUI

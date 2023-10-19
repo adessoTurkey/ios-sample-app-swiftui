@@ -8,11 +8,8 @@
 import SwiftUI
 
 struct CoinNewsListView: View {
-    @State private var viewModel: CoinDetailViewModel
-
-    init(coinData: CoinData) {
-        _viewModel = State(wrappedValue: CoinDetailViewModel(coinData: coinData))
-    }
+    @StateObject private var viewModel = CoinDetailViewModel()
+    var coinData: CoinData
 
     var body: some View {
         VStack {
@@ -47,8 +44,8 @@ struct CoinNewsListView: View {
                     .navigationViewStyle(.automatic)
             }
         }
-        .onAppear {
-            viewModel.onAppear()
+        .task {
+            await viewModel.onAppear(coinData: coinData)
         }
     }
 }

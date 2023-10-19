@@ -14,7 +14,7 @@ struct SampleAppSwiftUIApp: App {
         // Check out https://developer.apple.com/documentation/swiftui/scenephase for more information
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     private var loggingService: LoggingService
-    @State private var router: Router = Router()
+    @StateObject private var router = Router()
 
     init() {
         UITabBar.appearance().scrollEdgeAppearance = UITabBarAppearance.init(idiom: .unspecified)
@@ -23,8 +23,9 @@ struct SampleAppSwiftUIApp: App {
 
     var body: some Scene {
         WindowGroup {
-            MainView(router: $router)
-                .onChange(of: phase, { _, newValue in
+            MainView()
+                .environmentObject(router)
+                .onChange(of: phase, perform: { newValue in
                     manageChanges(for: newValue)
                 })
                 .onOpenURL(perform: onOpenURL(_:))

@@ -6,44 +6,33 @@
 //
 
 import Foundation
-import Observation
+import Combine
 
-@Observable
-class CoinDetailViewModel {
-    let coinData: CoinData
-    private(set) var isFavorite: Bool = false
-    var chartHistoryRangeSelection: CoinChartHistoryRange = .sixMonth {
-        didSet {
-            fetchCoinPriceHistory(forSelectedRange: chartHistoryRangeSelection)
-        }
-    }
+class CoinDetailViewModel: ObservableObject {
+    @Published var isFavorite: Bool = false
+    @Published var chartHistoryRangeSelection: CoinChartHistoryRange = .sixMonth
     private(set) var coinPriceHistoryChartDataModel: CoinPriceHistoryChartDataModel?
-    private(set) var isLoading: Bool = false
-    var coinNewsDataModel: [CoinNewData]?
-    var priceChartSelectedXDateText: String = ""
+    @Published var isLoading = false
+    @Published var coinNewsDataModel: [CoinNewData]?
+    @Published var priceChartSelectedXDateText = ""
 
     var rangeButtonsOpacity: Double {
         priceChartSelectedXDateText.isEmpty ? 1.0 : 0.0
     }
 
-    private let coinPriceHistoryUseCase: CoinPriceHistoryUseCaseProtocol
-    private let coinNewsUseCase: CoinNewsUseCaseProtocol
+    private let coinPriceHistoryUseCase: CoinPriceHistoryUseCaseProtocol = CoinPriceHistoryUseCase()
+    private let coinNewsUseCase: CoinNewsUseCaseProtocol = CoinNewsUseCase()
 
-    init(coinData: CoinData,
-         coinPriceHistoryUseCase: CoinPriceHistoryUseCaseProtocol = CoinPriceHistoryUseCase(),
-         coinNewsUseCase: CoinNewsUseCaseProtocol = CoinNewsUseCase()) {
-        self.coinData = coinData
-        self.coinPriceHistoryUseCase = coinPriceHistoryUseCase
-        self.coinNewsUseCase = coinNewsUseCase
+    func onAppear(coinData: CoinData) async {
+        await checkIsCoinFavorite(coinData: coinData)
+        await fetchCoinPriceHistory(
+            coinData: coinData,
+            forSelectedRange: chartHistoryRangeSelection
+        )
+        await fetchCoinNews(coinData: coinData)
     }
 
-    func onAppear() {
-        checkIsCoinFavorite()
-        fetchCoinPriceHistory(forSelectedRange: chartHistoryRangeSelection)
-        fetchCoinNews()
-    }
-
-    func getIconURL() -> URL? {
+    func getIconURL(coinData: CoinData) -> URL? {
         guard let coinCode = coinData.coinInfo?.code else {
             return nil
         }
@@ -51,65 +40,72 @@ class CoinDetailViewModel {
         return URLs.Icons.getURL(from: coinCode)
     }
 
-    func getPriceString() -> String {
+    func getPriceString(coinData: CoinData) -> String {
         coinData.detail?.usd?.createPriceString() ?? ""
     }
 
-    func checkIsCoinFavorite() {
-        isFavorite = StorageManager.shared.isCoinFavorite(coinData.coinInfo?.code ?? "")
+    func checkIsCoinFavorite(coinData: CoinData) async {
+        await MainActor.run {
+            isFavorite = StorageManager.shared.isCoinFavorite(coinData.coinInfo?.code ?? "")
+        }
     }
 
-    func updateCoinFavoriteState() {
+    func updateCoinFavoriteState(coinData: CoinData) {
         isFavorite.toggle()
         StorageManager.shared.manageFavorites(coinData: coinData)
     }
 
-    func fetchCoinPriceHistory(forSelectedRange range: CoinChartHistoryRange) {
+    func fetchCoinPriceHistory(coinData: CoinData, forSelectedRange range: CoinChartHistoryRange) async {
         guard let coinCode = coinData.coinInfo?.code else { return }
 
-        isLoading = true
-
-        Task {
+        await MainActor.run {
+            isLoading = true
+        }
+        do {
             var response: CoinPriceHistoryResponse?
-
             let limitAndAggregate = range.limitAndAggregateValue
-
-            if range == .oneDay {
-                response = try? await coinPriceHistoryUseCase.getHourlyPriceHistory(
-                    coinCode: coinCode,
-                    unitToBeConverted: "USD",
-                    hourLimit: limitAndAggregate.limit,
-                    aggregate: limitAndAggregate.aggregate
-                )
+            switch range {
+                case .oneDay:
+                    response = try await coinPriceHistoryUseCase.getHourlyPriceHistory(
+                        coinCode: coinCode,
+                        unitToBeConverted: "USD",
+                        hourLimit: limitAndAggregate.limit,
+                        aggregate: limitAndAggregate.aggregate
+                    )
+                default:
+                    response = try await coinPriceHistoryUseCase.getDailyPriceHistory(
+                        coinCode: coinCode,
+                        unitToBeConverted: "USD",
+                        dayLimit: limitAndAggregate.limit,
+                        aggregate: limitAndAggregate.aggregate
+                    )
+            }
+            if let response = response, let priceHistoryData = response.data {
+                await MainActor.run {
+                    isLoading = false
+                    coinPriceHistoryChartDataModel = CoinPriceHistoryChartDataModel(from: priceHistoryData)
+                }
             } else {
-                response = try? await coinPriceHistoryUseCase.getDailyPriceHistory(
-                    coinCode: coinCode,
-                    unitToBeConverted: "USD",
-                    dayLimit: limitAndAggregate.limit,
-                    aggregate: limitAndAggregate.aggregate
-                )
+                await MainActor.run {
+                    isLoading = false
+                }
             }
-
-            guard let response = response, let priceHistoryData = response.data else { return }
-
-            DispatchQueue.main.async {
-                self.isLoading = false
-                self.coinPriceHistoryChartDataModel = CoinPriceHistoryChartDataModel(from: priceHistoryData)
-            }
+        } catch let error {
+            LoggerManager().setError(errorMessage: error.localizedDescription)
         }
     }
 
-    func fetchCoinNews() {
+    func fetchCoinNews(coinData: CoinData) async {
         guard let coinCode = coinData.coinInfo?.code else { return }
-
-        Task {
-            var response: CoinNewsResponse?
-            response = try? await coinNewsUseCase.getCoinNews(coinCode: coinCode)
-
-            guard let response = response, let coinNewData = response.data else { return }
-            DispatchQueue.main.async {
-                self.coinNewsDataModel = coinNewData
+        do {
+            let response = try await coinNewsUseCase.getCoinNews(coinCode: coinCode)
+            if let data = response.data {
+                await MainActor.run {
+                    coinNewsDataModel = data
+                }
             }
+        } catch let error {
+            LoggerManager().setError(errorMessage: error.localizedDescription)
         }
     }
 }

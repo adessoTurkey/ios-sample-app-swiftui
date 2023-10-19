@@ -9,8 +9,8 @@ import SwiftUI
 
 struct FavoritesView: View {
     @State private var searchTerm = ""
-    @State private var viewModel = FavoritesViewModel()
-    @Binding var router: Router
+    @StateObject private var viewModel = FavoritesViewModel()
+    @EnvironmentObject var router: Router
 
     var body: some View {
         NavigationStack(path: $router.favoritesNavigationPath) {
@@ -34,14 +34,14 @@ struct FavoritesView: View {
         .background(Color(.lightestGray))
         .onAppear(perform: viewModel.fetchFavorites)
         .onDisappear(perform: viewModel.disconnect)
-        .onChange(of: searchTerm, { _, newValue in
+        .onChange(of: searchTerm, perform: { newValue in
             viewModel.filterResults(searchTerm: newValue)
             viewModel.sortOptions(sort: viewModel.selectedSortOption)
         })
-        .onChange(of: StorageManager.shared.favoriteCoins, { _, newValue in
+        .onChange(of: StorageManager.shared.favoriteCoins, perform: { newValue in
             fetchFavorites(codes: newValue)
         })
-        .onChange(of: viewModel.selectedSortOption, { _, new in
+        .onChange(of: viewModel.selectedSortOption, perform: { new in
             viewModel.sortOptions(sort: new)
         })
     }
@@ -59,5 +59,6 @@ struct FavoritesView: View {
 }
 
 #Preview {
-    FavoritesView(router: .constant(.init()))
+    FavoritesView()
+        .environmentObject(Router())
 }

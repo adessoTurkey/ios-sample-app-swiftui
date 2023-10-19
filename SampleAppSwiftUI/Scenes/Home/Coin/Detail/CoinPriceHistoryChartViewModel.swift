@@ -8,20 +8,18 @@
 import Foundation
 import SwiftUI
 import Charts
-import Observation
 
-@Observable
-class CoinPriceHistoryChartViewModel {
-    var selectedRange: CoinChartHistoryRange
-    var dataModel: CoinPriceHistoryChartDataModel
-    var selectedXDateText: String
+class CoinPriceHistoryChartViewModel: ObservableObject {
+    @Published var selectedRange: CoinChartHistoryRange
+    @Published var dataModel: CoinPriceHistoryChartDataModel
+    @Published var selectedXDateText: String
     /// Holds the selected x value of chart when user is dragging on it
-    var selectedX: (any Plottable)?
+    @Published var selectedX: (any Plottable)?
 
     init(selectedRange: CoinChartHistoryRange, dataModel: CoinPriceHistoryChartDataModel, selectedXDateText: String) {
         self.selectedRange = selectedRange
         self.dataModel = dataModel
-        self._selectedXDateText = selectedXDateText
+        self.selectedXDateText = selectedXDateText
         self.selectedX = nil
     }
 
@@ -70,9 +68,7 @@ class CoinPriceHistoryChartViewModel {
     }
 
     func onChangeDrag(value: DragGesture.Value, chartProxy: ChartProxy, geometryProxy: GeometryProxy) {
-        if let plotFrame = chartProxy.plotFrame {
-            let xCurrent = value.location.x - geometryProxy[plotFrame].origin.x
-
+        let xCurrent = value.location.x - geometryProxy[chartProxy.plotAreaFrame].origin.x
             if let selectedDate: Date = chartProxy.value(atX: xCurrent),
                let startDate = dataModel.prices.first?.date,
                let lastDate = dataModel.prices.last?.date,
@@ -81,7 +77,6 @@ class CoinPriceHistoryChartViewModel {
                 selectedXDateText = calculatedSelectedXDateText
             }
         }
-    }
 
     func onEndDrag() {
         selectedX = nil

@@ -8,10 +8,8 @@
 import Foundation
 import SwiftUI
 import Combine
-import Observation
 
-@Observable
-class FavoritesViewModel {
+class FavoritesViewModel: ObservableObject {
     private let checkWebSocket = true
 
     private var webSocketService: any WebSocketServiceProtocol
@@ -19,13 +17,13 @@ class FavoritesViewModel {
     private var reconnectionCount: Int = 0
     private var maxReconnectionCount: Int = 3
 
-    var coinList: [CoinData] = []
-    var filteredCoins: [CoinData] = []
-    var coinInfo: CoinData?
-    var filterTitle = SortOptions.defaultList.rawValue
-    var selectedSortOption: SortOptions = .defaultList
+    @Published var coinList: [CoinData] = []
+    @Published var filteredCoins: [CoinData] = []
+    @Published var coinInfo: CoinData?
+    @Published var filterTitle = SortOptions.defaultList.rawValue
+    @Published var selectedSortOption: SortOptions = .defaultList
 
-    var isLoading: Bool = false
+    @Published var isLoading: Bool = false
 
     init(webSocketService: any WebSocketServiceProtocol = WebSocketService.shared) {
         self.webSocketService = webSocketService

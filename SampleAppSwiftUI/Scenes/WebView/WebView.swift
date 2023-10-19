@@ -10,14 +10,30 @@ import SwiftUI
 
 struct WebView: UIViewRepresentable {
     let url: URL?
-    var activityIndicator: UIActivityIndicatorView! = UIActivityIndicatorView(frame: CGRect(x: (UIScreen.main.bounds.width/Dimensions.WebView.two)-Dimensions.WebView.thirty,
-                                                                                            y: (UIScreen.main.bounds.height/Dimensions.WebView.two)-Dimensions.WebView.thirty,
-                                                                                            width: Dimensions.WebView.sixty,
-                                                                                            height: Dimensions.WebView.sixty))
+    var activityIndicator = UIActivityIndicatorView(
+        frame: CGRect(x: (UIScreen.main.bounds.width/Dimensions.WebView.two)-Dimensions.WebView.thirty,
+                      y: (UIScreen.main.bounds.height/Dimensions.WebView.two)-Dimensions.WebView.thirty,
+                      width: Dimensions.WebView.sixty,
+                      height: Dimensions.WebView.sixty)
+    )
 
     func makeUIView(context: Context) -> UIView {
-        let view = UIView(frame: CGRect(x: Dimensions.WebView.zero, y: Dimensions.WebView.zero, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-        let webview = WKWebView(frame: CGRect(x: Dimensions.WebView.zero, y: Dimensions.WebView.zero, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        let view = UIView(
+            frame: CGRect(
+                x: Dimensions.WebView.zero,
+                y: Dimensions.WebView.zero,
+                width: UIScreen.main.bounds.width,
+                height: UIScreen.main.bounds.height
+            )
+        )
+        let webview = WKWebView(
+            frame: CGRect(
+                x: Dimensions.WebView.zero,
+                y: Dimensions.WebView.zero,
+                width: UIScreen.main.bounds.width,
+                height: UIScreen.main.bounds.height
+            )
+        )
         webview.navigationDelegate = context.coordinator
 
         if let url = self.url {
@@ -56,11 +72,11 @@ class WebViewHelper: NSObject, WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         parent.activityIndicator.isHidden = true
-        print("error: \(error)")
+        Logger().error(error.localizedDescription)
     }
 
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         parent.activityIndicator.isHidden = true
-        print("error \(error)")
+        Logger().error(error.localizedDescription)
     }
 }

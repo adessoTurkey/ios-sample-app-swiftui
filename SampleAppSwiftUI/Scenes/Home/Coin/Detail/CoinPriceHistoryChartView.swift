@@ -9,10 +9,10 @@ import SwiftUI
 import Charts
 
 struct CoinPriceHistoryChartView: View {
-    @State private var viewModel: CoinPriceHistoryChartViewModel
+    @StateObject private var viewModel: CoinPriceHistoryChartViewModel
 
     init(selectedRange: CoinChartHistoryRange, dataModel: CoinPriceHistoryChartDataModel, selectedXDateText: String) {
-        _viewModel = State(
+        _viewModel = StateObject(
             wrappedValue: CoinPriceHistoryChartViewModel(
                 selectedRange: selectedRange,
                 dataModel: dataModel,

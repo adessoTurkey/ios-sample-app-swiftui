@@ -11,7 +11,7 @@ struct SettingsView: View {
 
     @State private var isDarkModeOn = false
     @State private var selectedParity: Parity = .USD
-    @Binding var router: Router
+    @EnvironmentObject var router: Router
 
     var body: some View {
         NavigationStack(path: $router.settingsNavigationPath) {
@@ -85,5 +85,6 @@ extension SettingsView {
 }
 
 #Preview {
-    SettingsView(router: .constant(.init()))
+    SettingsView()
+        .environmentObject(Router())
 }

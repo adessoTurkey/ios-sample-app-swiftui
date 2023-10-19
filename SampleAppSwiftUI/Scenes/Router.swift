@@ -7,15 +7,13 @@
 
 import Foundation
 import SwiftUI
-import Observation
 
-@Observable
-final public class Router {
-    var homeNavigationPath: [Screen] = []
-    var favoritesNavigationPath: [Screen] = []
-    var settingsNavigationPath: [Screen] = []
-    var selectedTab: TabIndex = .home
-    @ObservationIgnored var tabbarNames: [TabIndex] = [.home, .favorites, .settings]
+final public class Router: ObservableObject {
+    @Published var homeNavigationPath: [Screen] = []
+    @Published var favoritesNavigationPath: [Screen] = []
+    @Published var settingsNavigationPath: [Screen] = []
+    @Published var selectedTab: TabIndex = .home
+    var tabbarNames: [TabIndex] = [.home, .favorites, .settings]
 
     func navigateCoinDetail(coinData: CoinData) {
         if selectedTab == .home {

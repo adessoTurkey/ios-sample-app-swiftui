@@ -10,24 +10,24 @@ import SwiftUI
 
 struct MainView: View {
 
-    @State private var storageManager = StorageManager.shared
-    @Binding var router: Router
+    private var storageManager = StorageManager.shared
+    @EnvironmentObject var router: Router
 
     var body: some View {
         TabView(selection: $router.selectedTab) {
-            HomeView(router: $router)
+            HomeView()
                 .tag(TabIndex.home)
                 .tabItem {
                     Image(systemName: TabIndex.home.imageName())
                         .accessibilityIdentifier("homeTabView")
                 }
-            FavoritesView(router: $router)
+            FavoritesView()
                 .tag(TabIndex.favorites)
                 .tabItem {
                     Image(systemName: TabIndex.favorites.imageName())
                         .accessibilityIdentifier("favoriteTabView")
                 }
-            SettingsView(router: $router)
+            SettingsView()
                 .tag(TabIndex.settings)
                 .tabItem {
                     Image(systemName: TabIndex.settings.imageName())
@@ -40,5 +40,6 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView(router: .constant(Router()))
+    MainView()
+        .environmentObject(Router())
 }

@@ -10,9 +10,9 @@ import SwiftUI
 
 struct HomeView: View {
 
-    @State private var viewModel = HomeViewModel()
+    @StateObject private var viewModel = HomeViewModel()
     @State private var searchTerm = ""
-    @Binding var router: Router
+    @EnvironmentObject var router: Router
 
     var body: some View {
         NavigationStack(path: $router.homeNavigationPath) {
@@ -42,16 +42,17 @@ struct HomeView: View {
                 await viewModel.fillModels()
             }
         }
-        .onChange(of: searchTerm, { _, newValue in
+        .onChange(of: searchTerm, perform: { newValue in
             viewModel.filterResults(searchTerm: newValue)
             viewModel.sortOptions(sort: viewModel.selectedSortOption)
         })
-        .onChange(of: viewModel.selectedSortOption, { _, newValue in
+        .onChange(of: viewModel.selectedSortOption, perform: { newValue in
             viewModel.sortOptions(sort: newValue)
         })
     }
 }
 
 #Preview {
-    HomeView(router: .constant(.init()))
+    HomeView()
+        .environmentObject(Router())
 }

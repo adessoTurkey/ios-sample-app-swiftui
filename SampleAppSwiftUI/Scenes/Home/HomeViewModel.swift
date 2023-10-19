@@ -8,18 +8,16 @@
 import Foundation
 import SwiftUI
 import Combine
-import Observation
 
-@Observable
-class HomeViewModel {
-    var coinInfo: ExcangeRatesResponseModel?
-    var coinList: [CoinData] = []
-    var filteredCoins: [CoinData] = []
-    var filterTitle = SortOptions.defaultList.rawValue
+class HomeViewModel: ObservableObject {
+    @Published var coinInfo: ExcangeRatesResponseModel?
+    @Published var coinList: [CoinData] = []
+    @Published var filteredCoins: [CoinData] = []
+    @Published var filterTitle = SortOptions.defaultList.rawValue
 
     let listPageLimit = 10
-    var isLoading: Bool = false
-    var selectedSortOption: SortOptions = .defaultList
+    @Published var isLoading: Bool = false
+    @Published var selectedSortOption: SortOptions = .defaultList
 
     func fillModels(demo: Bool = false) async {
         if demo {
@@ -30,7 +28,7 @@ class HomeViewModel {
 
     private func fetchAllCoins(page: Int = 1) async {
         guard let dataSource = try? await AllCoinRemoteDataSource().getAllCoin(limit: self.listPageLimit, unitToBeConverted: "USD", page: page) else {
-            print("Problem on the convert")
+            Logger().error("Problem on the convert")
             return
         }
         DispatchQueue.main.async {

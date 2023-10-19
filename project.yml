@@ -37,7 +37,9 @@ targets:
     dependencies:
       - package: CocoaLumberjack
         product: CocoaLumberjack
+      - package: CocoaLumberjack
         product: CocoaLumberjackSwift
+      - package: CocoaLumberjack
         product: CocoaLumberjackSwiftLogBackend
       - package: Pulse
         product: Pulse
@@ -63,7 +65,9 @@ targets:
       - target: SampleAppSwiftUI
       - package: CocoaLumberjack
         product: CocoaLumberjack
+      - package: CocoaLumberjack
         product: CocoaLumberjackSwift
+      - package: CocoaLumberjack
         product: CocoaLumberjackSwiftLogBackend
       - package: Pulse
         product: Pulse

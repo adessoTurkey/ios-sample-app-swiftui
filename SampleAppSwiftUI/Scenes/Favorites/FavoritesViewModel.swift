@@ -40,10 +40,12 @@ class FavoritesViewModel: ObservableObject {
     }
 
     func fetchFavorites() {
-        DispatchQueue.main.async {
-            self.isLoading = false
-            self.getFavoriteCoinList()
-            self.startSocketConnection()
+        if Configuration.coinApiKey.isNotEmpty {
+            DispatchQueue.main.async {
+                self.isLoading = false
+                self.getFavoriteCoinList()
+                self.startSocketConnection()
+            }
         }
     }
 

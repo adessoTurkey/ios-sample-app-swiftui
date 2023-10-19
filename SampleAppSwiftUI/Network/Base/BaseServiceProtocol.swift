@@ -35,6 +35,6 @@ extension BaseServiceProtocol {
     private func prepareAuthenticatedRequest(with requestObject: inout RequestObject) -> RequestObject {
         // TODO: - handle authenticatedRequest with urlSession
 
-        return requestObject
+        requestObject
     }
 }

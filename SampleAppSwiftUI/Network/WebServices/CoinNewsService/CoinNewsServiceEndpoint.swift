@@ -19,6 +19,6 @@ enum CoinNewsServiceEndpoint: TargetEndpointProtocol {
         switch self {
             case .coinNews(coinCode: let coinCode):
                 return BaseEndpoint.base.path + String(format: Constants.coinNewsEndpoint, coinCode, Configuration.coinApiKey)
-            }
+        }
     }
 }

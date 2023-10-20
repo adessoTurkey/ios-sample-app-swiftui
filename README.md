@@ -8,7 +8,7 @@ This is the iOS SwiftUI Sample App created by adesso Turkey. The project serves 
 
 ### Spesifications
 
-- Minimum target of iOS 17
+- Minimum target of iOS 16
 - Usage of Swift concurrency (async/await)
 - WebSocket implementation for real-time price change.
 - Up-to-date SWiftUI features (Navigation stack etc.)
@@ -39,7 +39,7 @@ This is the iOS SwiftUI Sample App created by adesso Turkey. The project serves 
 Because XcodeGen is used in this project, there will be no `.xcodeproj` or `.xcworkspace` files when it first cloned. To generate them using the `project.yml` file, run
 
 ```sh
-xcodegen generate
+xcodegen
 ```
 
 Swiftlint can also be installed via included scripts in the repository. Under the `{project_root}/scripts/installation` directory, simply run either or both of:

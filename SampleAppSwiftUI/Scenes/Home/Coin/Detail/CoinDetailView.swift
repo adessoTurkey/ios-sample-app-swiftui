@@ -15,13 +15,19 @@ struct CoinDetailView: View {
         static let chartHeight: CGFloat = 250
     }
 
-    var coinData: CoinData
+    @StateObject private var viewModel: CoinDetailViewModel
 
-    @StateObject private var viewModel = CoinDetailViewModel()
+    init(coinData: CoinData) {
+        _viewModel = StateObject(
+            wrappedValue: CoinDetailViewModel(
+                coinData: coinData
+            )
+        )
+    }
 
     var coinDetailImage: some View {
         VStack {
-            AsyncImage(url: viewModel.getIconURL(coinData: coinData)) { phase in
+            AsyncImage(url: viewModel.getIconURL()) { phase in
                 if let image = phase.image {
                     image.resizable()
                 } else if phase.error != nil {
@@ -40,9 +46,9 @@ struct CoinDetailView: View {
                 height: Dimensions.imageHeight * 2
             )
 
-            Text(verbatim: viewModel.getPriceString(coinData: coinData))
+            Text(verbatim: viewModel.getPriceString())
 
-            ChangePercentageView(changeRate: coinData.detail?.usd ?? .init())
+            ChangePercentageView(changeRate: viewModel.coinData.detail?.usd ?? .init())
 
             ZStack {
                 CoinChartHistoryRangeButtons(selection: $viewModel.chartHistoryRangeSelection)
@@ -84,7 +90,6 @@ struct CoinDetailView: View {
         .onReceive(viewModel.$chartHistoryRangeSelection) { selectedRange in
             Task {
                 await viewModel.fetchCoinPriceHistory(
-                    coinData: coinData,
                     forSelectedRange: selectedRange
                 )
             }
@@ -132,7 +137,7 @@ struct CoinDetailView: View {
                 news
                 Button {
                 } label: {
-                    NavigationLink(destination: CoinNewsListView(coinData: coinData)) {
+                    NavigationLink(destination: CoinNewsListView(coinData: viewModel.coinData)) {
                         Text("View More")
                             .frame(width: UIScreen.main.bounds.size.width - CoinDetailView.coinListFrameSize)
                             .font(.system(size: 18))
@@ -143,12 +148,12 @@ struct CoinDetailView: View {
                     .cornerRadius(CoinDetailView.viewMoreButton)
                 Spacer()
             }
-            .navigationTitle(Text(verbatim: coinData.coinInfo?.title ?? ""))
+            .navigationTitle(Text(verbatim: viewModel.coinData.coinInfo?.title ?? ""))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        viewModel.updateCoinFavoriteState(coinData: coinData)
+                        viewModel.updateCoinFavoriteState()
                     } label: {
                         viewModel.isFavorite
                         ? Image(systemName: Images.favorites)
@@ -157,9 +162,7 @@ struct CoinDetailView: View {
                     .tint(.gray)
                 }
             }
-            .task {
-                await viewModel.onAppear(coinData: coinData)
-            }
+            .task(viewModel.onAppear)
         }
     }
 }

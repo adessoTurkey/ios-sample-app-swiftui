@@ -16,6 +16,26 @@ class CoinDetailViewModel: ObservableObject {
     @Published var coinNewsDataModel: [CoinNewData]?
     @Published var priceChartSelectedXDateText = ""
 
+    let coinData: CoinData
+
+    init(
+        isFavorite: Bool = false,
+        chartHistoryRangeSelection: CoinChartHistoryRange = .sixMonth,
+        coinPriceHistoryChartDataModel: CoinPriceHistoryChartDataModel? = nil,
+        isLoading: Bool = false,
+        coinNewsDataModel: [CoinNewData]? = nil,
+        priceChartSelectedXDateText: String = "",
+        coinData: CoinData
+    ) {
+        self.isFavorite = isFavorite
+        self.chartHistoryRangeSelection = chartHistoryRangeSelection
+        self.coinPriceHistoryChartDataModel = coinPriceHistoryChartDataModel
+        self.isLoading = isLoading
+        self.coinNewsDataModel = coinNewsDataModel
+        self.priceChartSelectedXDateText = priceChartSelectedXDateText
+        self.coinData = coinData
+    }
+
     var rangeButtonsOpacity: Double {
         priceChartSelectedXDateText.isEmpty ? 1.0 : 0.0
     }
@@ -23,16 +43,16 @@ class CoinDetailViewModel: ObservableObject {
     private let coinPriceHistoryUseCase: CoinPriceHistoryUseCaseProtocol = CoinPriceHistoryUseCase()
     private let coinNewsUseCase: CoinNewsUseCaseProtocol = CoinNewsUseCase()
 
-    func onAppear(coinData: CoinData) async {
-        await checkIsCoinFavorite(coinData: coinData)
+    @Sendable
+    func onAppear() async {
+        await checkIsCoinFavorite()
         await fetchCoinPriceHistory(
-            coinData: coinData,
             forSelectedRange: chartHistoryRangeSelection
         )
-        await fetchCoinNews(coinData: coinData)
+        await fetchCoinNews()
     }
 
-    func getIconURL(coinData: CoinData) -> URL? {
+    func getIconURL() -> URL? {
         guard let coinCode = coinData.coinInfo?.code else {
             return nil
         }
@@ -40,22 +60,22 @@ class CoinDetailViewModel: ObservableObject {
         return URLs.Icons.getURL(from: coinCode)
     }
 
-    func getPriceString(coinData: CoinData) -> String {
+    func getPriceString() -> String {
         coinData.detail?.usd?.createPriceString() ?? ""
     }
 
-    func checkIsCoinFavorite(coinData: CoinData) async {
+    func checkIsCoinFavorite() async {
         await MainActor.run {
             isFavorite = StorageManager.shared.isCoinFavorite(coinData.coinInfo?.code ?? "")
         }
     }
 
-    func updateCoinFavoriteState(coinData: CoinData) {
+    func updateCoinFavoriteState() {
         isFavorite.toggle()
         StorageManager.shared.manageFavorites(coinData: coinData)
     }
 
-    func fetchCoinPriceHistory(coinData: CoinData, forSelectedRange range: CoinChartHistoryRange) async {
+    func fetchCoinPriceHistory(forSelectedRange range: CoinChartHistoryRange) async {
         guard let coinCode = coinData.coinInfo?.code else { return }
 
         await MainActor.run {
@@ -95,7 +115,7 @@ class CoinDetailViewModel: ObservableObject {
         }
     }
 
-    func fetchCoinNews(coinData: CoinData) async {
+    func fetchCoinNews() async {
         guard let coinCode = coinData.coinInfo?.code else { return }
         do {
             let response = try await coinNewsUseCase.getCoinNews(coinCode: coinCode)

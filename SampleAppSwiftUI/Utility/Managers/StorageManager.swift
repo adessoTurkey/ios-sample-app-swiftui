@@ -11,7 +11,8 @@ final class StorageManager: ObservableObject {
 
     static let shared = StorageManager()
 
-    @AppStorage("favoriteCoins") var favoriteCoins: [CoinData] = [] {
+    @AppStorage("favoriteCoins", store: UserDefaults(suiteName: Configuration.appGroupName))
+    var favoriteCoins: [CoinData] = [] {
         didSet {
             objectWillChange.send()
         }
@@ -61,5 +62,4 @@ final class StorageManager: ObservableObject {
         toggleFavoriteCoin(coinData: coinData)
         return output
     }
-
 }

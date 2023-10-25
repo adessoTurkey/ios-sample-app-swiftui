@@ -1,18 +1,19 @@
 //
-//  Development.xcconfig
-//  boilerplate-ios-swiftui
+//  Production.xcconfig
+//  SampleAppSwiftUI
 //
-//  Created by Can Baybunar on 19.11.2020.
-//  Copyright © 2020 Adesso Turkey. All rights reserved.
+//  Created by Yildirim, Alper on 17.10.2023.
 //
 
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-PRODUCT_BUNDLE_IDENTIFIER = com.adesso.SampleAppSwiftUI.development
+PRODUCT_BUNDLE_IDENTIFIER = com.adesso.SampleAppSwiftUI.watchkitapp.prod
 
 base_url = https:/$()/min-api.cryptocompare.com/data/
 
 webSocket_base_url = wss:/$()/streamer.cryptocompare.com/v2
 
-personal_api = 
+personal_api =
+
+app_group_name = 

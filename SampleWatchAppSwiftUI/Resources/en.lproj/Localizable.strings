@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  SampleAppSwiftUI
+
+  Created by Selim Gungorer on 14.09.2022.
+  Copyright © 2022 Adesso Turkey. All rights reserved.
+*/
+
+"Hello, World!" = "Hello";
+"Favorites" = "Favorites";
+"Home" = "Home";
+"CoinPreRequest" = "5~CCCAGG~%@~%@";
+"News" = "News";
+"NoData" = "No Data";

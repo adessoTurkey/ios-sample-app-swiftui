@@ -1,9 +1,8 @@
 //
 //  Configuration.swift
-//  boilerplate-ios-swiftui
+//  SampleWatchAppSwiftUI
 //
-//  Created by Baha Ulug on 1.12.2020.
-//  Copyright © 2020 Adesso Turkey. All rights reserved.
+//  Created by Yildirim, Alper on 17.10.2023.
 //
 
 import Foundation
@@ -35,7 +34,7 @@ final class Configuration: ConfigurationProtocol {
 
     static var baseURL: String {
         let url: String? = try? self.value(for: "base_url")
-        return url ?? ""
+        return  ""
     }
 
     static var coinApiKey: String {
@@ -50,11 +49,35 @@ final class Configuration: ConfigurationProtocol {
 
     static var webSocketBaseUrl: String {
         let url: String? = try? self.value(for: "webSocket_base_url")
-        return url ?? ""
+        return url ??
     }
 
     static var appGroupName: String {
         let key: String? = try? self.value(for: "app_group_name")
         return key ?? ""
     }
+}
+
+protocol ConfigurationProtocol {}
+
+extension ConfigurationProtocol {
+    static func value<T>(for key: String) throws -> T where T: LosslessStringConvertible {
+        guard let object = Bundle.main.object(forInfoDictionaryKey: key) else {
+            throw ConfigurationError.missingKey
+        }
+
+        switch object {
+            case let value as T:
+                return value
+            case let string as String:
+                guard let value = T(string) else { fallthrough }
+                return value
+            default:
+                throw ConfigurationError.invalidValue
+        }
+    }
+}
+
+enum ConfigurationError: Swift.Error {
+    case missingKey, invalidValue
 }

@@ -1,26 +1,41 @@
-input_dir: SampleAppSwiftUI/Resources
-output_dir: SampleAppSwiftUI/Resources/Constants/Generated
-
 strings:
     inputs:
-        - en.lproj
+        - SampleAppSwiftUI/Resources/en.lproj
     outputs:
         templateName: structured-swift5
         params:
             publicAccess: true
             enumName: Strings
-        output: Strings+Generated.swift
+        output: SampleAppSwiftUI/Resources/Constants/Generated/Strings+Generated.swift
+    inputs:
+        - SampleWatchAppSwiftUI/Resources/en.lproj
+    outputs:
+        templateName: structured-swift5
+        params:
+            publicAccess: true
+            enumName: Strings
+        output: SampleWatchAppSwiftUI/Resources/Constants/Generated/Strings+Generated.swift
+
 xcassets:
     inputs:
-        - Assets.xcassets
-        - Colors.xcassets
-        - Icons.xcassets
-        - Images.xcassets
+        - SampleAppSwiftUI/Resources/Assets.xcassets
+        - SampleAppSwiftUI/Resources/Colors.xcassets
+        - SampleAppSwiftUI/Resources/Icons.xcassets
+        - SampleAppSwiftUI/Resources/Images.xcassets
     outputs:
         templateName: swift5
         params:
             forceProvidesNamespaces: true
             forceFileNameEnum: true
             enumName: Resources
-        output: Assets+Generated.swift
+        output: SampleAppSwiftUI/Resources/Constants/Generated/Assets+Generated.swift
+    inputs:
+        -  SampleWatchAppSwiftUI/Resources/Colors.xcassets
+    outputs:
+        templateName: swift5
+        params:
+            forceProvidesNamespaces: true
+            forceFileNameEnum: true
+            enumName: Resources
+        output:  SampleWatchAppSwiftUI/Resources/Constants/Generated/Assets+Generated.swift
 

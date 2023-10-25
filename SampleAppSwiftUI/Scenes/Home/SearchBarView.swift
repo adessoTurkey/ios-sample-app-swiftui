@@ -14,10 +14,10 @@ struct SearchBarView: View {
     var body: some View {
         ZStack(alignment: .center) {
             RoundedRectangle(cornerRadius: Dimensions.CornerRadius.default)
-                .fill(Color.searchbarBackground)
+                .fill(Color(.searchBarBackground))
             HStack(spacing: Spacings.default) {
                 Image(systemName: Images.search)
-                    .foregroundColor(.searchIcon)
+                    .foregroundStyle(Color(.searchIcon))
                 TextField("Search for a name or symbol", text: $searchText)
                     .font(Fonts.searchBar)
                     .accessibilityIdentifier("searchBarViewInputField")
@@ -32,11 +32,8 @@ struct SearchBarView: View {
     }
 }
 
-struct SearchBarView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchBarView(searchText: .constant(""), topPadding: Paddings.SearchBar.shortTop)
-            .previewLayout(.sizeThatFits)
-            .frame(width: .infinity, height: Dimensions.searchBarHeight)
-            .padding(.vertical)
-    }
+#Preview {
+    SearchBarView(searchText: .constant(""), topPadding: Paddings.SearchBar.shortTop)
+        .frame(width: .infinity, height: Dimensions.searchBarHeight)
+        .padding(.vertical)
 }

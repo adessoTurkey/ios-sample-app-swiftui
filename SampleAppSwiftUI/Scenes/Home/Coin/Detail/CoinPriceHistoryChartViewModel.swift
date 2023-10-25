@@ -10,16 +10,16 @@ import SwiftUI
 import Charts
 
 class CoinPriceHistoryChartViewModel: ObservableObject {
-    var selectedRange: CoinChartHistoryRange
-    var dataModel: CoinPriceHistoryChartDataModel
-    @Binding var selectedXDateText: String
+    @Published var selectedRange: CoinChartHistoryRange
+    @Published var dataModel: CoinPriceHistoryChartDataModel
+    @Published var selectedXDateText: String
     /// Holds the selected x value of chart when user is dragging on it
     @Published var selectedX: (any Plottable)?
 
-    init(selectedRange: CoinChartHistoryRange, dataModel: CoinPriceHistoryChartDataModel, selectedXDateText: Binding<String>) {
+    init(selectedRange: CoinChartHistoryRange, dataModel: CoinPriceHistoryChartDataModel, selectedXDateText: String) {
         self.selectedRange = selectedRange
         self.dataModel = dataModel
-        self._selectedXDateText = selectedXDateText
+        self.selectedXDateText = selectedXDateText
         self.selectedX = nil
     }
 
@@ -69,15 +69,14 @@ class CoinPriceHistoryChartViewModel: ObservableObject {
 
     func onChangeDrag(value: DragGesture.Value, chartProxy: ChartProxy, geometryProxy: GeometryProxy) {
         let xCurrent = value.location.x - geometryProxy[chartProxy.plotAreaFrame].origin.x
-
-        if let selectedDate: Date = chartProxy.value(atX: xCurrent),
-           let startDate = dataModel.prices.first?.date,
-           let lastDate = dataModel.prices.last?.date,
-           selectedDate >= startDate && selectedDate <= lastDate {
-            selectedX = selectedDate
-            selectedXDateText = calculatedSelectedXDateText
+            if let selectedDate: Date = chartProxy.value(atX: xCurrent),
+               let startDate = dataModel.prices.first?.date,
+               let lastDate = dataModel.prices.last?.date,
+               selectedDate >= startDate && selectedDate <= lastDate {
+                selectedX = selectedDate
+                selectedXDateText = calculatedSelectedXDateText
+            }
         }
-    }
 
     func onEndDrag() {
         selectedX = nil

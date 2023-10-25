@@ -18,7 +18,9 @@ protocol ViewModelProtocol: ObservableObject {
 
 extension ViewModelProtocol {
     func checkLastItem(_ item: CoinData) {}
+
     func sortOptions(sort: SortOptions) {
+        selectedSortOption = sort
         switch sort {
             case .defaultList:
                 filteredCoins = filteredCoins.count < coinList.count ? filteredCoins : coinList

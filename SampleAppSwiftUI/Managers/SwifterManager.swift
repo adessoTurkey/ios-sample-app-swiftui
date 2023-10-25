@@ -40,7 +40,7 @@ class SwifterManager {
             do {
                 try swifterServer.start(Constants.port)
             } catch let error {
-                print(error)
+                LoggerManager().setError(errorMessage: error.localizedDescription)
             }
         }
         #endif

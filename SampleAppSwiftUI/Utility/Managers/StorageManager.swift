@@ -7,15 +7,11 @@
 
 import SwiftUI
 
-final class StorageManager: ObservableObject {
+final class StorageManager {
 
     static let shared = StorageManager()
 
-    @AppStorage("favoriteCoins") var favoriteCoins: [CoinData] = [] {
-        didSet {
-            objectWillChange.send()
-        }
-    }
+    @AppStorage("favoriteCoins") var favoriteCoins: [CoinData] = []
 
     private init() { }
 

@@ -14,7 +14,7 @@ struct SettingLineModifier: ViewModifier {
         content
             .padding(Paddings.Settings.line)
             .frame(height: height)
-            .background(Color.settingsLineColor)
+            .background(Color(.settingsLine))
             .cornerRadius(Dimensions.CornerRadius.settingsButton)
     }
 }

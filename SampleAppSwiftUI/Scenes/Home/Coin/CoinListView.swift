@@ -12,7 +12,7 @@ struct CoinListView<ViewModel: ViewModelProtocol>: View {
     @Binding var filteredCoins: [CoinData]
     @State private var showingAlert = false
     @State private var alertTitle = ""
-    @EnvironmentObject private var router: Router
+    @EnvironmentObject var router: Router
     let favoriteChanged: () -> Void
 
     var body: some View {
@@ -74,10 +74,9 @@ struct CoinListView<ViewModel: ViewModelProtocol>: View {
     }
 }
 
-struct CoinListView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            CoinListView(viewModel: HomeViewModel(), filteredCoins: .constant([.demo, .demo, .demo]), favoriteChanged: {})
-        }
+#Preview {
+    NavigationView {
+        CoinListView(viewModel: FavoritesViewModel(), filteredCoins: .constant([.demo, .demo, .demo]), favoriteChanged: {})
+            .environmentObject(Router())
     }
 }

@@ -11,7 +11,9 @@ struct CoinNewsListView: View {
     @StateObject private var viewModel: CoinDetailViewModel
 
     init(coinData: CoinData) {
-        _viewModel = StateObject(wrappedValue: CoinDetailViewModel(coinData: coinData))
+        _viewModel = StateObject(
+            wrappedValue: CoinDetailViewModel(coinData: coinData)
+        )
     }
 
     var body: some View {
@@ -27,7 +29,8 @@ struct CoinNewsListView: View {
                                             if let image = phase.image {
                                                 image.resizable()
                                             } else {
-                                                Resources.Images.worldNews.swiftUIImage.resizable()
+                                                Image(.worldNews)
+                                                    .resizable()
                                             }
                                         }
                                         .scaledToFit()
@@ -41,14 +44,12 @@ struct CoinNewsListView: View {
                         .listStyle(.inset)
                     }
                 }.frame(height: UIScreen.main.bounds.height)
-                    .navigationTitle(Strings.news)
+                    .navigationTitle("News")
                     .navigationBarTitleDisplayMode(.inline)
                     .navigationViewStyle(.automatic)
             }
         }
-        .onAppear {
-            viewModel.onAppear()
-        }
+        .task(viewModel.onAppear)
     }
 }
 

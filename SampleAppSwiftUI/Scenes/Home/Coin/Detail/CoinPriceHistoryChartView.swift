@@ -11,7 +11,7 @@ import Charts
 struct CoinPriceHistoryChartView: View {
     @StateObject private var viewModel: CoinPriceHistoryChartViewModel
 
-    init(selectedRange: CoinChartHistoryRange, dataModel: CoinPriceHistoryChartDataModel, selectedXDateText: Binding<String>) {
+    init(selectedRange: CoinChartHistoryRange, dataModel: CoinPriceHistoryChartDataModel, selectedXDateText: String) {
         _viewModel = StateObject(
             wrappedValue: CoinPriceHistoryChartViewModel(
                 selectedRange: selectedRange,
@@ -138,31 +138,26 @@ struct CoinPriceHistoryChartView: View {
     }
 }
 
-struct CoinPriceHistoryChartView_Previews: PreviewProvider {
-    static var previews: some View {
+#Preview {
+    Group {
         Group {
-            Group {
-                ForEach(CoinChartHistoryRange.allCases) { item in
-                    CoinPriceHistoryChartView(
-                        selectedRange: item,
-                        dataModel: .demo,
-                        selectedXDateText: .constant("")
-                    )
-                    .previewDisplayName(item.rawValue)
-                }
+            ForEach(CoinChartHistoryRange.allCases) { item in
+                CoinPriceHistoryChartView(
+                    selectedRange: item,
+                    dataModel: .demo,
+                    selectedXDateText: ""
+                )
             }
-
-            Group {
-                ForEach(CoinChartHistoryRange.allCases) { item in
-                    CoinPriceHistoryChartView(
-                        selectedRange: item,
-                        dataModel: .demo,
-                        selectedXDateText: .constant("")
-                    )
-                    .previewDisplayName(item.rawValue + "DARK")
-                }
-            }
-            .preferredColorScheme(.dark)
         }
+        Group {
+            ForEach(CoinChartHistoryRange.allCases) { item in
+                CoinPriceHistoryChartView(
+                    selectedRange: item,
+                    dataModel: .demo,
+                    selectedXDateText: ""
+                )
+            }
+        }
+        .preferredColorScheme(.dark)
     }
 }

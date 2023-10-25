@@ -12,7 +12,8 @@ struct HomeView: View {
 
     @StateObject private var viewModel = HomeViewModel()
     @State private var searchTerm = ""
-    @EnvironmentObject private var router: Router
+    @EnvironmentObject var router: Router
+
     var body: some View {
         NavigationStack(path: $router.homeNavigationPath) {
             VStack(spacing: Spacings.home) {
@@ -26,7 +27,7 @@ struct HomeView: View {
                     }
                 }
             }.padding(.horizontal, Paddings.side)
-            .navigationTitle(Text(Strings.home))
+            .navigationTitle("Home")
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: Screen.self) { screen in
                 if screen.type == .detail, let data = screen.data as? CoinData {
@@ -34,22 +35,24 @@ struct HomeView: View {
                 }
             }
         }
-        .background(Color.lightGray)
-        .onFirstAppear {
+        .background(Color(.lightestGray))
+        .ignoresSafeArea(.all, edges: [.top, .trailing, .leading])
+        .onAppear {
             Task {
                 await viewModel.fillModels()
             }
         }
-        .onChange(of: searchTerm) { searchTerm in
-            viewModel.filterResults(searchTerm: searchTerm)
+        .onChange(of: searchTerm, perform: { newValue in
+            viewModel.filterResults(searchTerm: newValue)
             viewModel.sortOptions(sort: viewModel.selectedSortOption)
-        }
-        .onChange(of: viewModel.selectedSortOption, perform: viewModel.sortOptions(sort:))
+        })
+        .onChange(of: viewModel.selectedSortOption, perform: { newValue in
+            viewModel.sortOptions(sort: newValue)
+        })
     }
 }
 
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
-    }
+#Preview {
+    HomeView()
+        .environmentObject(Router())
 }

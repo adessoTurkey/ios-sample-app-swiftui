@@ -8,16 +8,11 @@
 import SwiftUI
 import WidgetKit
 
-final class StorageManager: ObservableObject {
+final class StorageManager {
 
     static let shared = StorageManager()
 
-    @AppStorage("favoriteCoins", store: UserDefaults(suiteName: "group.com.adesso.SampleAppSwiftUI")) var favoriteCoins: [CoinData] = [] {
-        didSet {
-            objectWillChange.send()
-            WidgetCenter.shared.reloadAllTimelines()
-        }
-    }
+    @AppStorage("favoriteCoins") var favoriteCoins: [CoinData] = []
 
     private init() { }
 

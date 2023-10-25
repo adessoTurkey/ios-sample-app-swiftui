@@ -16,6 +16,6 @@ extension FavoritesCoinRequest {
     init(action: SubscriptionRequestAction, codeList: [CoinCode], toChange: String = "USD") {
         self.action = action.rawValue
         self.subs = []
-        codeList.forEach({ self.subs.append(Strings.coinPreRequest($0, toChange)) })
+        codeList.forEach({ self.subs.append(String(format: String(localized: "CoinPreRequest"), $0, toChange)) })
     }
 }

@@ -131,8 +131,14 @@ final class JsonHelper {
     ///
     /// - Returns: Saves the given `json` to given `withName`.
     static func save(json: String?, withName: String) {
-        guard let json = json else { return debugPrint("error json is nil") }
-        guard let filePath = filePath(withName) else { return debugPrint("error getting path with filePath") }
+        guard let json = json else {
+            Logger().error("error json is nil")
+            return
+        }
+        guard let filePath = filePath(withName) else {
+            Logger().error("error getting path with filePath")
+            return
+        }
 
         if !FileManager.default.fileExists(atPath: filePath) {
             FileManager.default.createFile(atPath: filePath, contents: nil, attributes: nil)
@@ -140,8 +146,8 @@ final class JsonHelper {
 
         do {
             try json.write(toFile: filePath, atomically: true, encoding: .utf8)
-        } catch {
-            debugPrint("error writing to file to path: \(filePath)")
+        } catch let error {
+            Logger().error("error writing to file to path: \(filePath) error: \(error.localizedDescription)")
         }
     }
 }

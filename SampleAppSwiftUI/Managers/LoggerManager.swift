@@ -7,6 +7,8 @@
 //
 
 import CocoaLumberjack
+import CocoaLumberjackSwiftLogBackend
+import Logging
 
 class LoggerManager {
 
@@ -32,6 +34,7 @@ class LoggerManager {
 
         logger.setLogLevel(level)
         DDLog.add(ddosLogger)
+        LoggingSystem.bootstrapWithCocoaLumberjack()
 
         let fileManager = DDLogFileManagerDefault(logsDirectory: documentsDirectory)
         fileLogger = DDFileLogger(logFileManager: fileManager)

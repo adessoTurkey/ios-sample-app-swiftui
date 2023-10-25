@@ -8,24 +8,30 @@
 import SwiftUI
 
 struct FilterView<ViewModel: ViewModelProtocol>: View {
-    @ObservedObject var viewModel: ViewModel
+    var viewModel: ViewModel
+
+    @State private var sortName = ""
 
     var body: some View {
         HStack {
-            Text(viewModel.selectedSortOption.rawValue)
+            Text(sortName)
             Spacer()
 
             Menu {
                 ForEach(SortOptions.allCases, id: \.rawValue) { sortOption in
                     Button {
                         viewModel.selectedSortOption = sortOption
+                        sortName = sortOption.rawValue.localized
                     } label: {
-                        Text(sortOption.rawValue)
+                        Text(sortOption.rawValue.localized)
                     }
                 }
             } label: {
                 Image(systemName: Images.filter)
             }
+        }
+        .onAppear {
+            sortName = viewModel.selectedSortOption.rawValue.localized
         }
     }
 }

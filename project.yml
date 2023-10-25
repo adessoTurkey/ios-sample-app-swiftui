@@ -11,10 +11,15 @@ options:
     iOS: 16.0
 
 attributes:
-  BuildIndependentTargetsInParallel: true
+  BuildIndependentTargetsInParallel: YES
 
 settings:
-  enableBaseInternationalization: true
+  ENABLE_USER_SCRIPT_SANDBOXING: false
+  CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: true
+  ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS: true
+  ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: true
+  LOCALIZATION_PREFERS_STRING_CATALOGS: true
+  SWIFT_EMIT_LOC_STRINGS: true
   
 packages:
   CocoaLumberjack:
@@ -32,7 +37,10 @@ targets:
     dependencies:
       - package: CocoaLumberjack
         product: CocoaLumberjack
+      - package: CocoaLumberjack
         product: CocoaLumberjackSwift
+      - package: CocoaLumberjack
+        product: CocoaLumberjackSwiftLogBackend
       - package: Pulse
         product: Pulse
         product: PulseUI
@@ -53,15 +61,15 @@ targets:
         - path: scripts/installation/swiftlint.sh
           name: SwiftLint
           basedOnDependencyAnalysis: false
-        - path: scripts/installation/swiftgen.sh
-          name: SwiftGen
-          basedOnDependencyAnalysis: false
   SampleAppSwiftUITests:
     dependencies:
       - target: SampleAppSwiftUI
       - package: CocoaLumberjack
         product: CocoaLumberjack
+      - package: CocoaLumberjack
         product: CocoaLumberjackSwift
+      - package: CocoaLumberjack
+        product: CocoaLumberjackSwiftLogBackend
       - package: Pulse
         product: Pulse
         product: PulseUI
@@ -87,3 +95,4 @@ targets:
         implicit: true
       - framework: WidgetKit.framework
         implicit: true
+parallelizeBuild: true

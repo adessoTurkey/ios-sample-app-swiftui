@@ -19,6 +19,6 @@ enum ExampleServiceEndpoint: TargetEndpointProtocol {
         switch self {
             case .example(let firstParameter, let secondParameter):
                 return BaseEndpoint.base.path + String(format: Constants.exampleEndpoint, firstParameter, secondParameter)
-            }
+        }
     }
 }

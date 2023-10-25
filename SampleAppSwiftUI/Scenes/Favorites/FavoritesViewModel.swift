@@ -10,7 +10,6 @@ import SwiftUI
 import Combine
 
 class FavoritesViewModel: ObservableObject {
-
     private let checkWebSocket = true
 
     private var webSocketService: any WebSocketServiceProtocol
@@ -24,7 +23,7 @@ class FavoritesViewModel: ObservableObject {
     @Published var filterTitle = SortOptions.defaultList.rawValue
     @Published var selectedSortOption: SortOptions = .defaultList
 
-    @State var isLoading: Bool = false
+    @Published var isLoading: Bool = false
 
     init(webSocketService: any WebSocketServiceProtocol = WebSocketService.shared) {
         self.webSocketService = webSocketService

@@ -106,10 +106,10 @@ class WebSocketStream: NSObject, AsyncSequence {
             guard let self else { return }
             self.task.sendPing { error in
                 if let error {
-                    debugPrint("Pong Error: ", error)
+                    LoggerManager().setError(errorMessage: "Pong Error: \(error.localizedDescription)")
                     timer.invalidate()
                 } else {
-                    debugPrint("Connection is alive")
+                    Logger().log(level: .info, message: "Connection is alive")
                 }
             }
         }

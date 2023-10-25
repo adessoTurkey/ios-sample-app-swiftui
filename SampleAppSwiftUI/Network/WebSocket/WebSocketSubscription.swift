@@ -35,14 +35,15 @@ class WebSocketSubscription<S: Subscriber>: Subscription where S.Input == URLSes
 
     private func listenSocket() async {
         guard let subscriber = subscriber else {
-            debugPrint("no subscriber")
-            return }
+            LoggerManager().setError(errorMessage: "no subscriber")
+            return
+        }
         do {
             for try await message in socket {
                 _ = subscriber.receive(message)
             }
-        } catch {
-            debugPrint("Something went wrong")
+        } catch let error {
+            LoggerManager().setError(errorMessage: "Something went wrong \(error.localizedDescription)")
         }
     }
 }

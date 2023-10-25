@@ -14,10 +14,10 @@ class HomeViewModel: ObservableObject {
     @Published var coinList: [CoinData] = []
     @Published var filteredCoins: [CoinData] = []
     @Published var filterTitle = SortOptions.defaultList.rawValue
-    @Published var selectedSortOption: SortOptions = .defaultList
 
     let listPageLimit = 10
-    @State var isLoading: Bool = false
+    @Published var isLoading: Bool = false
+    @Published var selectedSortOption: SortOptions = .defaultList
 
     func fillModels(demo: Bool = false) async {
         if demo {
@@ -28,7 +28,7 @@ class HomeViewModel: ObservableObject {
 
     private func fetchAllCoins(page: Int = 1) async {
         guard let dataSource = try? await AllCoinRemoteDataSource().getAllCoin(limit: self.listPageLimit, unitToBeConverted: "USD", page: page) else {
-            print("Problem on the convert")
+            Logger().error("Problem on the convert")
             return
         }
         DispatchQueue.main.async {
@@ -60,6 +60,7 @@ class HomeViewModel: ObservableObject {
 }
 
 extension HomeViewModel: ViewModelProtocol {
+
     func checkLastItem(_ item: CoinData) {
         guard !isLoading else { return }
 

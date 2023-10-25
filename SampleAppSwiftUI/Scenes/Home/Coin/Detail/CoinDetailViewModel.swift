@@ -6,39 +6,50 @@
 //
 
 import Foundation
+import Combine
 
 class CoinDetailViewModel: ObservableObject {
+    @Published var isFavorite: Bool = false
+    @Published var chartHistoryRangeSelection: CoinChartHistoryRange = .sixMonth
+    private(set) var coinPriceHistoryChartDataModel: CoinPriceHistoryChartDataModel?
+    @Published var isLoading = false
+    @Published var coinNewsDataModel: [CoinNewData]?
+    @Published var priceChartSelectedXDateText = ""
+
     let coinData: CoinData
-    @Published private(set) var isFavorite: Bool = false
-    @Published var chartHistoryRangeSelection: CoinChartHistoryRange = .sixMonth {
-        didSet {
-            fetchCoinPriceHistory(forSelectedRange: chartHistoryRangeSelection)
-        }
+
+    init(
+        isFavorite: Bool = false,
+        chartHistoryRangeSelection: CoinChartHistoryRange = .sixMonth,
+        coinPriceHistoryChartDataModel: CoinPriceHistoryChartDataModel? = nil,
+        isLoading: Bool = false,
+        coinNewsDataModel: [CoinNewData]? = nil,
+        priceChartSelectedXDateText: String = "",
+        coinData: CoinData
+    ) {
+        self.isFavorite = isFavorite
+        self.chartHistoryRangeSelection = chartHistoryRangeSelection
+        self.coinPriceHistoryChartDataModel = coinPriceHistoryChartDataModel
+        self.isLoading = isLoading
+        self.coinNewsDataModel = coinNewsDataModel
+        self.priceChartSelectedXDateText = priceChartSelectedXDateText
+        self.coinData = coinData
     }
-    @Published private(set) var coinPriceHistoryChartDataModel: CoinPriceHistoryChartDataModel?
-    @Published private(set) var coinNewsDataModel: [CoinNewData]?
-    @Published private(set) var isLoading: Bool = false
-    @Published var priceChartSelectedXDateText: String = ""
 
     var rangeButtonsOpacity: Double {
         priceChartSelectedXDateText.isEmpty ? 1.0 : 0.0
     }
 
-    private let coinPriceHistoryUseCase: CoinPriceHistoryUseCaseProtocol
-    private let coinNewsUseCase: CoinNewsUseCaseProtocol
+    private let coinPriceHistoryUseCase: CoinPriceHistoryUseCaseProtocol = CoinPriceHistoryUseCase()
+    private let coinNewsUseCase: CoinNewsUseCaseProtocol = CoinNewsUseCase()
 
-    init(coinData: CoinData,
-         coinPriceHistoryUseCase: CoinPriceHistoryUseCaseProtocol = CoinPriceHistoryUseCase(),
-         coinNewsUseCase: CoinNewsUseCaseProtocol = CoinNewsUseCase()) {
-        self.coinData = coinData
-        self.coinPriceHistoryUseCase = coinPriceHistoryUseCase
-        self.coinNewsUseCase = coinNewsUseCase
-    }
-
-    func onAppear() {
-        checkIsCoinFavorite()
-        fetchCoinPriceHistory(forSelectedRange: chartHistoryRangeSelection)
-        fetchCoinNews()
+    @Sendable
+    func onAppear() async {
+        await checkIsCoinFavorite()
+        await fetchCoinPriceHistory(
+            forSelectedRange: chartHistoryRangeSelection
+        )
+        await fetchCoinNews()
     }
 
     func getIconURL() -> URL? {
@@ -53,8 +64,10 @@ class CoinDetailViewModel: ObservableObject {
         coinData.detail?.usd?.createPriceString() ?? ""
     }
 
-    func checkIsCoinFavorite() {
-        isFavorite = StorageManager.shared.isCoinFavorite(coinData.coinInfo?.code ?? "")
+    func checkIsCoinFavorite() async {
+        await MainActor.run {
+            isFavorite = StorageManager.shared.isCoinFavorite(coinData.coinInfo?.code ?? "")
+        }
     }
 
     func updateCoinFavoriteState() {
@@ -62,52 +75,57 @@ class CoinDetailViewModel: ObservableObject {
         StorageManager.shared.manageFavorites(coinData: coinData)
     }
 
-    func fetchCoinPriceHistory(forSelectedRange range: CoinChartHistoryRange) {
+    func fetchCoinPriceHistory(forSelectedRange range: CoinChartHistoryRange) async {
         guard let coinCode = coinData.coinInfo?.code else { return }
 
-        isLoading = true
-
-        Task {
+        await MainActor.run {
+            isLoading = true
+        }
+        do {
             var response: CoinPriceHistoryResponse?
-
             let limitAndAggregate = range.limitAndAggregateValue
-
-            if range == .oneDay {
-                response = try? await coinPriceHistoryUseCase.getHourlyPriceHistory(
-                    coinCode: coinCode,
-                    unitToBeConverted: "USD",
-                    hourLimit: limitAndAggregate.limit,
-                    aggregate: limitAndAggregate.aggregate
-                )
+            switch range {
+                case .oneDay:
+                    response = try await coinPriceHistoryUseCase.getHourlyPriceHistory(
+                        coinCode: coinCode,
+                        unitToBeConverted: "USD",
+                        hourLimit: limitAndAggregate.limit,
+                        aggregate: limitAndAggregate.aggregate
+                    )
+                default:
+                    response = try await coinPriceHistoryUseCase.getDailyPriceHistory(
+                        coinCode: coinCode,
+                        unitToBeConverted: "USD",
+                        dayLimit: limitAndAggregate.limit,
+                        aggregate: limitAndAggregate.aggregate
+                    )
+            }
+            if let response = response, let priceHistoryData = response.data {
+                await MainActor.run {
+                    isLoading = false
+                    coinPriceHistoryChartDataModel = CoinPriceHistoryChartDataModel(from: priceHistoryData)
+                }
             } else {
-                response = try? await coinPriceHistoryUseCase.getDailyPriceHistory(
-                    coinCode: coinCode,
-                    unitToBeConverted: "USD",
-                    dayLimit: limitAndAggregate.limit,
-                    aggregate: limitAndAggregate.aggregate
-                )
+                await MainActor.run {
+                    isLoading = false
+                }
             }
-
-            guard let response = response, let priceHistoryData = response.data else { return }
-
-            DispatchQueue.main.async {
-                self.isLoading = false
-                self.coinPriceHistoryChartDataModel = CoinPriceHistoryChartDataModel(from: priceHistoryData)
-            }
+        } catch let error {
+            LoggerManager().setError(errorMessage: error.localizedDescription)
         }
     }
 
-    func fetchCoinNews() {
+    func fetchCoinNews() async {
         guard let coinCode = coinData.coinInfo?.code else { return }
-
-        Task {
-            var response: CoinNewsResponse?
-            response = try? await coinNewsUseCase.getCoinNews(coinCode: coinCode)
-
-            guard let response = response, let coinNewData = response.data else { return }
-            DispatchQueue.main.async {
-                self.coinNewsDataModel = coinNewData
+        do {
+            let response = try await coinNewsUseCase.getCoinNews(coinCode: coinCode)
+            if let data = response.data {
+                await MainActor.run {
+                    coinNewsDataModel = data
+                }
             }
+        } catch let error {
+            LoggerManager().setError(errorMessage: error.localizedDescription)
         }
     }
 }

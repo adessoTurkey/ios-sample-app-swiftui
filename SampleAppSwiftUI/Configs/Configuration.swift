@@ -52,9 +52,4 @@ final class Configuration: ConfigurationProtocol {
         let url: String? = try? self.value(for: "webSocket_base_url")
         return url ?? ""
     }
-
-    static var appGroupName: String {
-        let key: String? = try? self.value(for: "app_group_name")
-        return key ?? ""
-    }
 }

@@ -15,5 +15,3 @@ base_url = https:/$()/min-api.cryptocompare.com/data/
 webSocket_base_url = wss:/$()/streamer.cryptocompare.com/v2
 
 personal_api = 
-
-app_group_name = 

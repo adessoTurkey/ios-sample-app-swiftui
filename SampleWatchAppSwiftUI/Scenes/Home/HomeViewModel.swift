@@ -6,44 +6,30 @@
 //
 
 import Foundation
+import SwiftUI
+import WatchConnectivity
 
-enum HomeViewType {
-    case topCoins
-    case favorites
-
-    var imageSystemName: String {
-        switch self {
-            case .topCoins:
-                return "list.number"
-            case .favorites:
-                return "heart"
-        }
-    }
-
-    var currentPageTitle: String {
-        switch self {
-            case .topCoins:
-                return "Top Coins"
-            case .favorites:
-                return "Favorites"
-        }
-    }
-
-    var alternativePageTitle: String {
-        self == .favorites
-        ? Self.topCoins.currentPageTitle
-        : Self.favorites.currentPageTitle
-    }
-}
-
-class HomeViewModel: ObservableObject {
+class HomeViewModel: NSObject, ObservableObject {
     @Published var coinList: [CoinData] = []
     @Published var pageState: PageState = .idle
     @Published var homeViewType: HomeViewType = .topCoins
 
-    private var favoriteCoins: [CoinData] = []
-    private var userDefaults = UserDefaults(suiteName: Configuration.appGroupName)
+    var favoriteCoins: [CoinData] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.coinList = self.favoriteCoins
+            }
+        }
+    }
+
+    var watchSession = WCSession.default
     private let listPageLimit = 10
+    private let userDefaults = UserDefaults.standard
+
+    override init() {
+        super.init()
+        initWatchConnectivity()
+    }
 
     func checkLastItem(_ item: CoinData) {
         guard pageState != .loading, homeViewType == .topCoins else { return }
@@ -83,18 +69,15 @@ class HomeViewModel: ObservableObject {
 
     func getFavoriteCoins() {
         updatePageState(with: .fetching)
+        getStoredFavorites()
+        updatePageState(with: .finished)
+    }
 
-        guard
-            let jsonString = userDefaults?.string(forKey: "favoriteCoins"),
-            let data = jsonString.data(using: .utf8),
-            let favoriteCoinsDecoded = [CoinData].decode(data)
-        else {
-            updatePageState(with: .empty)
-            return
-        }
-
-        coinList = favoriteCoinsDecoded
-        pageState = .finished
+    func updateFavoriteCoins(with coins: [CoinData]) {
+        updatePageState(with: .fetching)
+        favoriteCoins = coins
+        storeFavorites()
+        updatePageState(with: .finished)
     }
 
     private func fetchAllCoins(page: Int = 1) async {
@@ -118,5 +101,47 @@ class HomeViewModel: ObservableObject {
         DispatchQueue.main.async {
             self.pageState = state
         }
+    }
+
+    private func storeFavorites() {
+        guard let data: Data = favoriteCoins.encode() else { return }
+        userDefaults.set(data, forKey: "favoriteCoins")
+    }
+
+    private func getStoredFavorites() {
+        guard
+            let favoritesData = userDefaults.data(forKey: "favoriteCoins"),
+            let favoritesModel = [CoinData].decode(favoritesData)
+        else {
+            return
+        }
+        favoriteCoins = favoritesModel
+        if favoriteCoins.isEmpty {
+            updatePageState(with: .empty)
+        }
+    }
+}
+
+extension HomeViewModel: WCSessionDelegate {
+    func initWatchConnectivity() {
+        if watchSession.activationState == .notActivated {
+            watchSession.delegate = self
+            watchSession.activate()
+        }
+    }
+
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        print("activationState: \(activationState)")
+    }
+
+    func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
+        guard
+            let data = message["favoriteCoinsData"] as? Data,
+            let favoriteCoins = [CoinData].decode(data)
+        else {
+            return
+        }
+        updateFavoriteCoins(with: favoriteCoins)
+        replyHandler(message)
     }
 }

@@ -34,7 +34,7 @@ final class Configuration: ConfigurationProtocol {
 
     static var baseURL: String {
         let url: String? = try? self.value(for: "base_url")
-        return  ""
+        return  url ?? ""
     }
 
     static var coinApiKey: String {
@@ -49,7 +49,7 @@ final class Configuration: ConfigurationProtocol {
 
     static var webSocketBaseUrl: String {
         let url: String? = try? self.value(for: "webSocket_base_url")
-        return url ??
+        return url ?? ""
     }
 
     static var appGroupName: String {

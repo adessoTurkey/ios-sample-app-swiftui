@@ -13,7 +13,7 @@ struct HomeView: View {
     @StateObject private var viewModel = HomeViewModel()
     @State private var searchTerm = ""
     @EnvironmentObject var router: Router
-    @State private var columnVisibility = NavigationSplitViewVisibility.doubleColumn
+    @State private var columnVisibility = NavigationSplitViewVisibility.automatic
 
     var body: some View {
         if UIDevice.current.userInterfaceIdiom != .pad {
@@ -66,7 +66,6 @@ struct HomeView: View {
                     }
                 }
                 .padding(.horizontal, Paddings.side)
-                .navigationSplitViewStyle(.balanced)
                 .navigationTitle("Home")
                 .background(Color.lightestGray)
                 .onAppear {
@@ -92,7 +91,7 @@ struct HomeView: View {
                         }
                     }
                 }
-            }
+            }.navigationSplitViewStyle(.balanced)
         }
     }
 }

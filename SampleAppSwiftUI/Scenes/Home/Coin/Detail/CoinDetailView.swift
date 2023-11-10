@@ -139,7 +139,6 @@ struct CoinDetailView: View {
                 } label: {
                     NavigationLink(destination: CoinNewsListView(coinData: viewModel.coinData)) {
                         Text("View More")
-                            .frame(width: UIScreen.main.bounds.size.width - CoinDetailView.coinListFrameSize)
                             .font(.system(size: 18))
                             .padding()
                             .foregroundColor(Color(.searchIcon))

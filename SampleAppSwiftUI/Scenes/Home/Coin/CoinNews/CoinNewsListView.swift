@@ -18,38 +18,33 @@ struct CoinNewsListView: View {
 
     var body: some View {
         VStack {
-            ScrollView {
-                NavigationView {
-                    if let newsModel = viewModel.coinNewsDataModel {
-                        List {
-                            ForEach(newsModel) { model in
-                                NavigationLink(destination: WebView(url: URL(string: model.url))) {
-                                    HStack {
-                                        AsyncImage(url: URL(string: model.imageurl)) { phase in
-                                            if let image = phase.image {
-                                                image.resizable()
-                                            } else {
-                                                Image(.worldNews)
-                                                    .resizable()
-                                            }
-                                        }
-                                        .scaledToFit()
-                                        .clipShape(Circle())
-                                        .frame(width: Dimensions.imageWidth, height: Dimensions.imageHeight)
-                                        Text(model.title)
+            if let newsModel = viewModel.coinNewsDataModel {
+                List {
+                    ForEach(newsModel) { model in
+                        NavigationLink(destination: WebView(url: URL(string: model.url))) {
+                            HStack {
+                                AsyncImage(url: URL(string: model.imageurl)) { phase in
+                                    if let image = phase.image {
+                                        image.resizable()
+                                    } else {
+                                        Image(.worldNews)
+                                            .resizable()
                                     }
                                 }
+                                .scaledToFit()
+                                .clipShape(Circle())
+                                .frame(width: Dimensions.imageWidth, height: Dimensions.imageHeight)
+                                Text(model.title)
                             }
                         }
-                        .listStyle(.inset)
                     }
-                }.frame(height: UIScreen.main.bounds.height)
-                    .navigationTitle("News")
-                    .navigationBarTitleDisplayMode(.inline)
-                    .navigationViewStyle(.automatic)
+                }
+                .listStyle(.inset)
             }
         }
         .task(viewModel.onAppear)
+        .navigationTitle("News")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

@@ -89,3 +89,17 @@ iOSInjectionProject/
 *.xcodeproj
 SampleAppSwiftUI.xcodeproj
 SampleAppSwiftUI.xcworkspace
+
+
+# Tuist
+# Since we now generate .xcodeproj and .xcworkspace files with Tuist, git shouldn't track following files.
+# **/Derived folder created on each project generation so git shouldn't track it
+
+**/*.xcodeproj
+**/*.xcworkspace
+**/Derived/
+Tuist/Dependencies/
+Tuist/Dependencies/SwiftPackageManager
+Tuist/Dependencies/graph.json
+Tuist/.swiftpm
+Tuist/Package.resolved

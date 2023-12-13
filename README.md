@@ -32,15 +32,24 @@ This is the iOS SwiftUI Sample App created by adesso Turkey. The project serves 
 - [MacOS Ventura (13.4 or higher)](https://www.apple.com/macos/ventura/features/)
 - [Xcode 15 or higher](https://developer.apple.com/documentation/xcode-release-notes/xcode-15-release-notes)
 - [Swiftlint][github/swiftlint]
-- [XcodeGen](https://github.com/yonaskolb/XcodeGen)
+- [tuist](https://github.com/tuist/tuist)
 
 ## Installation
 
-Because XcodeGen is used in this project, there will be no `.xcodeproj` or `.xcworkspace` files when it first cloned. To generate them using the `project.yml` file, run
+Because `tuist` is used in this project, there will be no `.xcodeproj` or `.xcworkspace` files when it first cloned. To generate them using the [tuist manifest files](https://docs.tuist.io/tutorial/get-started) (like `Workspace.swift`, `Project.swift` etc.), first run
 
 ```sh
-xcodegen
+tuist fetch
 ```
+
+to fetch swift package dependencies and after that you can run
+
+```sh
+tuist generate
+``` 
+
+to generate your project. Don't forget to run these tuist commands in the root directory of the project!
+
 
 Swiftlint can also be installed via included scripts in the repository. Under the `{project_root}/scripts/installation` directory, simply run:
 
@@ -102,7 +111,7 @@ Gitflow is a legacy Git workflow that was originally a disruptive and novel stra
 
 ## Useful Tools and Resources
 
-- [XcodeGen](https://github.com/yonaskolb/XcodeGen) - XcodeGen is a command line tool written in Swift that generates your Xcode project using your folder structure and a project spec.
+- [tuist](https://github.com/tuist/tuist) - Tuist is a command line tool that helps you generate, maintain and interact with Xcode projects. It's open source and written in Swift.
 - [SwiftLint][github/swiftlint] - A tool to enforce Swift style and conventions.
 - [TestFlight](https://help.apple.com/itunes-connect/developer/#/devdc42b26b8) - TestFlight beta testing lets you distribute beta builds of your app to testers and collect feedback.
 - [GithubActions](https://github.com/features/actions) - CI/CD faeature to build, test, and deploy your code right from GitHub.

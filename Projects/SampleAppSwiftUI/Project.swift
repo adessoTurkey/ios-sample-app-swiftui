@@ -1,7 +1,7 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let project = Project.createAppModule(
+let project = Project.createAppProject(
     name: "SampleAppSwiftUI",
     projectPackages: [
         Package.remote(url: "https://github.com/CocoaLumberjack/CocoaLumberjack", requirement: .upToNextMajor(from: "3.8.0")),

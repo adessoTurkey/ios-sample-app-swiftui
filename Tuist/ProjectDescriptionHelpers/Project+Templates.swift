@@ -7,7 +7,7 @@ extension Project {
         "com.adesso.\(target)"
     }
 
-    public static func createAppModule(
+    public static func createAppProject(
         name: String,
         projectPackages: [Package] = [],
         projectSettings: Settings?,
@@ -28,11 +28,11 @@ extension Project {
             productName: name,
             bundleId: "$(PRODUCT_BUNDLE_IDENTIFIER)",
             deploymentTargets: deploymentTargets,
-            infoPlist: .file(path: .relativeToRoot("Modules/\(name)/\(name)/Info.plist")),
-            sources: SourceFilesList.paths([.relativeToRoot("Modules/\(name)/\(name)/**")]),
+            infoPlist: .file(path: .relativeToRoot("Projects/\(name)/\(name)/Info.plist")),
+            sources: SourceFilesList.paths([.relativeToRoot("Projects/\(name)/\(name)/**")]),
             resources: ResourceFileElements(
                 resources: [
-                    ResourceFileElement.glob(pattern: .relativeToRoot("Modules/\(name)/\(name)/Resources/**"))
+                    ResourceFileElement.glob(pattern: .relativeToRoot("Projects/\(name)/\(name)/Resources/**"))
                 ]
             ),
             scripts: appTargetScripts,
@@ -51,8 +51,8 @@ extension Project {
                 productName: unitTestTargetName,
                 bundleId: generateBundleId(for: unitTestTargetName),
                 deploymentTargets: deploymentTargets,
-                infoPlist: .file(path: .relativeToRoot("Modules/\(name)/\(unitTestTargetName)/Info.plist")),
-                sources: SourceFilesList.paths([.relativeToRoot("Modules/\(name)/\(unitTestTargetName)/**")]),
+                infoPlist: .file(path: .relativeToRoot("Projects/\(name)/\(unitTestTargetName)/Info.plist")),
+                sources: SourceFilesList.paths([.relativeToRoot("Projects/\(name)/\(unitTestTargetName)/**")]),
                 dependencies: dependencies
             )
 
@@ -68,8 +68,8 @@ extension Project {
                 productName: uiTestTargetName,
                 bundleId: generateBundleId(for: uiTestTargetName),
                 deploymentTargets: deploymentTargets,
-                infoPlist: .file(path: .relativeToRoot("Modules/\(name)/\(uiTestTargetName)/Info.plist")),
-                sources: SourceFilesList.paths([.relativeToRoot("Modules/\(name)/\(uiTestTargetName)/**")])
+                infoPlist: .file(path: .relativeToRoot("Projects/\(name)/\(uiTestTargetName)/Info.plist")),
+                sources: SourceFilesList.paths([.relativeToRoot("Projects/\(name)/\(uiTestTargetName)/**")])
             )
 
             targets.append(uiTestTarget)

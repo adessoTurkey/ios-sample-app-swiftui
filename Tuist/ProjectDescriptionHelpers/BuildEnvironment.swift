@@ -11,7 +11,7 @@ public enum BuildEnvironment: String, CaseIterable {
     }
 
     public var targetConfigPath: Path {
-        .relativeToRoot("Modules/SampleAppSwiftUI/SampleAppSwiftUI/Configs/\(name).xcconfig")
+        .relativeToRoot("Projects/SampleAppSwiftUI/SampleAppSwiftUI/Configs/\(name).xcconfig")
     }
 
     public var targetConfiguration: Configuration {

@@ -26,7 +26,7 @@ extension Project {
             destinations: destinations,
             product: .app,
             productName: name,
-            bundleId: generateBundleId(for: name),
+            bundleId: "$(PRODUCT_BUNDLE_IDENTIFIER)",
             deploymentTargets: deploymentTargets,
             infoPlist: .file(path: .relativeToRoot("Modules/\(name)/\(name)/Info.plist")),
             sources: SourceFilesList.paths([.relativeToRoot("Modules/\(name)/\(name)/**")]),

@@ -85,11 +85,8 @@ extension Project {
             packages: projectPackages,
             settings: projectSettings,
             targets: targets,
-            schemes: Scheme.allSchemes(
-                for: name,
-                hasUnitTestTarget: hasUnitTestTarget,
-                hasUITestTarget: hasUITestTarget
-            )
+            schemes: [Scheme.createScheme(for: name, executable: name, hasUnitTestTarget: hasUnitTestTarget, hasUITestTarget: hasUITestTarget)]
+            // schemes: Scheme.allSchemes(for: name, hasUnitTestTarget: hasUnitTestTarget, hasUITestTarget: hasUITestTarget) // MARK: If you want to create separate scheme for all BuildEnvironment use this method
         )
     }
 }

@@ -2,15 +2,22 @@ import Foundation
 import ProjectDescription
 
 extension Scheme {
-
-    /// Creates single scheme for "SampleAppSwiftUI" target with different configuration combination..
-    public static func createSchemeForMainApp() -> Scheme {
-        let target = "SampleAppSwiftUI"
-
+    
+    /// Creates single scheme for given target name with different configuration combination
+    /// - Run: Development
+    /// - Test: Development
+    /// - Profile: AppStore
+    /// - Analyze: Development
+    /// - Archive: AppStore
+    public static func createScheme(for target: String, executable: String? = nil, hasUnitTestTarget: Bool, hasUITestTarget: Bool) -> Scheme {
         let mainTarget = TargetReference(stringLiteral: target)
-        let unitTestTarget = TestableTarget(stringLiteral: "\(target)Tests")
-        let uiTestTarget = TestableTarget(stringLiteral: "\(target)UITests")
-        let executableTarget = TargetReference(stringLiteral: target)
+        let unitTestTarget: TestableTarget? = hasUnitTestTarget ? TestableTarget(stringLiteral: "\(target)Tests") : nil
+        let uiTestTarget: TestableTarget? = hasUITestTarget ? TestableTarget(stringLiteral: "\(target)UITests") : nil
+        let testableTargets: [TestableTarget] = [unitTestTarget, uiTestTarget].compactMap({ $0 })
+        var executableTarget: TargetReference?
+        if let executable {
+            executableTarget = "\(executable)"
+        }
 
         return .scheme(
             name: target,
@@ -21,7 +28,7 @@ extension Scheme {
                     mainTarget
                 ]
             ),
-            testAction: .targets([unitTestTarget, uiTestTarget], configuration: BuildEnvironment.development.configurationName),
+            testAction: !testableTargets.isEmpty ? .targets(testableTargets, configuration: BuildEnvironment.development.configurationName) : nil,
             runAction: .runAction(
                 configuration: BuildEnvironment.development.configurationName,
                 executable: executableTarget

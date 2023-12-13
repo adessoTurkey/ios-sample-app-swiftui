@@ -3,10 +3,44 @@ import ProjectDescription
 
 extension Scheme {
 
+    /// Creates single scheme for "SampleAppSwiftUI" target with different configuration combination..
+    public static func createSchemeForMainApp() -> Scheme {
+        let target = "SampleAppSwiftUI"
+
+        let mainTarget = TargetReference(stringLiteral: target)
+        let unitTestTarget = TestableTarget(stringLiteral: "\(target)Tests")
+        let uiTestTarget = TestableTarget(stringLiteral: "\(target)UITests")
+        let executableTarget = TargetReference(stringLiteral: target)
+
+        return .scheme(
+            name: target,
+            shared: true,
+            hidden: false,
+            buildAction: .buildAction(
+                targets: [
+                    mainTarget
+                ]
+            ),
+            testAction: .targets([unitTestTarget, uiTestTarget], configuration: BuildEnvironment.development.configurationName),
+            runAction: .runAction(
+                configuration: BuildEnvironment.development.configurationName,
+                executable: executableTarget
+            ),
+            archiveAction: .archiveAction(configuration: BuildEnvironment.appStore.configurationName),
+            profileAction: .profileAction(
+                configuration: BuildEnvironment.appStore.configurationName,
+                executable: executableTarget
+            ),
+            analyzeAction: .analyzeAction(configuration: BuildEnvironment.development.configurationName)
+        )
+    }
+
+    /// Creates separate schemes for all BuildEnvironments with given target name.
     public static func allSchemes(for target: String, executable: String? = nil, hasUnitTestTarget: Bool, hasUITestTarget: Bool) -> [Scheme] {
         BuildEnvironment.allCases.map({ createScheme(for: $0, target: target, hasUnitTestTarget: hasUnitTestTarget, hasUITestTarget: hasUITestTarget) })
     }
 
+    /// Creates a scheme for given BuildEnvironment with given target name.
     public static func createScheme(for env: BuildEnvironment, target: String, executable: String? = nil, hasUnitTestTarget: Bool, hasUITestTarget: Bool) -> Scheme {
         let config = env.configurationName
 

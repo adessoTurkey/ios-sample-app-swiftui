@@ -97,7 +97,12 @@ final class NetworkLoaderTests: XCTestCase {
         return (session, sut)
     }
 
-    private func expect(_ sut: NetworkLoaderProtocol, toCompleteWith expectedError: AdessoError, using requestObject: RequestObject, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
+    private func expect(_ sut: NetworkLoaderProtocol, 
+                        toCompleteWith expectedError: AdessoError,
+                        using requestObject: RequestObject,
+                        when action: () -> Void,
+                        file: StaticString = #filePath,
+                        line: UInt = #line) {
         let expectation = expectation(description: "Wait for request")
 
         Task {

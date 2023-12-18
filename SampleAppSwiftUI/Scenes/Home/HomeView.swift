@@ -49,7 +49,6 @@ struct HomeView: View {
         if UIDevice.current.userInterfaceIdiom != .pad {
             NavigationStack(path: $router.homeNavigationPath) {
                 stack
-                    .ignoresSafeArea(.all, edges: [.top, .trailing, .leading])
                     .navigationDestination(for: Screen.self) { screen in
                         if screen.type == .detail, let data = screen.data as? CoinData {
                             CoinDetailView(coinData: data)

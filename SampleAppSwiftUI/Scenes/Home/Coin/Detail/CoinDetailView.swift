@@ -97,35 +97,33 @@ struct CoinDetailView: View {
     }
 
     var news: some View {
-        NavigationView {
-            VStack {
-                if let newsModel = viewModel.coinNewsDataModel {
-                    List {
-                        Section("News") {
-                            ForEach(newsModel.prefix(5)) { model in
-                                NavigationLink(destination: WebView(url: URL(string: model.url))) {
-                                    HStack {
-                                        AsyncImage(url: URL(string: model.imageurl)) { phase in
-                                            if let image = phase.image {
-                                                image.resizable()
-                                            } else {
-                                                Image(.worldNews)
-                                                    .resizable()
-                                            }
+        VStack {
+            if let newsModel = viewModel.coinNewsDataModel {
+                List {
+                    Section("News") {
+                        ForEach(newsModel.prefix(5)) { model in
+                            NavigationLink(destination: WebView(url: URL(string: model.url))) {
+                                HStack {
+                                    AsyncImage(url: URL(string: model.imageurl)) { phase in
+                                        if let image = phase.image {
+                                            image.resizable()
+                                        } else {
+                                            Image(.worldNews)
+                                                .resizable()
                                         }
-                                        .scaledToFit()
-                                        .clipShape(Circle())
-                                        .frame(width: Dimensions.imageWidth, height: Dimensions.imageHeight)
-                                        Text(model.title)
-                                            .limitedCharacterCount(Numbers.newsCharCount, model.title, "...")
                                     }
+                                    .scaledToFit()
+                                    .clipShape(Circle())
+                                    .frame(width: Dimensions.imageWidth, height: Dimensions.imageHeight)
+                                    Text(model.title)
+                                        .limitedCharacterCount(Numbers.newsCharCount, model.title, "...")
                                 }
                             }
                         }
                     }
-                    .scrollDisabled(true)
-                    .listStyle(.inset)
                 }
+                .scrollDisabled(true)
+                .listStyle(.inset)
             }
         }
     }
@@ -135,11 +133,11 @@ struct CoinDetailView: View {
             ScrollView {
                 coinDetailImage
                 news
+                    .frame(height: Dimensions.imageHeight * 10)
                 Button {
                 } label: {
                     NavigationLink(destination: CoinNewsListView(coinData: viewModel.coinData)) {
                         Text("View More")
-                            .frame(width: UIScreen.main.bounds.size.width - CoinDetailView.coinListFrameSize)
                             .font(.system(size: 18))
                             .padding()
                             .foregroundColor(Color(.searchIcon))

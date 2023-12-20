@@ -11,11 +11,11 @@ final class StorageManager {
 
     static let shared = StorageManager()
 
-    @AppStorage("favoriteCoins") var favoriteCoins: [CoinData] = []
+    @AppStorage("favoriteCoins") var favoriteCoins: [CoinUIModel] = []
 
     private init() { }
 
-    func isCoinFavorite(_ coinCode: CoinCode) -> Bool {
+    func isCoinFavorite(_ coinCode: String) -> Bool {
         favoriteCoins.contains { coinData in
             if let coinInfo = coinData.coinInfo, let code = coinInfo.code {
                 return code == coinCode
@@ -24,7 +24,7 @@ final class StorageManager {
         }
     }
 
-    func toggleFavoriteCoin(coinData: CoinData) {
+    func toggleFavoriteCoin(coinData: CoinUIModel) {
         if favoriteCoins.isEmpty {
             addFavoriteCoin(coinData: coinData)
         } else {
@@ -36,13 +36,13 @@ final class StorageManager {
         }
     }
 
-    private func addFavoriteCoin(coinData: CoinData) {
+    private func addFavoriteCoin(coinData: CoinUIModel) {
         DispatchQueue.main.async {
             self.favoriteCoins.append(coinData)
         }
     }
 
-    private func removeFavoriteCoin(_ coinCode: CoinCode) {
+    private func removeFavoriteCoin(_ coinCode: String) {
         favoriteCoins.removeAll { coinData in
             if let coinInfo = coinData.coinInfo, let code = coinInfo.code {
                 return code == coinCode
@@ -52,7 +52,7 @@ final class StorageManager {
     }
 
     @discardableResult
-    func manageFavorites(coinData: CoinData) -> String {
+    func manageFavorites(coinData: CoinUIModel) -> String {
         let output = isCoinFavorite(coinData.coinInfo?.code ?? "") ? "Removed from Favorites" : "Added to Favorites"
         toggleFavoriteCoin(coinData: coinData)
         return output

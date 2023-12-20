@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NetworkService
 
 protocol AllCoinRepositoryProtocol {
     func getAllCoin(limit: Int, unitToBeConverted: String, page: Int) async throws -> AllCoinResponse

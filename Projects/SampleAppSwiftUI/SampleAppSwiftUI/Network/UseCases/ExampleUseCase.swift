@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ExampleUseCaseProtocol {
-    func fetchExample() async throws -> ExampleResponse
+    func fetchExample() async throws -> ExampleUIModel
 }
 
 class ExampleUseCase: ExampleUseCaseProtocol {
@@ -19,7 +19,8 @@ class ExampleUseCase: ExampleUseCaseProtocol {
         self.exampleRepository = exampleRepository
     }
 
-    func fetchExample() async throws -> ExampleResponse {
-        try await exampleRepository.getExample()
+    func fetchExample() async throws -> ExampleUIModel {
+        let responseModel = try await exampleRepository.getExample()
+        return ExampleUIModel(from: responseModel)
     }
 }

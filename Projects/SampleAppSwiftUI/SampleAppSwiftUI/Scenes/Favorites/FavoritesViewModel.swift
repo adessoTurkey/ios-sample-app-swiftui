@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import Combine
+import NetworkService
 
 class FavoritesViewModel: ObservableObject {
     private let checkWebSocket = true
@@ -17,9 +18,9 @@ class FavoritesViewModel: ObservableObject {
     private var reconnectionCount: Int = 0
     private var maxReconnectionCount: Int = 3
 
-    @Published var coinList: [CoinData] = []
-    @Published var filteredCoins: [CoinData] = []
-    @Published var coinInfo: CoinData?
+    @Published var coinList: [CoinUIModel] = []
+    @Published var filteredCoins: [CoinUIModel] = []
+    @Published var coinInfo: CoinUIModel?
     @Published var filterTitle = SortOptions.defaultList.rawValue
     @Published var selectedSortOption: SortOptions = .defaultList
 
@@ -61,20 +62,21 @@ class FavoritesViewModel: ObservableObject {
 
     private func connect() {
         guard reconnectionCount < maxReconnectionCount,
-             let service = webSocketService.connect(endPoint: .baseCoinApi) else {
+              let service = webSocketService.connect(endPoint: .baseCoinApi, loggerManager: LoggerManager.shared) else {
             NSLog("Service connection error.")
             return
         }
         service.setPing(time: 10)
         service.connectionHandler {[weak self] webservice in
             guard let self else { return }
-            var subs: [CoinCode] = []
+            var subs: [String] = []
             for coin in self.filteredCoins {
                 if let coinInfo = coin.coinInfo,
                    let code = coinInfo.code {
                     subs.append(code)
                 }
             }
+
             let request = FavoritesCoinRequest(action: .add, codeList: subs)
             webservice.sendMessage(request)
         } disconnected: { [weak self] closeCode in

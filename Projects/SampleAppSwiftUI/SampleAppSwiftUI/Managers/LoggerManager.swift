@@ -9,8 +9,11 @@
 import CocoaLumberjack
 import CocoaLumberjackSwiftLogBackend
 import Logging
+import NetworkService
 
 class LoggerManager {
+
+    static let shared = LoggerManager()
 
     private enum Constants {
         static let secondsInOneDay: TimeInterval = 60 * 60 * 24
@@ -20,7 +23,8 @@ class LoggerManager {
 
     private let logger = Logger()
     private var fileLogger: DDFileLogger?
-    static let instance = LoggerManager()
+
+    private init() {}
 
     func setLogLevel(_ logLevel: LogLevel) {
         logger.setLogLevel(logLevel)
@@ -66,5 +70,28 @@ class LoggerManager {
 
     func setError(errorMessage: String) {
         logger.error(errorMessage)
+    }
+}
+
+// MARK: - NetworkService - LoggerManagerProtocol Implementation
+extension LoggerManager: LoggerManagerProtocol {
+    func setVerbose(_ message: String) {
+        logger.verbose(message)
+    }
+
+    func setDebug(_ message: String) {
+        logger.debug(message)
+    }
+
+    func setInfo(_ message: String) {
+        logger.info(message)
+    }
+
+    func setWarn(_ message: String) {
+        logger.warn(message)
+    }
+
+    func setError(_ message: String) {
+        logger.error(message)
     }
 }

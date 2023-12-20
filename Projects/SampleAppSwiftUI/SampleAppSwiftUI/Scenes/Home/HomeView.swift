@@ -30,7 +30,7 @@ struct HomeView: View {
             .navigationTitle("Home")
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: Screen.self) { screen in
-                if screen.type == .detail, let data = screen.data as? CoinData {
+                if screen.type == .detail, let data = screen.data as? CoinUIModel {
                     CoinDetailView(coinData: data)
                 }
             }

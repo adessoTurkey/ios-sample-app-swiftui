@@ -13,19 +13,19 @@ class CoinDetailViewModel: ObservableObject {
     @Published var chartHistoryRangeSelection: CoinChartHistoryRange = .sixMonth
     private(set) var coinPriceHistoryChartDataModel: CoinPriceHistoryChartDataModel?
     @Published var isLoading = false
-    @Published var coinNewsDataModel: [CoinNewData]?
+    @Published var coinNewsDataModel: [CoinNewDataUIModel]?
     @Published var priceChartSelectedXDateText = ""
 
-    let coinData: CoinData
+    let coinData: CoinUIModel
 
     init(
         isFavorite: Bool = false,
         chartHistoryRangeSelection: CoinChartHistoryRange = .sixMonth,
         coinPriceHistoryChartDataModel: CoinPriceHistoryChartDataModel? = nil,
         isLoading: Bool = false,
-        coinNewsDataModel: [CoinNewData]? = nil,
+        coinNewsDataModel: [CoinNewDataUIModel]? = nil,
         priceChartSelectedXDateText: String = "",
-        coinData: CoinData
+        coinData: CoinUIModel
     ) {
         self.isFavorite = isFavorite
         self.chartHistoryRangeSelection = chartHistoryRangeSelection
@@ -82,7 +82,7 @@ class CoinDetailViewModel: ObservableObject {
             isLoading = true
         }
         do {
-            var response: CoinPriceHistoryResponse?
+            var response: CoinPriceHistoryUIModel?
             let limitAndAggregate = range.limitAndAggregateValue
             switch range {
                 case .oneDay:
@@ -111,7 +111,7 @@ class CoinDetailViewModel: ObservableObject {
                 }
             }
         } catch let error {
-            LoggerManager().setError(errorMessage: error.localizedDescription)
+            LoggerManager.shared.setError(errorMessage: error.localizedDescription)
         }
     }
 
@@ -125,7 +125,7 @@ class CoinDetailViewModel: ObservableObject {
                 }
             }
         } catch let error {
-            LoggerManager().setError(errorMessage: error.localizedDescription)
+            LoggerManager.shared.setError(errorMessage: error.localizedDescription)
         }
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import NetworkService
 
 protocol ExampleRemoteDataSourceProtocol {
     func getExample() async throws -> ExampleResponse
@@ -21,6 +22,7 @@ class ExampleRemoteDataSource: ExampleRemoteDataSourceProtocol {
     }
 
     func getExample() async throws -> ExampleResponse {
-        try await exampleService.exampleRequest()
+        try await exampleService.exampleRequest(requestModel: ExampleRequestModel(firstParameter: "firstParameter", 
+                                                                                  secondParameter: "secondParameter"))
     }
 }

@@ -15,6 +15,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         // Handle remote notification failures here
-        LoggerManager().setError(errorMessage: error.localizedDescription)
+        LoggerManager.shared.setError(errorMessage: error.localizedDescription)
     }
 }

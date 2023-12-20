@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import NetworkService
 
 class WebServiceProvider {
     static let shared: WebServiceProvider = WebServiceProvider()

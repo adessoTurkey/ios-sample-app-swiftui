@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NetworkService
 
 protocol CoinNewsRepositoryProtocol {
     func getCoinNews(coinCode: String) async throws -> CoinNewsResponse

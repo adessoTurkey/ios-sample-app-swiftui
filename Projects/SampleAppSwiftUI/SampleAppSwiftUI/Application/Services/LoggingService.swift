@@ -11,7 +11,7 @@ import UIKit
 class LoggingService {
 
     init() {
-        LoggerManager.instance.setup(level: .debug)
+        LoggerManager.shared.setup(level: .debug)
         logApplicationAndDeviceInfo()
     }
 
@@ -21,6 +21,6 @@ class LoggingService {
         let deviceModel = UIDevice.modelName
         let osVersion = UIDevice.osVersion
 
-        LoggerManager.instance.setInfo(version: version, build: build, deviceModel: deviceModel, osVersion: osVersion)
+        LoggerManager.shared.setInfo(version: version, build: build, deviceModel: deviceModel, osVersion: osVersion)
     }
 }

@@ -8,16 +8,18 @@
 import Foundation
 import SwiftUI
 import Combine
+import NetworkService
 
 class HomeViewModel: ObservableObject {
     @Published var coinInfo: ExcangeRatesResponseModel?
-    @Published var coinList: [CoinData] = []
-    @Published var filteredCoins: [CoinData] = []
+    @Published var coinList: [CoinUIModel] = []
+    @Published var filteredCoins: [CoinUIModel] = []
     @Published var filterTitle = SortOptions.defaultList.rawValue
 
     let listPageLimit = 10
     @Published var isLoading: Bool = false
     @Published var selectedSortOption: SortOptions = .defaultList
+    private var allCoinsUseCase: AllCoinUseCaseProtocol = AllCoinUseCase()
 
     func fillModels(demo: Bool = false) async {
         if demo {
@@ -27,10 +29,11 @@ class HomeViewModel: ObservableObject {
     }
 
     private func fetchAllCoins(page: Int = 1) async {
-        guard let dataSource = try? await AllCoinRemoteDataSource().getAllCoin(limit: self.listPageLimit, unitToBeConverted: "USD", page: page) else {
+        guard let dataSource = try? await allCoinsUseCase.fetchAllCoin(limit: self.listPageLimit, unitToBeConverted: "USD", page: page) else {
             Logger().error("Problem on the convert")
             return
         }
+
         DispatchQueue.main.async {
             if let data = dataSource.data {
                 self.coinList.append(contentsOf: data)
@@ -61,7 +64,7 @@ class HomeViewModel: ObservableObject {
 
 extension HomeViewModel: ViewModelProtocol {
 
-    func checkLastItem(_ item: CoinData) {
+    func checkLastItem(_ item: CoinUIModel) {
         guard !isLoading else { return }
 
         let offset = 2
@@ -85,11 +88,11 @@ extension HomeViewModel: ViewModelProtocol {
 // MARK: Demo Mode
 extension HomeViewModel {
     private func fetchDemoModel() {
-        guard let coinList = JsonHelper.make([CoinData].self, .coinList) else { return }
+        guard let coinList = JsonHelper.make([CoinUIModel].self, .coinList) else { return }
         self.fillDemoData(coinList: coinList)
     }
 
-    private func fillDemoData(coinList: [CoinData]) {
+    private func fillDemoData(coinList: [CoinUIModel]) {
         self.coinList = coinList
         self.filteredCoins = coinList
     }

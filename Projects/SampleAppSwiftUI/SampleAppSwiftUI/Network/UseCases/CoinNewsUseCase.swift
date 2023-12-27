@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CoinNewsUseCaseProtocol {
-    func getCoinNews(coinCode: String) async throws -> CoinNewsResponse
+    func getCoinNews(coinCode: String) async throws -> CoinNewsUIModel
 }
 
 class CoinNewsUseCase: CoinNewsUseCaseProtocol {
@@ -18,7 +18,8 @@ class CoinNewsUseCase: CoinNewsUseCaseProtocol {
         self.coinNewsRepository = coinNewsRepository
     }
 
-    func getCoinNews(coinCode: String) async throws -> CoinNewsResponse {
-        try await coinNewsRepository.getCoinNews(coinCode: coinCode)
+    func getCoinNews(coinCode: String) async throws -> CoinNewsUIModel {
+        let responseModel = try await coinNewsRepository.getCoinNews(coinCode: coinCode)
+        return CoinNewsUIModel(from: responseModel)
     }
 }

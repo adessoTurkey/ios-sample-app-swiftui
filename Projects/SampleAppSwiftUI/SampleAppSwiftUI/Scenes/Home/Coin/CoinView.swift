@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CoinView: View {
-    var coinInfo: CoinData
+    var coinInfo: CoinUIModel
 
     var body: some View {
         ZStack {
@@ -72,7 +72,7 @@ struct CoinView: View {
         }
     }
 
-    func configureTextColor(_ rawData: RawUsd) -> Color {
+    func configureTextColor(_ rawData: RawUsdUIModel) -> Color {
         rawData.changePercentage ?? Numbers.absoluteZero < Numbers.absoluteZero ? .red : .green
     }
 }

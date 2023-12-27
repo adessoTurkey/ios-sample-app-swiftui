@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NetworkService
 
 protocol CoinPriceHistoryRepositoryProtocol {
     func getDailyPriceHistory(coinCode: String, unitToBeConverted: String, dayLimit: Int, aggregate: Int) async throws -> CoinPriceHistoryResponse

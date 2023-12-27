@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NetworkService
 
 protocol AllCoinRemoteDataSourceProtocol {
     func getAllCoin(limit: Int, unitToBeConverted: String, page: Int) async throws -> AllCoinResponse
@@ -20,6 +21,8 @@ class AllCoinRemoteDataSource: AllCoinRemoteDataSourceProtocol {
     }
 
     func getAllCoin(limit: Int, unitToBeConverted: String, page: Int) async throws -> AllCoinResponse {
-        try await allCoinService.allCoinRequest(limit: limit, unitToBeConverted: unitToBeConverted, page: page)
+        try await allCoinService.allCoinRequest(requestModel: AllCoinRequestModel(limit: limit,
+                                                                                  unitToBeConverted: unitToBeConverted,
+                                                                                  page: page))
     }
 }

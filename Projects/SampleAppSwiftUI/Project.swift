@@ -6,7 +6,8 @@ let project = Project.createAppProject(
     projectPackages: [
         Package.remote(url: "https://github.com/CocoaLumberjack/CocoaLumberjack", requirement: .upToNextMajor(from: "3.8.0")),
         Package.remote(url: "https://github.com/kean/Pulse", requirement: .upToNextMajor(from: "3.0.0")),
-        Package.remote(url: "https://github.com/apple/swift-log.git", requirement: .upToNextMajor(from: "1.5.2"))
+        Package.remote(url: "https://github.com/apple/swift-log.git", requirement: .upToNextMajor(from: "1.5.2")),
+        Package.local(path: .relativeToRoot("Projects/NetworkService"))
     ],
     projectSettings: .projectSettings,
     destinations: [.iPhone, .iPad, .macWithiPadDesign],
@@ -19,7 +20,8 @@ let project = Project.createAppProject(
         .package(product: "CocoaLumberjack"),
         .package(product: "CocoaLumberjackSwift"),
         .package(product: "CocoaLumberjackSwiftLogBackend"),
-        .package(product: "PulseUI")
+        .package(product: "PulseUI"),
+        .package(product: "NetworkService")
     ],
     hasUnitTestTarget: true,
     hasUITestTarget: true

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChangePercentageView: View {
-    let changeRate: RawUsd
+    let changeRate: RawUsdUIModel
 
     private var isRised: Bool {
         changeRate.changePercentage ?? 0 >= 0
@@ -28,5 +28,5 @@ struct ChangePercentageView: View {
 }
 
 #Preview {
-    ChangePercentageView(changeRate: CoinData.demo.detail?.usd ?? .init())
+    ChangePercentageView(changeRate: CoinUIModel.demo.detail?.usd ?? .init())
 }

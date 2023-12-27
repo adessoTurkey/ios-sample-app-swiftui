@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NetworkService
 
 protocol CoinPriceHistoryRemoteDataSourceProtocol {
     func getDailyPriceHistory(coinCode: String, unitToBeConverted: String, dayLimit: Int, aggregate: Int) async throws -> CoinPriceHistoryResponse
@@ -20,11 +21,31 @@ class CoinPriceHistoryRemoteDataSource: CoinPriceHistoryRemoteDataSourceProtocol
         self.coinPriceHistoryService = coinPriceHistoryService
     }
 
-    func getDailyPriceHistory(coinCode: String, unitToBeConverted: String, dayLimit: Int, aggregate: Int) async throws -> CoinPriceHistoryResponse {
-        try await coinPriceHistoryService.dailyPriceHistoryRequest(coinCode: coinCode, unitToBeConverted: unitToBeConverted, dayLimit: dayLimit, aggregate: aggregate)
+    func getDailyPriceHistory(coinCode: String,
+                              unitToBeConverted: String,
+                              dayLimit: Int,
+                              aggregate: Int) async throws -> CoinPriceHistoryResponse {
+        try await coinPriceHistoryService.dailyPriceHistoryRequest(
+            requestModel: CoinPriceHistoryRequestModel(
+                coinCode: coinCode,
+                unitToBeConverted: unitToBeConverted,
+                limit: dayLimit,
+                aggregate: aggregate
+            )
+        )
     }
 
-    func getHourlyPriceHistory(coinCode: String, unitToBeConverted: String, hourLimit: Int, aggregate: Int) async throws -> CoinPriceHistoryResponse {
-        try await coinPriceHistoryService.hourlyPriceHistoryRequest(coinCode: coinCode, unitToBeConverted: unitToBeConverted, hourLimit: hourLimit, aggregate: aggregate)
+    func getHourlyPriceHistory(coinCode: String,
+                               unitToBeConverted: String,
+                               hourLimit: Int,
+                               aggregate: Int) async throws -> CoinPriceHistoryResponse {
+        try await coinPriceHistoryService.hourlyPriceHistoryRequest(
+            requestModel: CoinPriceHistoryRequestModel(
+                coinCode: coinCode,
+                unitToBeConverted: unitToBeConverted,
+                limit: hourLimit,
+                aggregate: aggregate
+            )
+        )
     }
 }

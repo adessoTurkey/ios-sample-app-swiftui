@@ -17,7 +17,7 @@ struct CoinDetailView: View {
 
     @StateObject private var viewModel: CoinDetailViewModel
 
-    init(coinData: CoinData) {
+    init(coinData: CoinUIModel) {
         _viewModel = StateObject(
             wrappedValue: CoinDetailViewModel(
                 coinData: coinData
@@ -170,7 +170,7 @@ struct CoinDetailView: View {
 #Preview {
     Group {
         NavigationView {
-            CoinDetailView(coinData: CoinData.demo)
+            CoinDetailView(coinData: CoinUIModel.demo)
                 .previewLayout(.sizeThatFits)
         }
     }

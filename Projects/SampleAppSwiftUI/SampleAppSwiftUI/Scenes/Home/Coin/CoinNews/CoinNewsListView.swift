@@ -10,7 +10,7 @@ import SwiftUI
 struct CoinNewsListView: View {
     @StateObject private var viewModel: CoinDetailViewModel
 
-    init(coinData: CoinData) {
+    init(coinData: CoinUIModel) {
         _viewModel = StateObject(
             wrappedValue: CoinDetailViewModel(coinData: coinData)
         )
@@ -55,6 +55,6 @@ struct CoinNewsListView: View {
 
 struct CoinNewsListView_Previews: PreviewProvider {
     static var previews: some View {
-        CoinNewsListView(coinData: CoinData.demo)
+        CoinNewsListView(coinData: CoinUIModel.demo)
     }
 }

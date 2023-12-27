@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NetworkService
 
 protocol CoinNewsRemoteDataSourceProtocol {
     func getCoinNews(coinCode: String) async throws -> CoinNewsResponse
@@ -19,6 +20,6 @@ class CoinNewsRemoteDataSource: CoinNewsRemoteDataSourceProtocol {
     }
 
     func getCoinNews(coinCode: String) async throws -> CoinNewsResponse {
-        try await coinNewsService.coinNewsRequest(coinCode: coinCode)
+        try await coinNewsService.coinNewsRequest(requestModel: CoinNewsRequestModel(coinCode: coinCode))
     }
 }

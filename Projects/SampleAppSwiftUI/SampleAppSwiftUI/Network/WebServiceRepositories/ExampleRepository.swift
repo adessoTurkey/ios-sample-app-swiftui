@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import NetworkService
 
 protocol ExampleRepositoryProtocol {
     func getExample() async throws -> ExampleResponse

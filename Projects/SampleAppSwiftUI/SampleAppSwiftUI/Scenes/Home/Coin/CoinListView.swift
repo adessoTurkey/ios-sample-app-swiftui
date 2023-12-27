@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CoinListView<ViewModel: ViewModelProtocol>: View {
     @ObservedObject var viewModel: ViewModel
-    @Binding var filteredCoins: [CoinData]
+    @Binding var filteredCoins: [CoinUIModel]
     @State private var showingAlert = false
     @State private var alertTitle = ""
     @EnvironmentObject var router: Router
@@ -59,11 +59,11 @@ struct CoinListView<ViewModel: ViewModelProtocol>: View {
         }
     }
 
-    private func navigateCoinDetail(coinData: CoinData) {
+    private func navigateCoinDetail(coinData: CoinUIModel) {
         router.navigateCoinDetail(coinData: coinData)
     }
 
-    func checkFavorite(coinData: CoinData) {
+    func checkFavorite(coinData: CoinUIModel) {
         self.alertTitle = StorageManager.shared.manageFavorites(coinData: coinData)
         showingAlert.toggle()
         favoriteChanged()

@@ -22,7 +22,7 @@ struct FavoritesView: View {
                 CoinListView(viewModel: viewModel, filteredCoins: $viewModel.filteredCoins, favoriteChanged: viewModel.fetchFavorites)
             }
             .navigationDestination(for: Screen.self) { screen in
-                if screen.type == .detail, let data = screen.data as? CoinData {
+                if screen.type == .detail, let data = screen.data as? CoinUIModel {
                     CoinDetailView(coinData: data)
                 }
             }
@@ -46,7 +46,7 @@ struct FavoritesView: View {
         })
     }
 
-    private func fetchFavorites(codes: [CoinData]) {
+    private func fetchFavorites(codes: [CoinUIModel]) {
         viewModel.fetchFavorites()
     }
 

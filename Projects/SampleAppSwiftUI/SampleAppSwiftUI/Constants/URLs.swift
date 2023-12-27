@@ -13,7 +13,7 @@ enum URLs {
         static let iconPath = "/assets/icons/"
         static let scaleURL = "@2x.png"
 
-        static func getURL(from coinCode: CoinCode) -> URL? {
+        static func getURL(from coinCode: String) -> URL? {
             URL(string: "\(baseURL)\(iconPath)\(coinCode.lowercased())\(scaleURL)")
         }
     }

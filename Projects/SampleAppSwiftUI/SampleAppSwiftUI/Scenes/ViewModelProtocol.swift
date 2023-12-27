@@ -9,15 +9,15 @@ import Foundation
 
 protocol ViewModelProtocol: ObservableObject {
     var isLoading: Bool { get set }
-    var filteredCoins: [CoinData] { get set }
-    var coinList: [CoinData] { get }
+    var filteredCoins: [CoinUIModel] { get set }
+    var coinList: [CoinUIModel] { get }
     var selectedSortOption: SortOptions { get set }
 
-    func checkLastItem(_ item: CoinData)
+    func checkLastItem(_ item: CoinUIModel)
 }
 
 extension ViewModelProtocol {
-    func checkLastItem(_ item: CoinData) {}
+    func checkLastItem(_ item: CoinUIModel) {}
 
     func sortOptions(sort: SortOptions) {
         selectedSortOption = sort

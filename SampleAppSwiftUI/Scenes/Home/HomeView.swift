@@ -30,7 +30,6 @@ struct HomeView: View {
         .padding(.horizontal, Paddings.side)
         .navigationTitle("Home")
         .navigationBarTitleDisplayMode(.inline)
-        .background(Color(.lightestGray))
         .onAppear {
             Task {
                 await viewModel.fillModels()

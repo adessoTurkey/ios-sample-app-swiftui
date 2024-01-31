@@ -24,4 +24,14 @@ extension URL {
         }
         return nil
     }
+    
+    var queryParameters: [String: String] {
+        guard let components = URLComponents(url: self, resolvingAgainstBaseURL: true),
+              let queryItems = components.queryItems else { return [:] }
+        var parameters = [String: String]()
+        for queryItem in queryItems {
+            parameters[queryItem.name] = queryItem.value
+        }
+        return parameters
+    }
 }

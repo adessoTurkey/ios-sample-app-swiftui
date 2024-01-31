@@ -17,7 +17,8 @@ extension Project {
         appTargetSettings: Settings?,
         dependencies: [TargetDependency] = [],
         hasUnitTestTarget: Bool,
-        hasUITestTarget: Bool
+        hasUITestTarget: Bool,
+        entitlements: Entitlements?
     ) -> Project {
         var targets: [Target] = []
 
@@ -35,6 +36,7 @@ extension Project {
                     ResourceFileElement.glob(pattern: .relativeToRoot("Projects/\(name)/\(name)/Resources/**"))
                 ]
             ),
+            entitlements: entitlements,
             scripts: appTargetScripts,
             dependencies: dependencies,
             settings: appTargetSettings

@@ -8,7 +8,7 @@
 import Foundation
 
 enum ScreenType: String {
-    case detail
+    case detail = "1"
 }
 
 struct Screen {

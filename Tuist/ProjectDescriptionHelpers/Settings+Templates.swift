@@ -8,7 +8,8 @@ extension SettingsDictionary {
         "ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS": true,
         "ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS": true,
         "LOCALIZATION_PREFERS_STRING_CATALOGS": true,
-        "SWIFT_EMIT_LOC_STRINGS": true
+        "SWIFT_EMIT_LOC_STRINGS": true,
+        "DEBUG_INFORMATION_FORMAT": "dwarf-with-dsym"
     ]
 }
 

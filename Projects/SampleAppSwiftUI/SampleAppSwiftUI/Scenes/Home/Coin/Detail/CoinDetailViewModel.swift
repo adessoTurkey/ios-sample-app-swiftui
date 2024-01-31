@@ -50,6 +50,9 @@ class CoinDetailViewModel: ObservableObject {
             forSelectedRange: chartHistoryRangeSelection
         )
         await fetchCoinNews()
+        await FirebaseManager.shared.logEvent(name: "DetailView_Appears", params: [
+            "coin_name" : coinData.coinInfo?.title ?? ""
+        ])
     }
 
     func getIconURL() -> URL? {

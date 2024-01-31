@@ -1,10 +1,6 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let pushNotificationEntitlement: [String: Plist.Value] = [
-    "aps-environment": "development"
-]
-
 let project = Project.createAppProject(
     name: "SampleAppSwiftUI",
     projectPackages: [
@@ -36,5 +32,5 @@ let project = Project.createAppProject(
     ],
     hasUnitTestTarget: true,
     hasUITestTarget: true,
-    entitlements: .dictionary(pushNotificationEntitlement)
+    entitlements: .dictionary(["aps-environment": "development"])
 )

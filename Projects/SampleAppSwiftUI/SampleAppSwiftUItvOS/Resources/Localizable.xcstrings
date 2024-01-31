@@ -1,0 +1,41 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Account" : {
+
+    },
+    "Average" : {
+
+    },
+    "Date" : {
+
+    },
+    "Favorite" : {
+
+    },
+    "Key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No data"
+          }
+        }
+      }
+    },
+    "Low" : {
+
+    },
+    "Remove favorite" : {
+
+    },
+    "Sent" : {
+
+    },
+    "Show list" : {
+
+    }
+  },
+  "version" : "1.0"
+}

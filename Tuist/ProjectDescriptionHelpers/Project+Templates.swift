@@ -75,6 +75,27 @@ extension Project {
             targets.append(uiTestTarget)
         }
 
+        let tvOSTargetName = "\(name)tvOS"
+        let tvOSTarget = Target(
+            name: tvOSTargetName,
+            destinations: .tvOS,
+            product: .app,
+            bundleId: "$(PRODUCT_BUNDLE_IDENTIFIER).tvApp",
+            deploymentTargets: .tvOS("17.0"),
+            infoPlist: .file(path: .relativeToRoot("Projects/\(name)/\(tvOSTargetName)/Info.plist")),
+            sources: SourceFilesList.paths([.relativeToRoot("Projects/\(name)/\(tvOSTargetName)/**")]),
+            resources: ResourceFileElements(
+                resources: [
+                    ResourceFileElement.glob(pattern: .relativeToRoot("Projects/\(name)/\(tvOSTargetName)/Resources/**"))
+                ]
+            ),
+            scripts: appTargetScripts,
+            dependencies: dependencies,
+            settings: appTargetSettings
+        )
+
+        targets.append(tvOSTarget)
+
         return Project(
             name: name,
             options: .options(

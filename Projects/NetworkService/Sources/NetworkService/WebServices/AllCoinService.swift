@@ -9,6 +9,7 @@ import Foundation
 
 public protocol AllCoinServiceProtocol {
     func allCoinRequest(requestModel: AllCoinRequestModel) async throws -> AllCoinResponse
+    func topVolumeList(requestModel: AllCoinRequestModel) async throws -> AllCoinResponse
 }
 
 public final class AllCoinService: AllCoinServiceProtocol, BaseServiceProtocol {
@@ -25,5 +26,17 @@ public final class AllCoinService: AllCoinServiceProtocol, BaseServiceProtocol {
                                                  page: requestModel.page))
 
         return try await request(with: RequestObject(url: urlString), responseModel: AllCoinResponse.self)
+    }
+
+    public func topVolumeList(requestModel: AllCoinRequestModel) async throws -> AllCoinResponse {
+        let urlString = build(
+            endpoint: .topByDailyVolume(
+                limit: requestModel.limit,
+                unitToBeConverted: requestModel.unitToBeConverted,
+                page: requestModel.page
+            )
+        )
+
+        return try await request(with: .init(url: urlString), responseModel: AllCoinResponse.self)
     }
 }

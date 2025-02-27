@@ -1,0 +1,18 @@
+//
+//  Production.xcconfig
+//  boilerplate-ios-swiftui
+//
+//  Created by Can Baybunar on 19.11.2020.
+//  Copyright © 2020 Adesso Turkey. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+PRODUCT_BUNDLE_IDENTIFIER = com.adesso.SampleAppSwiftUI.prod
+
+base_url = https:/$()/min-api.cryptocompare.com/data/
+
+webSocket_base_url = wss:/$()/streamer.cryptocompare.com/v2
+
+personal_api = 

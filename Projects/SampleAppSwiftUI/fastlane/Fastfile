@@ -1,0 +1,67 @@
+default_platform(:ios)
+
+platform :ios do
+  # 🔹 Apple sertifikalarını GIT KULLANMADAN senkronize et
+  before_all do
+    match(
+      type: "development",
+    	readonly: true,
+   	app_identifier: "com.adesso.SampleAppSwiftUI.dev",
+    	git_url: "https://github.com/adessoTurkey/ios-sample-app-swiftui"
+    )
+  end
+
+  # 🔹 Test Ortamı İçin Firebase'e Gönderme
+  desc "Test build için Firebase'e yükleme"
+  lane :firebase_test do
+    # Test için GoogleService-Info.plist dosyasını kopyala
+    sh "cp \"$(pwd)/SampleAppSwiftUI/Configs/Development/GoogleService-Info.plist\" \"$(pwd)/SampleAppSwiftUI/GoogleService-Info.plist\""
+
+    # Test için Ad-Hoc build al
+    build_app(
+      scheme: "SampleAppSwiftUI",
+      configuration: "Release",
+      export_method: "ad-hoc",
+      export_options: {
+        provisioningProfiles: {
+          "com.adesso.SampleAppSwiftUI.test" => "SampleApp_Test_AdHoc_Profile"
+        }
+      },
+      silent: true
+    )
+
+    # Firebase App Distribution'a yükle
+    firebase_app_distribution(
+      app: "1:597671415800:ios:bf29d7af691485e579d00d",
+      testers: "meryem.sahin@adesso.com.tr,giraykayan@gmail.com",
+      groups: "test-testers"
+    )
+  end
+
+  # 🔹 Production Ortamı İçin Firebase'e Gönderme
+  desc "Production build için Firebase'e yükleme"
+  lane :firebase_production do
+    # Production için GoogleService-Info.plist dosyasını kopyala
+    sh "cp \"$(pwd)/SampleAppSwiftUI/Configs/Production/GoogleService-Info.plist\" \"$(pwd)/SampleAppSwiftUI/GoogleService-Info.plist\""
+
+    # Production için Ad-Hoc build al
+    build_app(
+      scheme: "SampleAppSwiftUI",
+      configuration: "Release",
+      export_method: "ad-hoc",
+      export_options: {
+        provisioningProfiles: {
+          "com.adesso.SampleAppSwiftUI.production" => "SampleApp_Prod_AdHoc_Profile"
+        }
+      },
+      silent: true
+    )
+
+    # Firebase App Distribution'a yükle
+    firebase_app_distribution(
+      app: "1:597671415800:ios:72f6e7411b979f3679d00d",
+      testers: "meryem.sahin@adesso.com.tr,giraykayan@gmail.com",
+      groups: "prod-testers"
+    )
+  end
+end
